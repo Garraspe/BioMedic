@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Diagrama de Bloques - BioVent</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #263238;
+        }
+
+
+        /* =========================================
+           ENCABEZADO
+        ========================================= */
+
+        header {
+            background: linear-gradient(135deg, #0d6efd, #084298);
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+
+        header p {
+            margin: 10px 0 0;
+            font-size: 16px;
+        }
+
+
+        /* =========================================
+           MENÚ
+        ========================================= */
+
+        nav {
+            background: white;
+
+            padding: 15px;
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+
+        nav a {
+            text-decoration: none;
+
+            color: #0d6efd;
+
+            font-weight: bold;
+
+            padding: 10px 15px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+
+        nav a:hover {
+            background: #e8f1ff;
+        }
+
+
+        nav a.activo {
+            background: #0d6efd;
+
+            color: white;
+        }
+
+
+        /* =========================================
+           CONTENEDOR
+        ========================================= */
+
+        .contenedor {
+            width: 94%;
+
+            max-width: 1300px;
+
+            margin: 35px auto;
+        }
+
+
+        .tarjeta {
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            margin-bottom: 30px;
+        }
+
+
+        .tarjeta h2 {
+            margin-top: 0;
+
+            color: #084298;
+        }
+
+
+        /* =========================================
+           INTRODUCCIÓN
+        ========================================= */
+
+        .introduccion {
+            text-align: center;
+        }
+
+
+        .introduccion p {
+            max-width: 950px;
+
+            margin: 15px auto;
+
+            line-height: 1.7;
+
+            color: #555;
+        }
+ 
+
+        /* =========================================
+           DIAGRAMA
+        ========================================= */
+
+        .zona-diagrama {
+            overflow-x: auto;
+
+            padding: 20px 10px 30px;
+        }
+
+
+        .diagrama {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+        /* =========================================
+           BLOQUES
+        ========================================= */
+
+        .bloque {
+    width: 150px;
+
+    min-height: 130px;
+
+    flex-shrink: 1;
+
+            padding: 18px 12px;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 14px rgba(0,0,0,0.12);
+
+            transition: 0.2s;
+        }
+
+
+        .bloque:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 9px 20px rgba(0,0,0,0.18);
+        }
+
+
+        .icono {
+            font-size: 38px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .bloque strong {
+            font-size: 16px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .bloque small {
+            font-size: 13px;
+
+            line-height: 1.45;
+        }
+
+
+        /* =========================================
+           COLORES DE LOS BLOQUES
+        ========================================= */
+
+        .alimentacion {
+            background: #fff8df;
+
+            border: 3px solid #ffc107;
+        }
+
+
+        .alimentacion strong {
+            color: #946c00;
+        }
+
+
+        .control {
+            background: #eaf2ff;
+
+            border: 3px solid #0d6efd;
+        }
+
+
+        .control strong {
+            color: #084298;
+        }
+
+
+        .neumatico {
+            background: #f4edff;
+
+            border: 3px solid #6f42c1;
+        }
+
+
+        .neumatico strong {
+            color: #59339d;
+        }
+
+
+        .actuador {
+            background: #fff1e5;
+
+            border: 3px solid #fd7e14;
+        }
+
+
+        .actuador strong {
+            color: #c45d00;
+        }
+
+
+        .circuito {
+            background: #e9fbf5;
+
+            border: 3px solid #20c997;
+        }
+
+
+        .circuito strong {
+            color: #087f5b;
+        }
+
+
+        .paciente {
+            background: #eaf8ef;
+
+            border: 3px solid #198754;
+        }
+
+
+        .paciente strong {
+            color: #146c43;
+        }
+
+
+        .sensor {
+            background: #f1f3f5;
+
+            border: 3px solid #6c757d;
+        }
+
+
+        .sensor strong {
+            color: #495057;
+        }
+
+
+        .interfaz {
+            background: #e9faff;
+
+            border: 3px solid #0dcaf0;
+        }
+
+
+        .interfaz strong {
+            color: #087990;
+        }
+
+
+        .alarma {
+            background: #fff0f1;
+
+            border: 3px solid #dc3545;
+        }
+
+
+        .alarma strong {
+            color: #b02a37;
+        }
+
+
+        /* =========================================
+           FLECHAS
+        ========================================= */
+
+        .flecha {
+            font-size: 34px;
+
+            font-weight: bold;
+
+            color: #0d6efd;
+
+            margin: 8px 0;
+        }
+
+
+        .flecha-horizontal {
+            font-size: 34px;
+
+            font-weight: bold;
+
+            color: #0d6efd;
+
+            display: flex;
+
+            align-items: center;
+        }
+
+
+        /* =========================================
+           FILA PRINCIPAL
+        ========================================= */
+
+        .fila-principal {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        /* =========================================
+           SENSORES
+        ========================================= */
+
+        .zona-sensores {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 25px 0 10px;
+}
+
+.sensor-conexion {
+    width: 150px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Centrar perfectamente la línea, etiqueta y sensor */
+
+.zona-sensores > div {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+/* Línea vertical */
+
+.zona-sensores .conexion {
+    width: 3px;
+
+    height: 45px;
+
+    background: #6c757d;
+
+    margin: 0 auto;
+}
+
+
+/* Etiqueta MONITOREO */
+
+/* =========================================
+   SENSORES
+========================================= */
+
+.zona-sensores {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 25px 0;
+}
+
+.zona-sensores > div {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+/* Línea vertical perfectamente centrada */
+
+.zona-sensores .conexion {
+    width: 3px;
+    height: 45px;
+
+    background: #6c757d;
+
+    margin: 0;
+}
+
+/* Etiqueta MONITOREO */
+
+.zona-sensores .etiqueta {
+    width: 150px;
+
+    text-align: center;
+
+    margin: 10px 0;
+}
+
+
+        /* =========================================
+           BLOQUES DE CONTROL
+        ========================================= */
+
+        .zona-control {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            gap: 30px;
+
+            margin-top: 30px;
+        }
+
+
+        .subbloque {
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+        }
+
+
+        /* =========================================
+           RETROALIMENTACIÓN
+        ========================================= */
+
+        .retroalimentacion {
+
+            margin: 35px auto 10px;
+
+            max-width: 850px;
+
+            background: #f8f9fa;
+
+            border: 2px dashed #6c757d;
+
+            border-radius: 15px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            line-height: 1.7;
+        }
+
+
+        .retroalimentacion strong {
+            display: block;
+
+            color: #343a40;
+
+            margin-bottom: 8px;
+        }
+
+
+        /* =========================================
+           TABLA
+        ========================================= */
+
+        .tabla-contenedor {
+            overflow-x: auto;
+        }
+
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 20px;
+        }
+
+
+        th,
+        td {
+            border: 1px solid #dce3eb;
+
+            padding: 14px;
+
+            text-align: left;
+
+            vertical-align: top;
+
+            line-height: 1.5;
+        }
+
+
+        th {
+            background: #eaf2ff;
+
+            color: #084298;
+        }
+
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+
+        /* =========================================
+           RELACIÓN CON BIOVENT
+        ========================================= */
+
+        .biovent {
+            border-left: 6px solid #198754;
+        }
+
+
+        .biovent h2 {
+            color: #198754;
+        }
+
+
+        .biovent-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-top: 25px;
+        }
+
+
+        .modulo {
+            background: #f2fbf6;
+
+            border: 1px solid #b7dfc6;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            text-align: center;
+        }
+
+
+        .modulo .icono {
+            display: block;
+        }
+
+
+        .modulo strong {
+            color: #146c43;
+        }
+
+
+        .modulo p {
+            line-height: 1.5;
+        }
+
+
+        /* =========================================
+           NOTA
+        ========================================= */
+
+        .nota {
+            background: #fff8e1;
+
+            border-left: 6px solid #ffc107;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        .nota strong {
+            color: #856404;
+        }
+
+
+        /* =========================================
+           PIE DE PÁGINA
+        ========================================= */
+
+        footer {
+            background: #263238;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            margin-top: 40px;
+        }
+
+
+        footer p {
+            margin: 6px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .biovent-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            header h1 {
+                font-size: 25px;
+            }
+
+
+            .tarjeta {
+                padding: 20px;
+            }
+
+
+            nav {
+                flex-direction: column;
+            }
+
+
+            nav a {
+                text-align: center;
+            }
+
+
+            .biovent-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     ENCABEZADO
+========================================= -->
+
+<header>
+
+    <h1>🫁 Diagrama de Bloques</h1>
+
+    <p>
+        Arquitectura funcional del ventilador mecánico
+    </p>
+
+</header>
+
+
+<!-- =========================================
+     MENÚ
+========================================= -->
+
+<nav>
+
+    <a href="/">
+        Inicio
+    </a>
+
+    <a href="/equipos">
+        Equipos
+    </a>
+
+    <a href="/mantenimientos">
+        Mantenimientos
+    </a>
+
+    <a href="/checklist">
+        Checklists
+    </a>
+
+    <a href="/dashboard">
+        Dashboard
+    </a>
+
+    <a href="/normativa">
+        Normativa
+    </a>
+
+    <a href="/bibliografia">
+        Bibliografía
+    </a>
+
+    <a href="/diagrama-bloques" class="activo">
+        Diagrama de bloques
+    </a>
+
+</nav>
+
+
+<main class="contenedor">
+
+
+<!-- =========================================
+     INTRODUCCIÓN
+========================================= -->
+
+<section class="tarjeta introduccion">
+
+    <h2>
+        🔬 Arquitectura funcional del ventilador mecánico
+    </h2>
+
+    <p>
+
+        El siguiente diagrama representa de manera simplificada
+        los principales subsistemas que intervienen en el
+        funcionamiento de un ventilador mecánico.
+
+    </p>
+
+    <p>
+
+        El sistema recibe energía, procesa información mediante
+        la unidad de control, regula el suministro de gases,
+        entrega el flujo al paciente y utiliza sensores para
+        supervisar continuamente las variables de funcionamiento.
+
+    </p>
+
+</section>
+
+
+<!-- =========================================
+     DIAGRAMA PRINCIPAL
+========================================= -->
+
+<section class="tarjeta">
+
+    <h2 style="text-align:center;">
+        ⚙️ Diagrama funcional
+    </h2>
+
+
+    <div class="zona-diagrama">
+
+        <div class="diagrama">
+
+
+            <!-- =================================
+                 SENSORES
+            ================================== -->
+
+            <div class="zona-sensores">
+
+                <div>
+
+                    <div class="conexion"></div>
+
+                    <div class="etiqueta">
+                        MONITOREO
+                    </div>
+
+                    <div class="bloque sensor">
+
+                        <div class="icono">
+                            📊
+                        </div>
+
+                        <strong>
+                            Sensores
+                        </strong>
+
+                        <small>
+                            Presión<br>
+                            Flujo<br>
+                            Variables del sistema
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 FLUJO PRINCIPAL
+            ================================== -->
+
+            <div class="fila-principal">
+
+
+                <!-- ALIMENTACIÓN -->
+
+                <div class="bloque alimentacion">
+
+                    <div class="icono">
+                        ⚡
+                    </div>
+
+                    <strong>
+                        Alimentación
+                    </strong>
+
+                    <small>
+                        Energía eléctrica<br>
+                        Batería de respaldo
+                    </small>
+
+                </div>
+
+
+                <div class="flecha-horizontal">
+                    →
+                </div>
+
+
+                <!-- CONTROL -->
+
+                <div class="bloque control">
+
+                    <div class="icono">
+                        🧠
+                    </div>
+
+                    <strong>
+                        Unidad de control
+                    </strong>
+
+                    <small>
+                        Procesamiento<br>
+                        y control
+                    </small>
+
+                </div>
+
+
+                <div class="flecha-horizontal">
+                    →
+                </div>
+
+
+                <!-- NEUMÁTICO -->
+
+                <div class="bloque neumatico">
+
+                    <div class="icono">
+                        💨
+                    </div>
+
+                    <strong>
+                        Sistema neumático
+                    </strong>
+
+                    <small>
+                        Gestión y regulación
+                        de gases
+                    </small>
+
+                </div>
+
+
+                <div class="flecha-horizontal">
+                    →
+                </div>
+
+
+                <!-- ACTUADORES -->
+
+                <div class="bloque actuador">
+
+                    <div class="icono">
+                        ⚙️
+                    </div>
+
+                    <strong>
+                        Actuadores
+                    </strong>
+
+                    <small>
+                        Regulación del flujo
+                        y entrega
+                    </small>
+
+                </div>
+
+
+                <div class="flecha-horizontal">
+                    →
+                </div>
+
+
+                <!-- CIRCUITO -->
+
+                <div class="bloque circuito">
+
+                    <div class="icono">
+                        🔄
+                    </div>
+
+                    <strong>
+                        Circuito respiratorio
+                    </strong>
+
+                    <small>
+                        Conducción
+                        de gases
+                    </small>
+
+                </div>
+
+
+                <div class="flecha-horizontal">
+                    →
+                </div>
+
+
+                <!-- PACIENTE -->
+
+                <div class="bloque paciente">
+
+                    <div class="icono">
+                        🫁
+                    </div>
+
+                    <strong>
+                        Paciente
+                    </strong>
+
+                    <small>
+                        Soporte
+                        ventilatorio
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================
+                 CONEXIONES
+            ================================== -->
+
+            <div class="zona-control">
+
+
+                <!-- INTERFAZ -->
+
+                <div class="subbloque">
+
+                    <div class="conexion"></div>
+
+                    <div class="etiqueta">
+                        USUARIO
+                    </div>
+
+                    <div class="bloque interfaz">
+
+                        <div class="icono">
+                            🖥️
+                        </div>
+
+                        <strong>
+                            Interfaz / Pantalla
+                        </strong>
+
+                        <small>
+                            Configuración<br>
+                            Visualización
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ALARMAS -->
+
+                <div class="subbloque">
+
+                    <div class="conexion"></div>
+
+                    <div class="etiqueta">
+                        SEGURIDAD
+                    </div>
+
+                    <div class="bloque alarma">
+
+                        <div class="icono">
+                            🔔
+                        </div>
+
+                        <strong>
+                            Sistema de alarmas
+                        </strong>
+
+                        <small>
+                            Alertas visuales<br>
+                            y sonoras
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================
+                 RETROALIMENTACIÓN
+            ================================== -->
+
+            <div class="retroalimentacion">
+
+                <strong>
+                    🔁 Retroalimentación del sistema
+                </strong>
+
+                Los sensores permiten obtener información
+                sobre las condiciones de funcionamiento.
+                Esta información es procesada por la unidad
+                de control para supervisar el sistema y,
+                cuando corresponde, generar acciones y alarmas.
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     DESCRIPCIÓN
+========================================= -->
+
+<section class="tarjeta">
+
+    <h2>
+        📋 Descripción de los bloques
+    </h2>
+
+
+    <div class="tabla-contenedor">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Bloque
+                    </th>
+
+                    <th>
+                        Función
+                    </th>
+
+                    <th>
+                        Relación con BioVent
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                <tr>
+
+                    <td>
+                        <strong>⚡ Alimentación</strong>
+                    </td>
+
+                    <td>
+
+                        Proporciona la energía necesaria
+                        para el funcionamiento del equipo
+                        y puede incluir una batería de respaldo.
+
+                    </td>
+
+                    <td>
+
+                        Cable de alimentación,
+                        batería y estado del equipo.
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <strong>🧠 Unidad de control</strong>
+                    </td>
+
+                    <td>
+
+                        Procesa las señales provenientes
+                        de los sensores y coordina el
+                        funcionamiento del ventilador.
+
+                    </td>
+
+                    <td>
+
+                        Encendido y prueba de funcionamiento.
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <strong>📊 Sensores</strong>
+                    </td>
+
+                    <td>
+
+                        Permiten medir variables necesarias
+                        para supervisar las condiciones
+                        de ventilación.
+
+                    </td>
+
+                    <td>
+
+                        Punto de inspección de sensores
+                        y pruebas funcionales.
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <strong>💨 Sistema neumático</strong>
+                    </td>
+
+                    <td>
+
+                        Gestiona y regula el suministro
+                        de gases utilizados durante
+                        la ventilación.
+
+                    </td>
+
+                    <td>
+
+                        Circuito respiratorio,
+                        filtros y prueba de funcionamiento.
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <strong>⚙️ Actuadores</strong>
+                    </td>
+
+                    <td>
+
+                        Permiten controlar el flujo y
+                        las condiciones de entrega
+                        de los gases.
+
+                    </td>
+
+                    <td>
+
+                        Prueba de funcionamiento
+                        del equipo.
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <strong>🖥️ Interfaz / Pantalla</strong>
+                    </td>
+
+                    <td>
+
+                        Permite al usuario visualizar
+                        información y configurar
+                        parámetros del equipo.
+
+                    </td>
+
+                    <td>
+
+                        Inspección de pantalla.
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <strong>🔔 Sistema de alarmas</strong>
+                    </td>
+
+                    <td>
+
+                        Informa mediante señales visuales
+                        y sonoras sobre determinadas
+                        condiciones que requieren atención.
+
+                    </td>
+
+                    <td>
+
+                        Punto de alarmas del checklist.
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <strong>🔄 Circuito respiratorio</strong>
+                    </td>
+
+                    <td>
+
+                        Conduce los gases entre el ventilador
+                        y el paciente.
+
+                    </td>
+
+                    <td>
+
+                        Circuito respiratorio y filtros.
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        <strong>🫁 Paciente</strong>
+                    </td>
+
+                    <td>
+
+                        Recibe el soporte ventilatorio
+                        proporcionado por el equipo.
+
+                    </td>
+
+                    <td>
+
+                        Representa el objetivo final
+                        del sistema de ventilación.
+
+                    </td>
+
+                </tr>
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     RELACIÓN CON BIOVENT
+========================================= -->
+
+<section class="tarjeta biovent">
+
+    <h2>
+        💻 Relación del diagrama con BioVent
+    </h2>
+
+
+    <p>
+
+        El diagrama funcional permite relacionar los
+        subsistemas del ventilador mecánico con las
+        diferentes funciones de la plataforma BioVent.
+
+    </p>
+
+
+    <div class="biovent-grid">
+
+
+        <div class="modulo">
+
+            <span class="icono">
+                🫁
+            </span>
+
+            <strong>
+                Equipos
+            </strong>
+
+            <p>
+
+                Identificación, registro y
+                estado del ventilador.
+
+            </p>
+
+        </div>
+
+
+        <div class="modulo">
+
+            <span class="icono">
+                🔧
+            </span>
+
+            <strong>
+                Mantenimientos
+            </strong>
+
+            <p>
+
+                Seguimiento de actividades
+                preventivas y correctivas.
+
+            </p>
+
+        </div>
+
+
+        <div class="modulo">
+
+            <span class="icono">
+                📋
+            </span>
+
+            <strong>
+                Checklists
+            </strong>
+
+            <p>
+
+                Inspección de los diferentes
+                componentes y condiciones
+                del equipo.
+
+            </p>
+
+        </div>
+
+
+        <div class="modulo">
+
+            <span class="icono">
+                📊
+            </span>
+
+            <strong>
+                Dashboard
+            </strong>
+
+            <p>
+
+                Visualización general del estado
+                y seguimiento de los equipos.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     NOTA ACADÉMICA
+========================================= -->
+
+<section class="nota">
+
+    <strong>
+        📌 Nota académica
+    </strong>
+
+
+    <p>
+
+        El presente diagrama corresponde a una representación
+        funcional simplificada de un ventilador mecánico.
+        La arquitectura interna, los componentes y los
+        sistemas específicos pueden variar dependiendo
+        del fabricante y del modelo del equipo.
+
+    </p>
+
+
+    <p>
+
+        Para el proyecto BioVent, este esquema se utiliza
+        como referencia para relacionar el funcionamiento
+        general del ventilador con las actividades de
+        inspección, mantenimiento y seguimiento realizadas
+        mediante la plataforma.
+
+    </p>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================================
+     PIE
+========================================= -->
+
+<footer>
+
+    <p>
+        <strong>BioVent</strong>
+    </p>
+
+    <p>
+        Plataforma para la gestión y seguimiento
+        de equipos biomédicos
+    </p>
+
+    <p>
+        Diseño e Ingeniería Clínica — Entrega 1
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

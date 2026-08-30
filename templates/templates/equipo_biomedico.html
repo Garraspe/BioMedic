@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipo Biomédico - BioVent</title>
+
+```
+<style>
+
+    *{
+        box-sizing:border-box;
+    }
+
+    body{
+        margin:0;
+        font-family:Arial,sans-serif;
+        background:#f4f7f9;
+        color:#333;
+    }
+
+    header{
+        background:linear-gradient(135deg,#0b6e69,#149c94);
+        color:white;
+        text-align:center;
+        padding:35px 20px;
+    }
+
+    header h1{
+        margin:0;
+    }
+
+    nav{
+        background:white;
+        text-align:center;
+        padding:14px;
+        box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
+
+    nav a{
+        text-decoration:none;
+        color:#0b6e69;
+        font-weight:bold;
+        margin:8px 12px;
+        padding:8px 12px;
+        border-radius:6px;
+        display:inline-block;
+    }
+
+    nav a:hover{
+        background:#e8f7f5;
+    }
+
+    main{
+        max-width:1000px;
+        margin:30px auto;
+        padding:20px;
+    }
+
+    .card{
+        background:white;
+        border-radius:12px;
+        padding:30px;
+        box-shadow:0 2px 10px rgba(0,0,0,.08);
+        margin-bottom:25px;
+    }
+
+    h2{
+        color:#0b6e69;
+        border-bottom:2px solid #0b6e69;
+        padding-bottom:10px;
+    }
+
+    h3{
+        color:#0b6e69;
+    }
+
+    p{
+        line-height:1.7;
+        text-align:justify;
+    }
+
+    .imagen{
+        width:100%;
+        height:300px;
+        border-radius:10px;
+        background:#dfeeed;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:22px;
+        color:#0b6e69;
+        margin:20px 0;
+    }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:20px;
+    }
+
+    th{
+        background:#0b6e69;
+        color:white;
+    }
+
+    th,td{
+        border:1px solid #ddd;
+        padding:12px;
+        text-align:left;
+    }
+
+    tr:nth-child(even){
+        background:#f8f9fa;
+    }
+
+    .volver{
+        display:inline-block;
+        margin-top:10px;
+        text-decoration:none;
+        background:#0b6e69;
+        color:white;
+        padding:12px 20px;
+        border-radius:8px;
+        font-weight:bold;
+    }
+
+    .volver:hover{
+        background:#095752;
+    }
+
+    @media(max-width:600px){
+
+        nav a{
+            display:block;
+            margin:5px;
+        }
+
+        .card{
+            padding:20px;
+        }
+
+        .imagen{
+            height:200px;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+
+```
+<h1>BioVent</h1>
+
+<p>Selección del equipo biomédico</p>
+```
+
+</header>
+
+<nav>
+
+```
+<a href="/">Inicio</a>
+<a href="/equipos">Equipos</a>
+<a href="/mantenimientos">Mantenimientos</a>
+<a href="/checklist">Checklists</a>
+<a href="/dashboard">Dashboard</a>
+<a href="/proyecto">Proyecto</a>
+```
+
+</nav>
+
+<main>
+
+```
+<div class="card">
+
+    <h2>1. Selección del equipo biomédico</h2>
+
+    <div class="imagen">
+        Imagen del ventilador mecánico
+    </div>
+
+    <p>
+        El equipo biomédico seleccionado para el desarrollo del proyecto
+        BioVent es un ventilador mecánico de uso hospitalario destinado
+        al soporte respiratorio de pacientes que requieren asistencia
+        ventilatoria en áreas de cuidado crítico.
+    </p>
+
+    <p>
+        Como referencia tecnológica se utiliza el modelo
+        <strong>Dräger Evita V500</strong>, debido a que pertenece a la
+        categoría de ventiladores mecánicos empleados en unidades de
+        cuidados intensivos y permite representar adecuadamente los
+        procesos de inspección, mantenimiento y seguimiento que serán
+        gestionados mediante la plataforma BioVent.
+    </p>
+
+</div>
+
+
+<div class="card">
+
+    <h2>Características generales</h2>
+
+    <table>
+
+        <tr>
+            <th>Característica</th>
+            <th>Descripción</th>
+        </tr>
+
+        <tr>
+            <td>Nombre del equipo</td>
+            <td>Ventilador mecánico</td>
+        </tr>
+
+        <tr>
+            <td>Modelo de referencia</td>
+            <td>Dräger Evita V500</td>
+        </tr>
+
+        <tr>
+            <td>Área de aplicación</td>
+            <td>Unidad de Cuidados Intensivos</td>
+        </tr>
+
+        <tr>
+            <td>Clasificación</td>
+            <td>Equipo biomédico de soporte vital</td>
+        </tr>
+
+        <tr>
+            <td>Proyecto</td>
+            <td>BioVent</td>
+        </tr>
+
+    </table>
+
+</div>
+
+
+<div class="card">
+
+    <h2>Función principal</h2>
+
+    <p>
+        El ventilador mecánico tiene como función proporcionar soporte
+        ventilatorio controlado o asistido a pacientes que presentan
+        insuficiencia respiratoria o que requieren ayuda para mantener
+        una ventilación adecuada.
+    </p>
+
+    <p>
+        Para lograr este objetivo el equipo integra sistemas electrónicos,
+        neumáticos y sensores que permiten controlar el flujo, la presión,
+        el volumen y otros parámetros respiratorios durante el proceso de
+        ventilación.
+    </p>
+
+</div>
+
+
+<div class="card">
+
+    <h2>Relación con BioVent</h2>
+
+    <p>
+        La plataforma BioVent fue diseñada para registrar y gestionar
+        información relacionada con ventiladores mecánicos mediante módulos
+        de equipos, mantenimientos, checklists e historial de inspecciones.
+    </p>
+
+    <h3>Los 12 puntos evaluados en el checklist</h3>
+
+    <ol>
+
+        <li>Inspección visual general</li>
+        <li>Estado físico del equipo</li>
+        <li>Cable de alimentación</li>
+        <li>Pantalla</li>
+        <li>Sistema de alarmas</li>
+        <li>Encendido del equipo</li>
+        <li>Estado de la batería</li>
+        <li>Circuito respiratorio</li>
+        <li>Filtros</li>
+        <li>Sensores</li>
+        <li>Prueba de funcionamiento</li>
+        <li>Limpieza general</li>
+
+    </ol>
+
+    <p>
+        Estos elementos constituyen la base del sistema de inspección
+        implementado dentro del módulo Checklist de la plataforma.
+    </p>
+
+</div>
+
+
+<a href="/proyecto" class="volver">
+    ← Volver al Proyecto
+</a>
+```
+
+</main>
+
+</body>
+</html>
+

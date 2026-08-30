@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ficha del equipo - BioVent</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7f9;
+            color: #333;
+        }
+
+        /* ========================================= */
+        /* ENCABEZADO */
+        /* ========================================= */
+
+        header {
+            background: #0b6e69;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        /* ========================================= */
+        /* CONTENEDOR */
+        /* ========================================= */
+
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* ========================================= */
+        /* BOTONES */
+        /* ========================================= */
+
+        .botones {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .boton {
+            display: inline-block;
+            padding: 12px 18px;
+            background: #0b6e69;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .boton:hover {
+            background: #095752;
+        }
+
+        /* ========================================= */
+        /* TARJETAS */
+        /* ========================================= */
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: #0b6e69;
+            border-bottom: 2px solid #0b6e69;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* ========================================= */
+        /* INFORMACIÓN */
+        /* ========================================= */
+
+        .equipo-titulo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .codigo {
+            font-size: 30px;
+            color: #0b6e69;
+            font-weight: bold;
+        }
+
+        .marca-modelo {
+            font-size: 18px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .datos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .dato {
+            background: #f7f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #0b6e69;
+        }
+
+        .dato strong {
+            display: block;
+            color: #666;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        /* ========================================= */
+        /* ESTADOS */
+        /* ========================================= */
+
+        .estado {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .operativo {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .mantenimiento {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .fuera-servicio {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* ========================================= */
+        /* TABLAS */
+        /* ========================================= */
+
+        .tabla-contenedor {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #0b6e69;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f7fafa;
+        }
+
+        /* ========================================= */
+        /* RESULTADOS CHECKLIST */
+        /* ========================================= */
+
+        .aprobado {
+            background: #d4edda;
+            color: #155724;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .atencion {
+            background: #fff3cd;
+            color: #856404;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .no-aprobado {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* ========================================= */
+        /* SIN DATOS */
+        /* ========================================= */
+
+        .sin-datos {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            color: #777;
+        }
+
+        /* ========================================= */
+        /* CELULAR */
+        /* ========================================= */
+
+        @media (max-width: 700px) {
+
+            .datos {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>BioVent</h1>
+
+    <p>Ficha técnica del equipo</p>
+
+</header>
+
+
+<main>
+
+
+    <!-- ========================================= -->
+    <!-- BOTONES -->
+    <!-- ========================================= -->
+
+    <div class="botones">
+
+        <a href="/equipos" class="boton">
+            ← Volver a equipos
+        </a>
+
+        <a href="/dashboard" class="boton">
+            Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- INFORMACIÓN DEL EQUIPO -->
+    <!-- ========================================= -->
+
+    <div class="card">
+
+        <div class="equipo-titulo">
+
+            <div>
+
+                <div class="codigo">
+                    {{ equipo.codigo }}
+                </div>
+
+                <div class="marca-modelo">
+
+                    {{ equipo.marca }}
+                    {{ equipo.modelo }}
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                {% if equipo.estado|lower == "operativo" %}
+
+                    <span class="estado operativo">
+                        🟢 OPERATIVO
+                    </span>
+
+                {% elif equipo.estado|lower == "mantenimiento" %}
+
+                    <span class="estado mantenimiento">
+                        🟡 MANTENIMIENTO
+                    </span>
+
+                {% else %}
+
+                    <span class="estado fuera-servicio">
+                        🔴 {{ equipo.estado|upper }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <h2>
+            Información del equipo
+        </h2>
+
+
+        <div class="datos">
+
+
+            <div class="dato">
+
+                <strong>
+                    Código
+                </strong>
+
+                {{ equipo.codigo }}
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    Marca
+                </strong>
+
+                {{ equipo.marca }}
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    Modelo
+                </strong>
+
+                {{ equipo.modelo }}
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    Número de serie
+                </strong>
+
+                {{ equipo.serie }}
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    Ubicación
+                </strong>
+
+                {{ equipo.ubicacion }}
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    Servicio
+                </strong>
+
+                {{ equipo.servicio }}
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    Fecha de registro
+                </strong>
+
+                {{ equipo.fecha }}
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    Estado
+                </strong>
+
+                {{ equipo.estado }}
+
+            </div>
+
+
+        </div>
+
+
+        {% if equipo.observaciones %}
+
+        <div class="dato" style="margin-top:15px;">
+
+            <strong>
+                Observaciones
+            </strong>
+
+            {{ equipo.observaciones }}
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- HISTORIAL DE CHECKLISTS -->
+    <!-- ========================================= -->
+
+    <div class="card">
+
+        <h2>
+            Historial de Checklists
+        </h2>
+
+
+        {% if checklists %}
+
+        <div class="tabla-contenedor">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Fecha
+                        </th>
+
+                        <th>
+                            Técnico
+                        </th>
+
+                        <th>
+                            Resultado
+                        </th>
+
+                        <th>
+                            Observaciones
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for checklist in checklists %}
+
+                    <tr>
+
+                        <td>
+                            {{ checklist.fecha }}
+                        </td>
+
+                        <td>
+                            {{ checklist.tecnico }}
+                        </td>
+
+                        <td>
+
+                            {% if checklist.resultado == "APROBADO" %}
+
+                                <span class="aprobado">
+                                    🟢 APROBADO
+                                </span>
+
+                            {% elif checklist.resultado == "ATENCIÓN REQUERIDA" %}
+
+                                <span class="atencion">
+                                    🟡 ATENCIÓN
+                                </span>
+
+                            {% else %}
+
+                                <span class="no-aprobado">
+                                    🔴 NO APROBADO
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if checklist.observaciones %}
+
+                                {{ checklist.observaciones }}
+
+                            {% else %}
+
+                                Sin observaciones
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="sin-datos">
+
+            Este equipo todavía no tiene checklists registrados.
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- HISTORIAL DE MANTENIMIENTOS -->
+    <!-- ========================================= -->
+
+    <div class="card">
+
+        <h2>
+            Historial de Mantenimientos
+        </h2>
+
+
+        {% if mantenimientos %}
+
+        <div class="tabla-contenedor">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Tipo
+                        </th>
+
+                        <th>
+                            Fecha
+                        </th>
+
+                        <th>
+                            Próxima fecha
+                        </th>
+
+                        <th>
+                            Técnico
+                        </th>
+
+                        <th>
+                            Observaciones
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for mantenimiento in mantenimientos %}
+
+                    <tr>
+
+                        <td>
+                            {{ mantenimiento.tipo }}
+                        </td>
+
+                        <td>
+                            {{ mantenimiento.fecha }}
+                        </td>
+
+                        <td>
+                            {{ mantenimiento.proxima_fecha }}
+                        </td>
+
+                        <td>
+                            {{ mantenimiento.tecnico }}
+                        </td>
+
+                        <td>
+
+                            {% if mantenimiento.observaciones %}
+
+                                {{ mantenimiento.observaciones }}
+
+                            {% else %}
+
+                                Sin observaciones
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="sin-datos">
+
+            Este equipo todavía no tiene mantenimientos registrados.
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

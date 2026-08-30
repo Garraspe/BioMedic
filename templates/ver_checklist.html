@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Detalle del Checklist - BioVent</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f7fb;
+        color: #263238;
+    }
+
+    /* =========================================
+       ENCABEZADO
+    ========================================= */
+
+    header {
+        background: linear-gradient(135deg, #0d6efd, #084298);
+        color: white;
+        text-align: center;
+        padding: 35px 20px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 32px;
+    }
+
+    header p {
+        margin: 10px 0 0;
+        font-size: 16px;
+    }
+
+    /* =========================================
+       MENÚ
+    ========================================= */
+
+    nav {
+        background: white;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #0d6efd;
+        font-weight: bold;
+
+        padding: 10px 15px;
+
+        border-radius: 8px;
+
+        transition: 0.2s;
+    }
+
+    nav a:hover {
+        background: #e8f1ff;
+    }
+
+    nav a.activo {
+        background: #0d6efd;
+        color: white;
+    }
+
+    /* =========================================
+       CONTENEDOR
+    ========================================= */
+
+    .contenedor {
+        width: 94%;
+        max-width: 1200px;
+
+        margin: 35px auto;
+    }
+
+    .tarjeta {
+        background: white;
+
+        padding: 30px;
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 4px 15px rgba(0,0,0,0.08);
+
+        margin-bottom: 25px;
+    }
+
+    /* =========================================
+       TÍTULOS
+    ========================================= */
+
+    .tarjeta h2 {
+        margin-top: 0;
+        color: #084298;
+    }
+
+    /* =========================================
+       INFORMACIÓN DEL EQUIPO
+    ========================================= */
+
+    .equipo-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        margin-bottom: 25px;
+    }
+
+    .equipo-icono {
+        width: 70px;
+        height: 70px;
+
+        border-radius: 16px;
+
+        background: #eaf2ff;
+
+        border: 3px solid #0d6efd;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 38px;
+
+        flex-shrink: 0;
+    }
+
+    .equipo-header h2 {
+        margin: 0 0 5px;
+    }
+
+    .equipo-header p {
+        margin: 4px 0;
+        color: #555;
+    }
+
+    /* =========================================
+       INFORMACIÓN
+    ========================================= */
+
+    .informacion-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 15px;
+    }
+
+    .dato {
+        background: #f8fafc;
+
+        border: 1px solid #dce3eb;
+
+        border-radius: 12px;
+
+        padding: 16px;
+    }
+
+    .dato strong {
+        display: block;
+
+        color: #084298;
+
+        margin-bottom: 6px;
+    }
+
+    .dato span {
+        color: #444;
+    }
+
+    /* =========================================
+       RESULTADO
+    ========================================= */
+
+    .resultado {
+        margin: 25px 0;
+
+        padding: 20px;
+
+        border-radius: 15px;
+
+        text-align: center;
+
+        font-size: 22px;
+
+        font-weight: bold;
+    }
+
+    .resultado.aprobado {
+        background: #e9f7ef;
+
+        border: 2px solid #198754;
+
+        color: #146c43;
+    }
+
+    .resultado.atencion {
+        background: #fff8df;
+
+        border: 2px solid #ffc107;
+
+        color: #856404;
+    }
+
+    .resultado.no-aprobado {
+        background: #fff0f1;
+
+        border: 2px solid #dc3545;
+
+        color: #b02a37;
+    }
+
+    /* =========================================
+       TABLA
+    ========================================= */
+
+    .tabla-contenedor {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+
+        border-collapse: collapse;
+
+        margin-top: 15px;
+    }
+
+    th,
+    td {
+        border: 1px solid #dce3eb;
+
+        padding: 14px;
+
+        text-align: left;
+
+        vertical-align: middle;
+    }
+
+    th {
+        background: #eaf2ff;
+
+        color: #084298;
+    }
+
+    tr:nth-child(even) {
+        background: #f8fafc;
+    }
+
+    /* =========================================
+       RESULTADOS DE CADA PUNTO
+    ========================================= */
+
+    .estado {
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        font-weight: bold;
+    }
+
+    .circulo {
+        width: 16px;
+        height: 16px;
+
+        border-radius: 50%;
+
+        display: inline-block;
+    }
+
+    .verde {
+        background: #198754;
+    }
+
+    .amarillo {
+        background: #ffc107;
+    }
+
+    .rojo {
+        background: #dc3545;
+    }
+
+    /* =========================================
+       OBSERVACIONES
+    ========================================= */
+
+    .observaciones {
+        background: #f8fafc;
+
+        border-left: 5px solid #0d6efd;
+
+        padding: 20px;
+
+        border-radius: 10px;
+
+        line-height: 1.6;
+
+        min-height: 70px;
+    }
+
+    /* =========================================
+       BOTONES
+    ========================================= */
+
+    .acciones {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 12px;
+
+        margin-top: 25px;
+
+        flex-wrap: wrap;
+    }
+
+    .boton {
+        display: inline-block;
+
+        padding: 12px 20px;
+
+        border-radius: 10px;
+
+        text-decoration: none;
+
+        font-weight: bold;
+
+        transition: 0.2s;
+    }
+
+    .boton:hover {
+        transform: translateY(-2px);
+    }
+
+    .boton-volver {
+        background: #0d6efd;
+        color: white;
+    }
+
+    .boton-volver:hover {
+        background: #084298;
+    }
+
+    /* =========================================
+       PIE DE PÁGINA
+    ========================================= */
+
+    footer {
+        background: #263238;
+
+        color: white;
+
+        text-align: center;
+
+        padding: 25px;
+
+        margin-top: 40px;
+    }
+
+    footer p {
+        margin: 6px;
+    }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media (max-width: 800px) {
+
+        .informacion-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+    }
+
+    @media (max-width: 600px) {
+
+        header h1 {
+            font-size: 25px;
+        }
+
+        .tarjeta {
+            padding: 20px;
+        }
+
+        nav {
+            flex-direction: column;
+        }
+
+        nav a {
+            text-align: center;
+        }
+
+        .informacion-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .equipo-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<!-- =========================================
+     ENCABEZADO
+========================================= -->
+
+<header>
+
+```
+<h1>📋 Detalle del Checklist</h1>
+
+<p>
+    Registro de inspección del ventilador mecánico
+</p>
+```
+
+</header>
+
+<!-- =========================================
+     MENÚ
+========================================= -->
+
+<nav>
+
+```
+<a href="/">
+    Inicio
+</a>
+
+<a href="/equipos">
+    Equipos
+</a>
+
+<a href="/mantenimientos">
+    Mantenimientos
+</a>
+
+<a href="/checklist" class="activo">
+    Checklists
+</a>
+
+<a href="/dashboard">
+    Dashboard
+</a>
+
+<a href="/normativa">
+    Normativa
+</a>
+
+<a href="/bibliografia">
+    Bibliografía
+</a>
+
+<a href="/diagrama-bloques">
+    Diagrama de bloques
+</a>
+```
+
+</nav>
+
+<main class="contenedor">
+
+<!-- =========================================
+     INFORMACIÓN DEL EQUIPO
+========================================= -->
+
+<section class="tarjeta">
+
+```
+<div class="equipo-header">
+
+    <div class="equipo-icono">
+        🫁
+    </div>
+
+    <div>
+
+        <h2>
+            {{ checklist.codigo }}
+        </h2>
+
+        <p>
+            <strong>Marca:</strong>
+            {{ checklist.marca }}
+        </p>
+
+        <p>
+            <strong>Modelo:</strong>
+            {{ checklist.modelo }}
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="informacion-grid">
+
+
+    <div class="dato">
+
+        <strong>
+            Número de serie
+        </strong>
+
+        <span>
+            {{ checklist.serie }}
+        </span>
+
+    </div>
+
+
+    <div class="dato">
+
+        <strong>
+            Ubicación
+        </strong>
+
+        <span>
+            {{ checklist.ubicacion }}
+        </span>
+
+    </div>
+
+
+    <div class="dato">
+
+        <strong>
+            Servicio
+        </strong>
+
+        <span>
+            {{ checklist.servicio }}
+        </span>
+
+    </div>
+
+
+    <div class="dato">
+
+        <strong>
+            Fecha
+        </strong>
+
+        <span>
+            {{ checklist.fecha }}
+        </span>
+
+    </div>
+
+
+    <div class="dato">
+
+        <strong>
+            Técnico
+        </strong>
+
+        <span>
+            {{ checklist.tecnico }}
+        </span>
+
+    </div>
+
+
+    <div class="dato">
+
+        <strong>
+            Resultado
+        </strong>
+
+        <span>
+            {{ checklist.resultado }}
+        </span>
+
+    </div>
+
+
+</div>
+```
+
+</section>
+
+<!-- =========================================
+     RESULTADO GENERAL
+========================================= -->
+
+<section class="tarjeta">
+
+```
+{% if checklist.resultado == "APROBADO" %}
+
+    <div class="resultado aprobado">
+
+        🟢 APROBADO
+
+        <div style="font-size:15px; margin-top:8px; font-weight:normal;">
+
+            El equipo cumple con los puntos evaluados
+            en el checklist.
+
+        </div>
+
+    </div>
+
+
+{% elif checklist.resultado == "ATENCIÓN REQUERIDA" %}
+
+    <div class="resultado atencion">
+
+        🟡 ATENCIÓN REQUERIDA
+
+        <div style="font-size:15px; margin-top:8px; font-weight:normal;">
+
+            Se identificaron puntos que requieren
+            atención o seguimiento.
+
+        </div>
+
+    </div>
+
+
+{% else %}
+
+    <div class="resultado no-aprobado">
+
+        🔴 NO APROBADO
+
+        <div style="font-size:15px; margin-top:8px; font-weight:normal;">
+
+            Se identificaron uno o más puntos
+            que no cumplen.
+
+        </div>
+
+    </div>
+
+{% endif %}
+```
+
+</section>
+
+<!-- =========================================
+     PUNTOS DEL CHECKLIST
+========================================= -->
+
+<section class="tarjeta">
+
+```
+<h2>
+    🔍 Puntos inspeccionados
+</h2>
+
+
+<div class="tabla-contenedor">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    #
+                </th>
+
+                <th>
+                    Punto de inspección
+                </th>
+
+                <th>
+                    Resultado
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+            <tr>
+
+                <td>1</td>
+
+                <td>
+                    Inspección visual
+                </td>
+
+                <td>
+                    {% if checklist.inspeccion_visual == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.inspeccion_visual == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>2</td>
+
+                <td>
+                    Estado físico
+                </td>
+
+                <td>
+
+                    {% if checklist.estado_fisico == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.estado_fisico == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>3</td>
+
+                <td>
+                    Cable de alimentación
+                </td>
+
+                <td>
+
+                    {% if checklist.cable_alimentacion == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.cable_alimentacion == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>4</td>
+
+                <td>
+                    Pantalla
+                </td>
+
+                <td>
+
+                    {% if checklist.pantalla == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.pantalla == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>5</td>
+
+                <td>
+                    Alarmas
+                </td>
+
+                <td>
+
+                    {% if checklist.alarmas == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.alarmas == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>6</td>
+
+                <td>
+                    Encendido
+                </td>
+
+                <td>
+
+                    {% if checklist.encendido == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.encendido == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>7</td>
+
+                <td>
+                    Batería
+                </td>
+
+                <td>
+
+                    {% if checklist.bateria == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.bateria == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>8</td>
+
+                <td>
+                    Circuito respiratorio
+                </td>
+
+                <td>
+
+                    {% if checklist.circuito_respiratorio == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.circuito_respiratorio == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>9</td>
+
+                <td>
+                    Filtros
+                </td>
+
+                <td>
+
+                    {% if checklist.filtros == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.filtros == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>10</td>
+
+                <td>
+                    Sensores
+                </td>
+
+                <td>
+
+                    {% if checklist.sensores == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.sensores == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>11</td>
+
+                <td>
+                    Prueba de funcionamiento
+                </td>
+
+                <td>
+
+                    {% if checklist.prueba_funcionamiento == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.prueba_funcionamiento == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>12</td>
+
+                <td>
+                    Limpieza
+                </td>
+
+                <td>
+
+                    {% if checklist.limpieza == "Cumple" %}
+                        <span class="estado">
+                            <span class="circulo verde"></span>
+                            Cumple
+                        </span>
+                    {% elif checklist.limpieza == "Atención" %}
+                        <span class="estado">
+                            <span class="circulo amarillo"></span>
+                            Atención
+                        </span>
+                    {% else %}
+                        <span class="estado">
+                            <span class="circulo rojo"></span>
+                            No cumple
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+        </tbody>
+
+    </table>
+
+</div>
+```
+
+</section>
+
+<!-- =========================================
+     OBSERVACIONES
+========================================= -->
+
+<section class="tarjeta">
+
+```
+<h2>
+    📝 Observaciones
+</h2>
+
+<div class="observaciones">
+
+    {% if checklist.observaciones %}
+
+        {{ checklist.observaciones }}
+
+    {% else %}
+
+        No se registraron observaciones.
+
+    {% endif %}
+
+</div>
+```
+
+</section>
+
+<!-- =========================================
+     BOTÓN VOLVER
+========================================= -->
+
+<div class="acciones">
+
+```
+<a
+    href="/checklist"
+    class="boton boton-volver"
+>
+    ← Volver al historial
+</a>
+```
+
+</div>
+
+</main>
+
+<!-- =========================================
+     PIE DE PÁGINA
+========================================= -->
+
+<footer>
+
+```
+<p>
+    <strong>BioVent</strong>
+</p>
+
+<p>
+    Plataforma para la gestión y seguimiento
+    de equipos biomédicos
+</p>
+
+<p>
+    Diseño e Ingeniería Clínica — Entrega 1
+</p>
+```
+
+</footer>
+
+</body>
+
+</html>

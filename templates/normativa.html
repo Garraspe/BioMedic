@@ -1,0 +1,996 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Normativa - BioVent</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #263238;
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           ENCABEZADO
+        ===================================================== */
+
+        .header {
+            background: linear-gradient(135deg, #00695c, #00897b);
+            color: white;
+            padding: 35px 40px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-content {
+            width: 94%;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        .header h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.94;
+        }
+
+        /* =====================================================
+           CONTENEDOR
+        ===================================================== */
+
+        .container {
+            width: 94%;
+            max-width: 1500px;
+            margin: 30px auto;
+        }
+
+        /* =====================================================
+           BOTÓN VOLVER
+        ===================================================== */
+
+        .top-actions {
+            margin-bottom: 25px;
+        }
+
+        .btn-volver {
+            display: inline-block;
+            text-decoration: none;
+            background: #546e7a;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-volver:hover {
+            background: #37474f;
+            transform: translateY(-1px);
+        }
+
+        /* =====================================================
+           INTRODUCCIÓN
+        ===================================================== */
+
+        .intro {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            border-left: 6px solid #00897b;
+        }
+
+        .intro h2 {
+            color: #00695c;
+            margin-bottom: 14px;
+            font-size: 25px;
+        }
+
+        .intro p {
+            color: #546e7a;
+            font-size: 16px;
+        }
+
+        /* =====================================================
+           AVISO
+        ===================================================== */
+
+        .notice {
+            background: #e3f2fd;
+            border-left: 6px solid #1565c0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 35px;
+        }
+
+        .notice h3 {
+            color: #1565c0;
+            margin-bottom: 8px;
+        }
+
+        .notice p {
+            color: #455a64;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           TÍTULOS
+        ===================================================== */
+
+        .section-title {
+            font-size: 27px;
+            color: #263238;
+            margin-top: 38px;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            color: #607d8b;
+            margin-bottom: 22px;
+        }
+
+        /* =====================================================
+           TARJETAS
+        ===================================================== */
+
+        .normas-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .norma-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            min-height: 285px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            border-top: 6px solid #00897b;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .norma-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .norma-icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .norma-card h3 {
+            font-size: 20px;
+            color: #263238;
+            margin-bottom: 5px;
+        }
+
+        .norma-card .tipo {
+            color: #00897b;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .norma-card p {
+            color: #607d8b;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .norma-card ul {
+            padding-left: 20px;
+            color: #546e7a;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .norma-card li {
+            margin-bottom: 6px;
+        }
+
+        /* =====================================================
+           COLORES DE CATEGORÍAS
+        ===================================================== */
+
+        .colombia {
+            border-top-color: #1565c0;
+        }
+
+        .colombia .tipo {
+            color: #1565c0;
+        }
+
+        .tecnovigilancia {
+            border-top-color: #c62828;
+        }
+
+        .tecnovigilancia .tipo {
+            color: #c62828;
+        }
+
+        .habilitacion {
+            border-top-color: #f9a825;
+        }
+
+        .habilitacion .tipo {
+            color: #f57f17;
+        }
+
+        .internacional {
+            border-top-color: #00897b;
+        }
+
+        .internacional .tipo {
+            color: #00897b;
+        }
+
+        .seguridad {
+            border-top-color: #6a1b9a;
+        }
+
+        .seguridad .tipo {
+            color: #6a1b9a;
+        }
+
+        /* =====================================================
+           BOTONES / FUENTES
+        ===================================================== */
+
+        .source-box {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #eceff1;
+        }
+
+        .source-label {
+            display: block;
+            font-size: 12px;
+            color: #90a4ae;
+            margin-bottom: 6px;
+        }
+
+        .source-link {
+            display: inline-block;
+            text-decoration: none;
+            color: #00695c;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        /* =====================================================
+           TABLA COMPARATIVA
+        ===================================================== */
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            padding: 22px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th {
+            background: #00695c;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #546e7a;
+            font-size: 14px;
+            vertical-align: top;
+        }
+
+        tr:hover td {
+            background: #f7fafb;
+        }
+
+        td strong {
+            color: #263238;
+        }
+
+        /* =====================================================
+           IMPORTANCIA PARA BIOVENT
+        ===================================================== */
+
+        .biovent-section {
+            margin-top: 40px;
+        }
+
+        .biovent-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .biovent-card {
+            background: white;
+            padding: 23px;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .biovent-card .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .biovent-card h3 {
+            color: #37474f;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .biovent-card p {
+            color: #78909c;
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           RECOMENDACIONES
+        ===================================================== */
+
+        .recommendations {
+            background: white;
+            border-radius: 15px;
+            padding: 28px;
+            margin-top: 35px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        }
+
+        .recommendations h2 {
+            color: #00695c;
+            margin-bottom: 18px;
+        }
+
+        .recommendations ul {
+            padding-left: 22px;
+            color: #546e7a;
+        }
+
+        .recommendations li {
+            margin-bottom: 10px;
+        }
+
+        /* =====================================================
+           PIE
+        ===================================================== */
+
+        .footer {
+            margin-top: 45px;
+            padding: 25px;
+            text-align: center;
+            color: #78909c;
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .normas-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .biovent-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 27px 20px;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .normas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .biovent-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .intro {
+                padding: 22px;
+            }
+
+            .section-title {
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     ENCABEZADO
+========================================================== -->
+
+<header class="header">
+
+    <div class="header-content">
+
+        <h1>
+            📚 Normativa - BioVent
+        </h1>
+
+        <p>
+            Marco normativo y técnico relacionado con los equipos biomédicos
+            y ventiladores mecánicos.
+        </p>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     CONTENIDO
+========================================================== -->
+
+<main class="container">
+
+
+    <!-- =====================================================
+         BOTÓN VOLVER
+    ====================================================== -->
+
+    <div class="top-actions">
+
+        <a href="/" class="btn-volver">
+            ← Volver al inicio
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         INTRODUCCIÓN
+    ====================================================== -->
+
+    <section class="intro">
+
+        <h2>
+            Marco normativo
+        </h2>
+
+        <p>
+            BioVent considera los principales referentes regulatorios y
+            técnicos relacionados con la gestión, seguridad, mantenimiento,
+            vigilancia y uso de dispositivos médicos y equipos biomédicos.
+            Estos referentes sirven como apoyo para estructurar los procesos
+            de seguimiento de los ventiladores mecánicos dentro de la
+            plataforma.
+        </p>
+
+    </section>
+
+
+    
+
+
+    <!-- =====================================================
+         NORMATIVA COLOMBIANA
+    ====================================================== -->
+
+    <h2 class="section-title">
+         Normativa Colombiana
+    </h2>
+
+    <div class="normas-grid">
+
+
+        <!-- =================================================
+             DECRETO 4725
+        ================================================== -->
+
+        <article class="norma-card colombia">
+
+            <div class="norma-icon">
+                🏥
+            </div>
+
+            <h3>
+                Decreto 4725 de 2005
+            </h3>
+
+            <div class="tipo">
+                Dispositivos médicos
+            </div>
+
+            <p>
+                Regula el régimen de registros sanitarios, permisos de
+                comercialización y vigilancia sanitaria de los dispositivos
+                médicos para uso humano.
+            </p>
+
+            <ul>
+
+                <li>
+                    Requisitos sanitarios.
+                </li>
+
+                <li>
+                    Vigilancia de dispositivos médicos.
+                </li>
+
+                <li>
+                    Condiciones relacionadas con su comercialización y uso.
+                </li>
+
+                <li>
+                    Consideraciones sobre mantenimiento.
+                </li>
+
+            </ul>
+
+            <div class="source-box">
+
+                <span class="source-label">
+                    Fuente oficial
+                </span>
+
+                <a
+                    class="source-link"
+                    href="https://www.invima.gov.co/biblioteca/decreto-4725-de-2005pdf-1"
+                    target="_blank"
+                >
+                    Ver información en INVIMA →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             RESOLUCIÓN 4816
+        ================================================== -->
+
+        <article class="norma-card tecnovigilancia">
+
+            <div class="norma-icon">
+                🛡️
+            </div>
+
+            <h3>
+                Resolución 4816 de 2008
+            </h3>
+
+            <div class="tipo">
+                Tecnovigilancia
+            </div>
+
+            <p>
+                Reglamenta el Programa Nacional de Tecnovigilancia y establece
+                responsabilidades para la identificación y gestión de eventos
+                e incidentes adversos asociados a dispositivos médicos.
+            </p>
+
+            <ul>
+
+                <li>
+                    Vigilancia de eventos e incidentes adversos.
+                </li>
+
+                <li>
+                    Gestión de riesgos.
+                </li>
+
+                <li>
+                    Protección de pacientes y operadores.
+                </li>
+
+                <li>
+                    Seguimiento de la seguridad de los dispositivos.
+                </li>
+
+            </ul>
+
+            <div class="source-box">
+
+                <span class="source-label">
+                    Fuente oficial
+                </span>
+
+                <a
+                    class="source-link"
+                    href="https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=34200"
+                    target="_blank"
+                >
+                    Ver información en INVIMA →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             RESOLUCIÓN 3100
+        ================================================== -->
+
+        <article class="norma-card habilitacion">
+
+            <div class="norma-icon">
+                🏨
+            </div>
+
+            <h3>
+                Resolución 3100 de 2019
+            </h3>
+
+            <div class="tipo">
+                Habilitación de servicios de salud
+            </div>
+
+            <p>
+                Define procedimientos y condiciones para la inscripción de los
+                prestadores de servicios de salud y la habilitación de servicios.
+            </p>
+
+            <ul>
+
+                <li>
+                    Condiciones de habilitación.
+                </li>
+
+                <li>
+                    Requisitos para los servicios de salud.
+                </li>
+
+                <li>
+                    Gestión de equipos biomédicos.
+                </li>
+
+                <li>
+                    Condiciones de seguridad y funcionamiento.
+                </li>
+
+            </ul>
+
+            <div class="source-box">
+
+                <span class="source-label">
+                    Referente oficial
+                </span>
+
+                <a
+                    class="source-link"
+                    href="https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=88006"
+                    target="_blank"
+                >
+                    Consultar referencias en INVIMA →
+                </a>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         NORMAS TÉCNICAS INTERNACIONALES
+    ====================================================== -->
+
+    <h2 class="section-title">
+
+        🌎 Normas técnicas internacionales
+
+    </h2>
+
+    
+
+
+    <div class="normas-grid">
+
+
+        <!-- =================================================
+             IEC 60601-1
+        ================================================== -->
+
+        <article class="norma-card seguridad">
+
+            
+
+            <h3>
+                IEC 60601-1
+            </h3>
+
+            <div class="tipo">
+                Equipos electromédicos
+            </div>
+
+            <p>
+                Norma de referencia para requisitos generales de seguridad
+                básica y funcionamiento esencial de equipos electromédicos.
+            </p>
+
+            <ul>
+
+                <li>
+                    Seguridad eléctrica.
+                </li>
+
+                <li>
+                    Protección contra riesgos.
+                </li>
+
+                <li>
+                    Funcionamiento esencial.
+                </li>
+
+                <li>
+                    Requisitos generales para equipos electromédicos.
+                </li>
+
+            </ul>
+
+            <div class="source-box">
+
+                <span class="source-label">
+                    Fuente técnica
+                </span>
+
+                <a
+                    class="source-link"
+                    href="https://electromedicinabarcelona.com/iec-60601-norma-seguridad-electrica/"
+                    target="_blank"
+                >
+                    Consultar en IEC →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             ISO 80601-2-12
+        ================================================== -->
+
+        <article class="norma-card internacional">
+
+            
+
+            <h3>
+                ISO 80601-2-12:2023
+            </h3>
+
+            <div class="tipo">
+                Ventiladores de cuidados críticos
+            </div>
+
+            <p>
+                Norma particular aplicable a los requisitos de seguridad
+                básica y funcionamiento esencial de ventiladores para
+                cuidados críticos.
+            </p>
+
+            <ul>
+
+                <li>
+                    Requisitos específicos para ventiladores.
+                </li>
+
+                <li>
+                    Seguridad básica.
+                </li>
+
+                <li>
+                    Funcionamiento esencial.
+                </li>
+
+                <li>
+                    Aspectos relacionados con el equipo y sus accesorios.
+                </li>
+
+            </ul>
+
+            <div class="source-box">
+
+                <span class="source-label">
+                    Fuente técnica
+                </span>
+
+                <a
+                    class="source-link"
+                    href="https://es.scribd.com/document/657753933/EX-UNE-EN-ISO-80601-2-12-2021"
+                    target="_blank"
+                >
+                    Consultar en ISO →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+             SERIE IEC 60601
+        ================================================== -->
+
+        <article class="norma-card seguridad">
+
+            
+
+            <h3>
+                Familia IEC 60601
+            </h3>
+
+            <div class="tipo">
+                Seguridad de equipos electromédicos
+            </div>
+
+            <p>
+                La familia de normas IEC 60601 contiene diferentes requisitos
+                generales y particulares para equipos electromédicos.
+            </p>
+
+            <ul>
+
+                <li>
+                    Seguridad del equipo.
+                </li>
+
+                <li>
+                    Riesgos eléctricos.
+                </li>
+
+                <li>
+                    Compatibilidad y funcionamiento.
+                </li>
+
+                <li>
+                    Requisitos particulares según el tipo de equipo.
+                </li>
+
+            </ul>
+
+            <div class="source-box">
+
+                <span class="source-label">
+                    Referencia técnica
+                </span>
+
+                <span class="source-link">
+                    Familia IEC 60601
+                </span>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+
+    
+
+    <!-- =====================================================
+         RECOMENDACIONES
+    ====================================================== -->
+
+    <section class="recommendations">
+
+        <h2>
+             Consideraciones para el proyecto
+        </h2>
+
+        <ul>
+
+            <li>
+                Mantener actualizada la información normativa utilizada
+                como referencia.
+            </li>
+
+            <li>
+                Registrar correctamente la identificación de cada equipo
+                biomédico.
+            </li>
+
+            <li>
+                Mantener evidencia de los mantenimientos realizados.
+            </li>
+
+            <li>
+                Realizar verificaciones periódicas mediante los checklists.
+            </li>
+
+            <li>
+                Registrar y realizar seguimiento a situaciones que puedan
+                representar riesgos para pacientes u operadores.
+            </li>
+
+            <li>
+                Consultar siempre las versiones oficiales y vigentes de
+                las normas antes de utilizarlas como requisito de
+                cumplimiento.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <!-- =====================================================
+         PIE DE PÁGINA
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <p>
+            BioVent - Plataforma de gestión de ventiladores mecánicos
+        </p>
+
+        <p style="margin-top: 6px;">
+            Marco normativo y técnico para la gestión de equipos biomédicos
+        </p>
+
+    </footer>
+
+
+</main>
+
+
+</body>
+
+</html>
+```

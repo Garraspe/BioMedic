@@ -1,0 +1,1256 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Equipos - BioVent</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #263238;
+        }
+
+        /* =====================================================
+           ENCABEZADO
+        ===================================================== */
+
+        header {
+            background: linear-gradient(
+                135deg,
+                #0d6efd,
+                #084298
+            );
+
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 34px;
+        }
+
+        header p {
+            margin: 10px 0 0;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        /* =====================================================
+           MENÚ
+        ===================================================== */
+
+        nav {
+            background: white;
+            padding: 15px;
+
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #0d6efd;
+
+            font-weight: bold;
+
+            padding: 10px 15px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            background: #e8f1ff;
+        }
+
+        nav a.activo {
+            background: #0d6efd;
+            color: white;
+        }
+
+        /* =====================================================
+           CONTENEDOR
+        ===================================================== */
+
+        .contenedor {
+            width: 94%;
+            max-width: 1250px;
+
+            margin: 35px auto;
+        }
+
+        /* =====================================================
+           TARJETAS
+        ===================================================== */
+
+        .tarjeta {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            margin-bottom: 30px;
+        }
+
+        .tarjeta h2 {
+            margin-top: 0;
+
+            color: #084298;
+        }
+
+        /* =====================================================
+           ENCABEZADO DE REGISTRO
+        ===================================================== */
+
+        .titulo-registro {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 10px;
+        }
+
+        .titulo-registro .icono {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 12px;
+
+            background: #eaf2ff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 26px;
+        }
+
+        .descripcion {
+            color: #667085;
+
+            margin-bottom: 25px;
+
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           FORMULARIO
+        ===================================================== */
+
+        form {
+            width: 100%;
+        }
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .campo-completo {
+            grid-column: 1 / -1;
+        }
+
+        .campo label {
+            font-weight: bold;
+
+            margin-bottom: 7px;
+
+            color: #344054;
+        }
+
+        .campo input,
+        .campo select,
+        .campo textarea {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d0d5dd;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: white;
+
+            transition: 0.2s;
+        }
+
+        .campo input:focus,
+        .campo select:focus,
+        .campo textarea:focus {
+
+            outline: none;
+
+            border-color: #0d6efd;
+
+            box-shadow:
+                0 0 0 3px rgba(13,110,253,0.12);
+        }
+
+        .campo textarea {
+
+            min-height: 110px;
+
+            resize: vertical;
+        }
+
+        /* =====================================================
+           BOTÓN GUARDAR
+        ===================================================== */
+
+        .zona-boton {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            margin-top: 25px;
+        }
+
+        .btn-guardar {
+
+            border: none;
+
+            background: linear-gradient(
+                135deg,
+                #0d6efd,
+                #084298
+            );
+
+            color: white;
+
+            padding: 14px 28px;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            box-shadow:
+                0 4px 10px rgba(13,110,253,0.25);
+        }
+
+        .btn-guardar:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 7px 15px rgba(13,110,253,0.30);
+        }
+
+        /* =====================================================
+           EQUIPOS REGISTRADOS
+        ===================================================== */
+
+        .encabezado-equipos {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .contador {
+
+            background: #eaf2ff;
+
+            color: #084298;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           GRID DE EQUIPOS
+        ===================================================== */
+
+        .equipos-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 22px;
+        }
+
+        /* =====================================================
+           TARJETA EQUIPO
+        ===================================================== */
+
+        .equipo-card {
+
+            border: 1px solid #dce3eb;
+
+            border-radius: 16px;
+
+            padding: 22px;
+
+            background: #ffffff;
+
+            transition: 0.2s;
+
+            position: relative;
+        }
+
+        .equipo-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        /* =====================================================
+           ENCABEZADO TARJETA
+        ===================================================== */
+
+        .equipo-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 18px;
+        }
+
+        .equipo-identificacion {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .equipo-icono {
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 12px;
+
+            background: #eaf8ef;
+
+            border: 2px solid #198754;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 24px;
+        }
+
+        .equipo-header h3 {
+
+            margin: 0;
+
+            color: #084298;
+
+            font-size: 19px;
+        }
+
+        .equipo-header small {
+
+            display: block;
+
+            margin-top: 4px;
+
+            color: #667085;
+        }
+
+        /* =====================================================
+           ESTADO
+        ===================================================== */
+
+        .estado {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 8px 12px;
+
+            border-radius: 20px;
+
+            background: #e9f8ef;
+
+            color: #146c43;
+
+            border: 1px solid #b7dfc6;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            text-align: center;
+        }
+
+        .estado-punto {
+
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #198754;
+        }
+
+        /* =====================================================
+           INFORMACIÓN DEL EQUIPO
+        ===================================================== */
+
+        .informacion {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 13px;
+
+            margin-top: 15px;
+        }
+
+        .dato {
+
+            background: #f8fafc;
+
+            border-radius: 10px;
+
+            padding: 12px;
+        }
+
+        .dato strong {
+
+            display: block;
+
+            font-size: 12px;
+
+            color: #667085;
+
+            margin-bottom: 5px;
+
+            text-transform: uppercase;
+        }
+
+        .dato span {
+
+            font-size: 14px;
+
+            color: #263238;
+
+            word-break: break-word;
+        }
+
+        /* =====================================================
+           OBSERVACIONES
+        ===================================================== */
+
+        .observaciones {
+
+            margin-top: 15px;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            background: #fff8e1;
+
+            border-left: 4px solid #ffc107;
+        }
+
+        .observaciones strong {
+
+            display: block;
+
+            color: #856404;
+
+            margin-bottom: 5px;
+        }
+
+        .observaciones p {
+
+            margin: 0;
+
+            line-height: 1.5;
+
+            color: #5f5f5f;
+
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           SIN EQUIPOS
+        ===================================================== */
+
+        .sin-equipos {
+
+            text-align: center;
+
+            padding: 50px 20px;
+
+            background: #f8fafc;
+
+            border-radius: 14px;
+
+            border: 2px dashed #d0d5dd;
+        }
+
+        .sin-equipos .icono {
+
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+        .sin-equipos h3 {
+
+            margin: 0 0 8px;
+
+            color: #344054;
+        }
+
+        .sin-equipos p {
+
+            margin: 0;
+
+            color: #667085;
+        }
+
+        /* =====================================================
+           NOTA
+        ===================================================== */
+
+        .nota {
+
+            background: #eaf2ff;
+
+            border-left: 5px solid #0d6efd;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            margin-top: 25px;
+
+            line-height: 1.6;
+
+            color: #344054;
+        }
+
+        .nota strong {
+
+            color: #084298;
+        }
+
+        /* =====================================================
+           PIE DE PÁGINA
+        ===================================================== */
+
+        footer {
+
+            background: #263238;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            margin-top: 40px;
+        }
+
+        footer p {
+
+            margin: 6px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .equipos-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .campo-completo {
+
+                grid-column: auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            header h1 {
+
+                font-size: 27px;
+            }
+
+            nav {
+
+                flex-direction: column;
+            }
+
+            nav a {
+
+                text-align: center;
+            }
+
+            .tarjeta {
+
+                padding: 20px;
+            }
+
+            .equipo-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .informacion {
+
+                grid-template-columns: 1fr;
+            }
+
+            .zona-boton {
+
+                justify-content: stretch;
+            }
+
+            .btn-guardar {
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     ENCABEZADO
+===================================================== -->
+
+<header>
+
+    <h1>🫁 BioVent</h1>
+
+    <p>
+        Gestión de Equipos Biomédicos
+    </p>
+
+</header>
+
+
+<!-- =====================================================
+     MENÚ
+===================================================== -->
+
+<nav>
+
+    <a href="/">
+        Inicio
+    </a>
+
+    <a href="/equipos" class="activo">
+        Equipos
+    </a>
+
+    <a href="/mantenimientos">
+        Mantenimientos
+    </a>
+
+    <a href="/checklist">
+        Checklists
+    </a>
+
+    <a href="/dashboard">
+        Dashboard
+    </a>
+
+    <a href="/normativa">
+        Normativa
+    </a>
+
+    <a href="/bibliografia">
+        Bibliografía
+    </a>
+
+    <a href="/diagrama-bloques">
+        Diagrama de bloques
+    </a>
+
+</nav>
+
+
+<!-- =====================================================
+     CONTENIDO
+===================================================== -->
+
+<main class="contenedor">
+
+
+    <!-- =================================================
+         REGISTRAR EQUIPO
+    ================================================== -->
+
+    <section class="tarjeta">
+
+        <div class="titulo-registro">
+
+            <div class="icono">
+                🫁
+            </div>
+
+            <div>
+
+                <h2>
+                    Registrar ventilador mecánico
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <p class="descripcion">
+
+            Registra la información básica de identificación
+            y ubicación del ventilador mecánico dentro de la
+            institución.
+
+        </p>
+
+
+        <form method="POST" action="/equipos">
+
+            <div class="form-grid">
+
+
+                <!-- CÓDIGO -->
+
+                <div class="campo">
+
+                    <label for="codigo">
+                        Código del equipo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="codigo"
+                        name="codigo"
+                        placeholder="Ej. VM-001"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- MARCA -->
+
+                <div class="campo">
+
+                    <label for="marca">
+                        Marca
+                    </label>
+
+                    <input
+                        type="text"
+                        id="marca"
+                        name="marca"
+                        placeholder="Ej. Dräger"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- MODELO -->
+
+                <div class="campo">
+
+                    <label for="modelo">
+                        Modelo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="modelo"
+                        name="modelo"
+                        placeholder="Ej. Evita V500"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- SERIE -->
+
+                <div class="campo">
+
+                    <label for="serie">
+                        Número de serie
+                    </label>
+
+                    <input
+                        type="text"
+                        id="serie"
+                        name="serie"
+                        placeholder="Ej. SN123456"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- UBICACIÓN -->
+
+                <div class="campo">
+
+                    <label for="ubicacion">
+                        Ubicación
+                    </label>
+
+                    <input
+                        type="text"
+                        id="ubicacion"
+                        name="ubicacion"
+                        placeholder="Ej. UCI"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- SERVICIO -->
+
+                <div class="campo">
+
+                    <label for="servicio">
+                        Servicio
+                    </label>
+
+                    <input
+                        type="text"
+                        id="servicio"
+                        name="servicio"
+                        placeholder="Ej. UCIN"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- FECHA -->
+
+                <div class="campo">
+
+                    <label for="fecha">
+                        Fecha de adquisición
+                    </label>
+
+                    <input
+                        type="date"
+                        id="fecha"
+                        name="fecha"
+                    >
+
+                </div>
+
+
+                <!-- OBSERVACIONES -->
+
+                <div class="campo campo-completo">
+
+                    <label for="observaciones">
+                        Observaciones
+                    </label>
+
+                    <textarea
+                        id="observaciones"
+                        name="observaciones"
+                        placeholder="Escriba aquí cualquier información adicional del equipo..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- BOTÓN -->
+
+            <div class="zona-boton">
+
+                <button
+                    type="submit"
+                    class="btn-guardar"
+                >
+                    💾 Guardar equipo
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- NOTA -->
+
+        <div class="nota">
+
+            <strong>
+                ℹ️ Estado inicial del equipo:
+            </strong>
+
+            Al registrar un nuevo ventilador, BioVent lo
+            considera inicialmente como
+            <strong>
+                "Equipo apto y disponible para su uso"
+            </strong>.
+            El estado podrá cambiar posteriormente de acuerdo
+            con los resultados de las inspecciones, checklists
+            y actividades de mantenimiento.
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         EQUIPOS REGISTRADOS
+    ================================================== -->
+
+    <section class="tarjeta">
+
+
+        <div class="encabezado-equipos">
+
+            <h2>
+                🏥 Equipos registrados
+            </h2>
+
+            <span class="contador">
+
+                {{ equipos|length }}
+
+                {% if equipos|length == 1 %}
+                    equipo
+                {% else %}
+                    equipos
+                {% endif %}
+
+            </span>
+
+        </div>
+
+
+        {% if equipos %}
+
+
+            <div class="equipos-grid">
+
+
+                {% for equipo in equipos %}
+
+
+                    <article class="equipo-card">
+
+
+                        <!-- ENCABEZADO -->
+
+                        <div class="equipo-header">
+
+
+                            <div class="equipo-identificacion">
+
+                                <div class="equipo-icono">
+                                    🫁
+                                </div>
+
+                                <div>
+
+                                    <h3>
+                                        {{ equipo.codigo }}
+                                    </h3>
+
+                                    <small>
+                                        {{ equipo.marca }}
+                                        {{ equipo.modelo }}
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ESTADO -->
+
+                            <div class="estado">
+
+                                <span class="estado-punto"></span>
+
+                                {{ equipo.estado }}
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- INFORMACIÓN -->
+
+                        <div class="informacion">
+
+
+                            <div class="dato">
+
+                                <strong>
+                                    Marca
+                                </strong>
+
+                                <span>
+                                    {{ equipo.marca }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="dato">
+
+                                <strong>
+                                    Modelo
+                                </strong>
+
+                                <span>
+                                    {{ equipo.modelo }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="dato">
+
+                                <strong>
+                                    Número de serie
+                                </strong>
+
+                                <span>
+                                    {{ equipo.serie }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="dato">
+
+                                <strong>
+                                    Ubicación
+                                </strong>
+
+                                <span>
+                                    {{ equipo.ubicacion }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="dato">
+
+                                <strong>
+                                    Servicio
+                                </strong>
+
+                                <span>
+                                    {{ equipo.servicio }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="dato">
+
+                                <strong>
+                                    Fecha de adquisición
+                                </strong>
+
+                                <span>
+
+                                    {% if equipo.fecha %}
+
+                                        {{ equipo.fecha }}
+
+                                    {% else %}
+
+                                        No registrada
+
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- OBSERVACIONES -->
+
+                        {% if equipo.observaciones %}
+
+                            <div class="observaciones">
+
+                                <strong>
+                                    📝 Observaciones
+                                </strong>
+
+                                <p>
+                                    {{ equipo.observaciones }}
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+
+                    </article>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- SIN EQUIPOS -->
+
+            <div class="sin-equipos">
+
+                <div class="icono">
+                    🫁
+                </div>
+
+                <h3>
+                    No hay equipos registrados
+                </h3>
+
+                <p>
+                    Utiliza el formulario anterior para
+                    registrar el primer ventilador mecánico.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     PIE DE PÁGINA
+===================================================== -->
+
+<footer>
+
+    <p>
+        <strong>BioVent</strong>
+    </p>
+
+    <p>
+        Plataforma para la gestión y seguimiento
+        de equipos biomédicos
+    </p>
+
+    <p>
+        Diseño e Ingeniería Clínica — Entrega 1
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
+```

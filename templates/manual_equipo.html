@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manuales - {{ equipo.marca }} {{ equipo.modelo }} | BioVent</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: #f4f7fb;
+
+            color: #263238;
+
+        }
+
+
+        /* =========================================
+           ENCABEZADO
+        ========================================= */
+
+        header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #084298
+                );
+
+            color: white;
+
+            text-align: center;
+
+            padding: 35px 20px;
+
+        }
+
+
+        header h1 {
+
+            margin: 0;
+
+            font-size: 30px;
+
+        }
+
+
+        header p {
+
+            margin: 10px 0 0;
+
+            font-size: 16px;
+
+            opacity: 0.95;
+
+        }
+
+
+        /* =========================================
+           MENÚ
+        ========================================= */
+
+        nav {
+
+            background: white;
+
+            padding: 15px;
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+
+        }
+
+
+        nav a {
+
+            text-decoration: none;
+
+            color: #0d6efd;
+
+            font-weight: bold;
+
+            padding: 10px 15px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+
+        }
+
+
+        nav a:hover {
+
+            background: #e8f1ff;
+
+        }
+
+
+        nav a.activo {
+
+            background: #0d6efd;
+
+            color: white;
+
+        }
+
+
+        /* =========================================
+           CONTENEDOR
+        ========================================= */
+
+        .contenedor {
+
+            width: 94%;
+
+            max-width: 1200px;
+
+            margin: 35px auto;
+
+        }
+
+
+        /* =========================================
+           BOTÓN VOLVER
+        ========================================= */
+
+        .volver {
+
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            background: white;
+
+            color: #0d6efd;
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.08);
+
+        }
+
+
+        .volver:hover {
+
+            background: #eaf2ff;
+
+        }
+
+
+        /* =========================================
+           TARJETA DEL EQUIPO
+        ========================================= */
+
+        .equipo {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .equipo-titulo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .equipo-icono {
+
+            width: 75px;
+
+            height: 75px;
+
+            border-radius: 18px;
+
+            background: #eaf2ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 40px;
+
+        }
+
+
+        .equipo-titulo h2 {
+
+            margin: 0;
+
+            color: #084298;
+
+        }
+
+
+        .equipo-titulo p {
+
+            margin: 6px 0 0;
+
+            color: #666;
+
+        }
+
+
+        /* =========================================
+           INFORMACIÓN
+        ========================================= */
+
+        .informacion {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+        }
+
+
+        .dato {
+
+            background: #f8fafc;
+
+            border: 1px solid #e1e7ef;
+
+            border-radius: 12px;
+
+            padding: 15px;
+
+        }
+
+
+        .dato strong {
+
+            display: block;
+
+            color: #6c757d;
+
+            font-size: 12px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .dato span {
+
+            font-weight: bold;
+
+            color: #263238;
+
+        }
+
+
+        /* =========================================
+           DOCUMENTACIÓN
+        ========================================= */
+
+        .documentacion {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+        }
+
+
+        .documentacion h2 {
+
+            margin-top: 0;
+
+            color: #084298;
+
+        }
+
+
+        .documentacion-intro {
+
+            color: #666;
+
+            line-height: 1.6;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* =========================================
+           GRID DE MANUALES
+        ========================================= */
+
+        .manuales-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .manual {
+
+            border: 1px solid #dce3eb;
+
+            border-radius: 16px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            background: #fafcff;
+
+            transition: 0.2s;
+
+        }
+
+
+        .manual:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 6px 15px rgba(0,0,0,0.08);
+
+        }
+
+
+        .manual-icono {
+
+            font-size: 45px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .manual h3 {
+
+            margin: 8px 0;
+
+            color: #263238;
+
+        }
+
+
+        .manual p {
+
+            color: #666;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            min-height: 65px;
+
+        }
+
+
+        /* =========================================
+           ARCHIVO EXISTENTE
+        ========================================= */
+
+        .archivo {
+
+            background: #eaf8ef;
+
+            border: 1px solid #b7dfc6;
+
+            border-radius: 10px;
+
+            padding: 12px;
+
+            margin: 15px 0;
+
+        }
+
+
+        .archivo strong {
+
+            color: #146c43;
+
+            display: block;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .archivo small {
+
+            color: #555;
+
+        }
+
+
+        .btn-abrir {
+
+            display: inline-block;
+
+            background: #198754;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 16px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            margin-top: 8px;
+
+        }
+
+
+        .btn-abrir:hover {
+
+            background: #146c43;
+
+        }
+
+
+        /* =========================================
+           FORMULARIO DE CARGA
+        ========================================= */
+
+        .cargar {
+
+            margin-top: 18px;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #e1e7ef;
+
+        }
+
+
+        .cargar label {
+
+            display: block;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+            color: #495057;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .cargar input[type="file"] {
+
+            width: 100%;
+
+            padding: 10px;
+
+            border: 1px solid #ced4da;
+
+            border-radius: 8px;
+
+            background: white;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .btn-subir {
+
+            width: 100%;
+
+            border: none;
+
+            background: #0d6efd;
+
+            color: white;
+
+            padding: 11px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+        }
+
+
+        .btn-subir:hover {
+
+            background: #084298;
+
+        }
+
+
+        .pendiente {
+
+            background: #fff8e1;
+
+            border: 1px solid #ffe082;
+
+            color: #856404;
+
+            border-radius: 10px;
+
+            padding: 12px;
+
+            margin: 15px 0;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =========================================
+           INFORMACIÓN
+        ========================================= */
+
+        .nota {
+
+            margin-top: 30px;
+
+            background: #fff8e1;
+
+            border-left: 6px solid #ffc107;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            line-height: 1.6;
+
+        }
+
+
+        .nota strong {
+
+            color: #856404;
+
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+
+            background: #263238;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            margin-top: 40px;
+
+        }
+
+
+        footer p {
+
+            margin: 6px;
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .informacion {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .manuales-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .informacion {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .equipo-titulo {
+
+                flex-direction: column;
+
+                text-align: center;
+
+            }
+
+
+            nav {
+
+                flex-direction: column;
+
+            }
+
+
+            nav a {
+
+                text-align: center;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     ENCABEZADO
+========================================= -->
+
+<header>
+
+    <h1>📚 Manuales de Equipos</h1>
+
+    <p>
+        Documentación técnica del equipo biomédico
+    </p>
+
+</header>
+
+
+<!-- =========================================
+     MENÚ
+========================================= -->
+
+<nav>
+
+    <a href="/">
+        Inicio
+    </a>
+
+    <a href="/equipos">
+        Equipos
+    </a>
+
+    <a href="/mantenimientos">
+        Mantenimientos
+    </a>
+
+    <a href="/checklist">
+        Checklists
+    </a>
+
+    <a href="/dashboard">
+        Dashboard
+    </a>
+
+    <a href="/normativa">
+        Normativa
+    </a>
+
+    <a href="/bibliografia">
+        Bibliografía
+    </a>
+
+    <a href="/diagrama-bloques">
+        Diagrama de bloques
+    </a>
+
+    <a href="/manuales" class="activo">
+        Manuales
+    </a>
+
+</nav>
+
+
+<main class="contenedor">
+
+
+    <!-- =====================================
+         VOLVER
+    ====================================== -->
+
+    <a href="/manuales" class="volver">
+        ← Volver a equipos
+    </a>
+
+
+    <!-- =====================================
+         INFORMACIÓN DEL EQUIPO
+    ====================================== -->
+
+    <section class="equipo">
+
+        <div class="equipo-titulo">
+
+            <div class="equipo-icono">
+                🫁
+            </div>
+
+            <div>
+
+                <h2>
+                    {{ equipo.codigo }}
+                </h2>
+
+                <p>
+                    {{ equipo.marca }} — {{ equipo.modelo }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="informacion">
+
+
+            <div class="dato">
+
+                <strong>
+                    CÓDIGO
+                </strong>
+
+                <span>
+                    {{ equipo.codigo }}
+                </span>
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    MARCA
+                </strong>
+
+                <span>
+                    {{ equipo.marca }}
+                </span>
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    MODELO
+                </strong>
+
+                <span>
+                    {{ equipo.modelo }}
+                </span>
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    NÚMERO DE SERIE
+                </strong>
+
+                <span>
+                    {{ equipo.serie }}
+                </span>
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    UBICACIÓN
+                </strong>
+
+                <span>
+                    {{ equipo.ubicacion }}
+                </span>
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    SERVICIO
+                </strong>
+
+                <span>
+                    {{ equipo.servicio }}
+                </span>
+
+            </div>
+
+
+            <div class="dato">
+
+                <strong>
+                    ESTADO
+                </strong>
+
+                <span>
+                    {{ equipo.estado }}
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         DOCUMENTACIÓN
+    ====================================== -->
+
+    <section class="documentacion">
+
+        <h2>
+            📖 Documentación disponible
+        </h2>
+
+        <p class="documentacion-intro">
+
+            Desde esta sección puedes almacenar y consultar
+            los documentos técnicos correspondientes a este
+            equipo.
+
+        </p>
+
+
+        <div class="manuales-grid">
+
+
+            <!-- =================================
+                 MANUAL DE USUARIO
+            ================================== -->
+
+            <div class="manual">
+
+                <div class="manual-icono">
+                    📘
+                </div>
+
+                <h3>
+                    Manual de usuario
+                </h3>
+
+                <p>
+
+                    Documento destinado a explicar
+                    el funcionamiento y uso del equipo.
+
+                </p>
+
+
+                {% set manual_usuario = none %}
+
+                {% for manual in manuales %}
+
+                    {% if manual.tipo == "usuario" %}
+
+                        {% set manual_usuario = manual %}
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {% if manual_usuario %}
+
+                    <div class="archivo">
+
+                        <strong>
+                            📄 {{ manual_usuario.archivo }}
+                        </strong>
+
+                        <small>
+                            Fecha:
+                            {{ manual_usuario.fecha_subida }}
+                        </small>
+
+                        <br>
+
+                        <a
+                            href="{{ url_for('static', filename='manuales/' ~ equipo.id ~ '/' ~ manual_usuario.archivo) }}"
+                            target="_blank"
+                            class="btn-abrir"
+                        >
+                            📖 Abrir PDF
+                        </a>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="pendiente">
+
+                        📄 No hay manual de usuario cargado.
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="cargar">
+
+                    <form
+                        action="{{ url_for('subir_manual', id=equipo.id) }}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="tipo"
+                            value="usuario"
+                        >
+
+
+                        <label>
+                            📤 Cargar PDF
+                        </label>
+
+
+                        <input
+                            type="file"
+                            name="archivo"
+                            accept=".pdf,application/pdf"
+                            required
+                        >
+
+
+                        <button
+                            type="submit"
+                            class="btn-subir"
+                        >
+                            📤 Subir manual
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 MANUAL DE SERVICIO
+            ================================== -->
+
+            <div class="manual">
+
+                <div class="manual-icono">
+                    🔧
+                </div>
+
+                <h3>
+                    Manual de servicio técnico
+                </h3>
+
+                <p>
+
+                    Documentación relacionada con
+                    la revisión y servicio técnico
+                    del equipo.
+
+                </p>
+
+
+                {% set manual_servicio = none %}
+
+                {% for manual in manuales %}
+
+                    {% if manual.tipo == "servicio_tecnico" %}
+
+                        {% set manual_servicio = manual %}
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {% if manual_servicio %}
+
+                    <div class="archivo">
+
+                        <strong>
+                            📄 {{ manual_servicio.archivo }}
+                        </strong>
+
+                        <small>
+                            Fecha:
+                            {{ manual_servicio.fecha_subida }}
+                        </small>
+
+                        <br>
+
+                        <a
+                            href="{{ url_for('static', filename='manuales/' ~ equipo.id ~ '/' ~ manual_servicio.archivo) }}"
+                            target="_blank"
+                            class="btn-abrir"
+                        >
+                            📖 Abrir PDF
+                        </a>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="pendiente">
+
+                        📄 No hay manual de servicio cargado.
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="cargar">
+
+                    <form
+                        action="{{ url_for('subir_manual', id=equipo.id) }}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="tipo"
+                            value="servicio_tecnico"
+                        >
+
+
+                        <label>
+                            📤 Cargar PDF
+                        </label>
+
+
+                        <input
+                            type="file"
+                            name="archivo"
+                            accept=".pdf,application/pdf"
+                            required
+                        >
+
+
+                        <button
+                            type="submit"
+                            class="btn-subir"
+                        >
+                            📤 Subir manual
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 MANUAL DE MANTENIMIENTO
+            ================================== -->
+
+            <div class="manual">
+
+                <div class="manual-icono">
+                    🛠️
+                </div>
+
+                <h3>
+                    Manual de mantenimiento
+                </h3>
+
+                <p>
+
+                    Información relacionada con las
+                    actividades y procedimientos
+                    de mantenimiento.
+
+                </p>
+
+
+                {% set manual_mantenimiento = none %}
+
+                {% for manual in manuales %}
+
+                    {% if manual.tipo == "mantenimiento" %}
+
+                        {% set manual_mantenimiento = manual %}
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {% if manual_mantenimiento %}
+
+                    <div class="archivo">
+
+                        <strong>
+                            📄 {{ manual_mantenimiento.archivo }}
+                        </strong>
+
+                        <small>
+                            Fecha:
+                            {{ manual_mantenimiento.fecha_subida }}
+                        </small>
+
+                        <br>
+
+                        <a
+                            href="{{ url_for('static', filename='manuales/' ~ equipo.id ~ '/' ~ manual_mantenimiento.archivo) }}"
+                            target="_blank"
+                            class="btn-abrir"
+                        >
+                            📖 Abrir PDF
+                        </a>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="pendiente">
+
+                        📄 No hay manual de mantenimiento cargado.
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="cargar">
+
+                    <form
+                        action="{{ url_for('subir_manual', id=equipo.id) }}"
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="tipo"
+                            value="mantenimiento"
+                        >
+
+
+                        <label>
+                            📤 Cargar PDF
+                        </label>
+
+
+                        <input
+                            type="file"
+                            name="archivo"
+                            accept=".pdf,application/pdf"
+                            required
+                        >
+
+
+                        <button
+                            type="submit"
+                            class="btn-subir"
+                        >
+                            📤 Subir manual
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =====================================
+             NOTA
+        ====================================== -->
+
+        <div class="nota">
+
+            <strong>
+                📌 Información sobre la documentación
+            </strong>
+
+            <p>
+
+                Los documentos deben corresponder al equipo
+                seleccionado y preferiblemente ser documentos
+                proporcionados por el fabricante.
+
+            </p>
+
+            <p>
+
+                BioVent permite mantener organizada la
+                documentación de cada equipo para facilitar
+                su consulta durante las actividades de
+                operación, inspección y mantenimiento.
+
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<!-- =========================================
+     PIE DE PÁGINA
+========================================= -->
+
+<footer>
+
+    <p>
+        <strong>BioVent</strong>
+    </p>
+
+    <p>
+        Plataforma para la gestión y seguimiento
+        de equipos biomédicos
+    </p>
+
+    <p>
+        Diseño e Ingeniería Clínica — Entrega 1
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

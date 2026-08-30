@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Casos de Uso - BioVent</title>
+
+    <style>
+
+        .volver-container {
+    max-width: 1200px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+}
+
+.btn-volver {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #0d6efd;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-volver:hover {
+    background: #084298;
+    transform: translateY(-1px);
+}
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* =====================================================
+           ENCABEZADO
+        ===================================================== */
+
+        .encabezado {
+            background: linear-gradient(
+                135deg,
+                #0d6efd,
+                #084298
+            );
+
+            color: white;
+            padding: 45px 20px;
+            text-align: center;
+        }
+
+        .encabezado h1 {
+            margin: 0 0 12px 0;
+            font-size: 38px;
+        }
+
+        .encabezado p {
+            margin: 0 auto;
+            max-width: 850px;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           CONTENEDOR PRINCIPAL
+        ===================================================== */
+
+        .contenedor {
+            width: 92%;
+            max-width: 1250px;
+            margin: 35px auto 60px auto;
+        }
+
+        /* =====================================================
+           INTRODUCCIÓN
+        ===================================================== */
+
+        .introduccion {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            border-left: 6px solid #0d6efd;
+        }
+
+        .introduccion h2 {
+            margin-top: 0;
+            color: #084298;
+        }
+
+        .introduccion p {
+            line-height: 1.7;
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        /* =====================================================
+           ACTORES
+        ===================================================== */
+
+        .titulo-seccion {
+            text-align: center;
+            margin: 45px 0 25px 0;
+        }
+
+        .titulo-seccion h2 {
+            color: #084298;
+            margin-bottom: 8px;
+        }
+
+        .titulo-seccion p {
+            color: #6b7280;
+        }
+
+        .actores {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(250px, 1fr)
+            );
+
+            gap: 22px;
+        }
+
+        .actor {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+
+        .actor:hover {
+            transform: translateY(-4px);
+        }
+
+        .icono-actor {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            background: #e7f1ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        .actor h3 {
+            color: #084298;
+            margin: 10px 0;
+        }
+
+        .actor p {
+            color: #5b6470;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           CASOS DE USO
+        ===================================================== */
+
+        .casos {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(300px, 1fr)
+            );
+
+            gap: 22px;
+        }
+
+        .caso {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            border-top: 5px solid #0d6efd;
+            transition: transform 0.2s,
+                        box-shadow 0.2s;
+        }
+
+        .caso:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .numero {
+            width: 42px;
+            height: 42px;
+            background: #0d6efd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .caso h3 {
+            color: #084298;
+            margin: 8px 0 12px 0;
+        }
+
+        .caso p {
+            color: #4b5563;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .caso ul {
+            padding-left: 20px;
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           FLUJO GENERAL
+        ===================================================== */
+
+        .flujo {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 35px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+        }
+
+        .flujo h2 {
+            text-align: center;
+            color: #084298;
+            margin-top: 0;
+        }
+
+        .pasos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .paso {
+            background: #e7f1ff;
+            color: #084298;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .flecha {
+            font-size: 28px;
+            color: #0d6efd;
+            font-weight: bold;
+        }
+
+        /* =====================================================
+           TABLA
+        ===================================================== */
+
+        .tabla-contenedor {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 35px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        .tabla-contenedor h2 {
+            color: #084298;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 700px;
+        }
+
+        th {
+            background: #0d6efd;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+            line-height: 1.5;
+        }
+
+        tr:hover {
+            background: #f4f8ff;
+        }
+
+        /* =====================================================
+           IMPORTANCIA
+        ===================================================== */
+
+        .importancia {
+            background: linear-gradient(
+                135deg,
+                #eef6ff,
+                #ffffff
+            );
+
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 35px;
+            border-left: 6px solid #0d6efd;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+        }
+
+        .importancia h2 {
+            color: #084298;
+            margin-top: 0;
+        }
+
+        .importancia ul {
+            line-height: 1.9;
+            color: #4b5563;
+        }
+
+        /* =====================================================
+           PIE
+        ===================================================== */
+
+        .pie {
+            text-align: center;
+            margin-top: 45px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .encabezado h1 {
+                font-size: 28px;
+            }
+
+            .encabezado p {
+                font-size: 15px;
+            }
+
+            .contenedor {
+                width: 94%;
+            }
+
+            .introduccion,
+            .flujo,
+            .tabla-contenedor,
+            .importancia {
+                padding: 20px;
+            }
+
+            .pasos {
+                flex-direction: column;
+            }
+
+            .flecha {
+                transform: rotate(90deg);
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="volver-container">
+    <a href="{{ url_for('inicio') }}" class="btn-volver">
+        ← Volver al inicio
+    </a>
+</div>
+
+    <!-- =====================================================
+         ENCABEZADO
+    ====================================================== -->
+
+    <header class="encabezado">
+
+        <h1>Casos de Uso</h1>
+
+        <h4>
+            Identificación de las principales interacciones entre
+            los usuarios y la plataforma BioVent para la gestión,
+            seguimiento y control de ventiladores mecánicos.
+        </h4>
+
+    </header>
+
+
+    <main class="contenedor">
+
+
+        <!-- =================================================
+             INTRODUCCIÓN
+        ================================================== -->
+
+        <section class="introduccion">
+
+            <h2>¿Qué son los casos de uso?</h2>
+
+            <p>
+                Los casos de uso describen las diferentes acciones
+                que pueden realizar los usuarios dentro de la
+                plataforma BioVent. Permiten representar de forma
+                clara cómo interactúan los usuarios con el sistema
+                para registrar equipos biomédicos, realizar
+                mantenimientos, diligenciar listas de verificación,
+                consultar información técnica y realizar seguimiento
+                al estado de los ventiladores mecánicos.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             ACTORES
+        ================================================== -->
+
+        <div class="titulo-seccion">
+
+            <h2>Actores del sistema</h2>
+
+            <p>
+                Usuarios que interactúan con la plataforma BioVent.
+            </p>
+
+        </div>
+
+
+        <section class="actores">
+
+
+            <div class="actor">
+
+                <div class="icono-actor">
+                    👨‍🔧
+                </div>
+
+                <h3>Técnico biomédico</h3>
+
+                <p>
+                    Usuario encargado de registrar equipos,
+                    realizar mantenimientos y diligenciar
+                    los checklist de inspección.
+                </p>
+
+            </div>
+
+
+            <div class="actor">
+
+                <div class="icono-actor">
+                    👨‍💼
+                </div>
+
+                <h3>Responsable biomédico</h3>
+
+                <p>
+                    Consulta el estado de los equipos,
+                    revisa mantenimientos y verifica los
+                    resultados de las inspecciones.
+                </p>
+
+            </div>
+
+
+            <div class="actor">
+
+                <div class="icono-actor">
+                    👨‍💻
+                </div>
+
+                <h3>Administrador</h3>
+
+                <p>
+                    Gestiona la información almacenada en la
+                    plataforma y supervisa el funcionamiento
+                    general del sistema.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             CASOS DE USO
+        ================================================== -->
+
+        <div class="titulo-seccion">
+
+            <h2>Principales casos de uso</h2>
+
+            <p>
+                Funciones principales disponibles en BioVent.
+            </p>
+
+        </div>
+
+
+        <section class="casos">
+
+
+            <!-- CASO 1 -->
+
+            <article class="caso">
+
+                <div class="numero">1</div>
+
+                <h3>Registrar equipo biomédico</h3>
+
+                <p>
+                    Permite ingresar un nuevo ventilador mecánico
+                    al sistema.
+                </p>
+
+                <ul>
+
+                    <li>Ingresar código del equipo.</li>
+
+                    <li>Registrar marca y modelo.</li>
+
+                    <li>Registrar número de serie.</li>
+
+                    <li>Indicar ubicación y servicio.</li>
+
+                    <li>Agregar observaciones.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- CASO 2 -->
+
+            <article class="caso">
+
+                <div class="numero">2</div>
+
+                <h3>Consultar equipos</h3>
+
+                <p>
+                    Permite visualizar los equipos registrados
+                    dentro de la plataforma.
+                </p>
+
+                <ul>
+
+                    <li>Consultar información técnica.</li>
+
+                    <li>Consultar ubicación.</li>
+
+                    <li>Consultar estado del equipo.</li>
+
+                    <li>Acceder a la información asociada.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- CASO 3 -->
+
+            <article class="caso">
+
+                <div class="numero">3</div>
+
+                <h3>Registrar mantenimiento</h3>
+
+                <p>
+                    Permite registrar las actividades de
+                    mantenimiento realizadas a cada equipo.
+                </p>
+
+                <ul>
+
+                    <li>Seleccionar el equipo.</li>
+
+                    <li>Registrar tipo de mantenimiento.</li>
+
+                    <li>Registrar fecha.</li>
+
+                    <li>Definir próxima fecha.</li>
+
+                    <li>Registrar técnico responsable.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- CASO 4 -->
+
+            <article class="caso">
+
+                <div class="numero">4</div>
+
+                <h3>Consultar mantenimientos</h3>
+
+                <p>
+                    Permite realizar seguimiento al mantenimiento
+                    de los ventiladores.
+                </p>
+
+                <ul>
+
+                    <li>Visualizar mantenimientos realizados.</li>
+
+                    <li>Identificar mantenimientos próximos.</li>
+
+                    <li>Identificar mantenimientos vencidos.</li>
+
+                    <li>Consultar el historial.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- CASO 5 -->
+
+            <article class="caso">
+
+                <div class="numero">5</div>
+
+                <h3>Realizar checklist</h3>
+
+                <p>
+                    Permite verificar diferentes componentes y
+                    condiciones del ventilador mecánico.
+                </p>
+
+                <ul>
+
+                    <li>Inspección visual.</li>
+
+                    <li>Estado físico.</li>
+
+                    <li>Cable de alimentación.</li>
+
+                    <li>Pantalla y alarmas.</li>
+
+                    <li>Batería y sensores.</li>
+
+                    <li>Circuito respiratorio.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- CASO 6 -->
+
+            <article class="caso">
+
+                <div class="numero">6</div>
+
+                <h3>Evaluar checklist</h3>
+
+                <p>
+                    El sistema determina automáticamente el
+                    resultado general de la inspección.
+                </p>
+
+                <ul>
+
+                    <li>APROBADO.</li>
+
+                    <li>ATENCIÓN REQUERIDA.</li>
+
+                    <li>NO APROBADO.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- CASO 7 -->
+
+            <article class="caso">
+
+                <div class="numero">7</div>
+
+                <h3>Consultar historial</h3>
+
+                <p>
+                    Permite consultar las inspecciones realizadas
+                    anteriormente a los equipos.
+                </p>
+
+                <ul>
+
+                    <li>Consultar fecha.</li>
+
+                    <li>Consultar técnico.</li>
+
+                    <li>Consultar resultados.</li>
+
+                    <li>Consultar observaciones.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- CASO 8 -->
+
+            <article class="caso">
+
+                <div class="numero">8</div>
+
+                <h3>Consultar Dashboard</h3>
+
+                <p>
+                    Permite visualizar un resumen general del
+                    estado de la gestión biomédica.
+                </p>
+
+                <ul>
+
+                    <li>Total de equipos.</li>
+
+                    <li>Equipos operativos.</li>
+
+                    <li>Checklists realizados.</li>
+
+                    <li>Mantenimientos.</li>
+
+                    <li>Mantenimientos próximos y vencidos.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- CASO 9 -->
+
+            <article class="caso">
+
+                <div class="numero">9</div>
+
+                <h3>Gestionar manuales</h3>
+
+                <p>
+                    Permite asociar documentación técnica a cada
+                    ventilador registrado.
+                </p>
+
+                <ul>
+
+                    <li>Manual de usuario.</li>
+
+                    <li>Manual de servicio técnico.</li>
+
+                    <li>Manual de mantenimiento.</li>
+
+                    <li>Visualización de archivos PDF.</li>
+
+                </ul>
+
+            </article>
+
+
+            <!-- CASO 10 -->
+
+            <article class="caso">
+
+                <div class="numero">10</div>
+
+                <h3>Consultar información técnica</h3>
+
+                <p>
+                    Permite acceder a la información relacionada
+                    con el equipo biomédico seleccionado.
+                </p>
+
+                <ul>
+
+                    <li>Características del ventilador.</li>
+
+                    <li>Justificación técnica.</li>
+
+                    <li>Información bibliográfica.</li>
+
+                    <li>Información normativa.</li>
+
+                </ul>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- =================================================
+             TABLA DE CASOS
+        ================================================== -->
+
+        <section class="tabla-contenedor">
+
+            <h2>Resumen de casos de uso</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Caso de uso
+                        </th>
+
+                        <th>
+                            Actor principal
+                        </th>
+
+                        <th>
+                            Descripción
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            Registrar equipo
+                        </td>
+
+                        <td>
+                            Técnico biomédico
+                        </td>
+
+                        <td>
+                            Registra la información técnica
+                            y administrativa del ventilador.
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Registrar mantenimiento
+                        </td>
+
+                        <td>
+                            Técnico biomédico
+                        </td>
+
+                        <td>
+                            Registra las actividades de
+                            mantenimiento realizadas.
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Realizar checklist
+                        </td>
+
+                        <td>
+                            Técnico biomédico
+                        </td>
+
+                        <td>
+                            Verifica el estado físico y
+                            funcional del equipo.
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Consultar historial
+                        </td>
+
+                        <td>
+                            Responsable biomédico
+                        </td>
+
+                        <td>
+                            Consulta inspecciones y
+                            mantenimientos anteriores.
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Consultar Dashboard
+                        </td>
+
+                        <td>
+                            Responsable biomédico
+                        </td>
+
+                        <td>
+                            Visualiza indicadores generales
+                            de la plataforma.
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Gestionar manuales
+                        </td>
+
+                        <td>
+                            Administrador / Técnico
+                        </td>
+
+                        <td>
+                            Administra los documentos técnicos
+                            asociados a los equipos.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- =================================================
+             IMPORTANCIA
+        ================================================== -->
+
+        <section class="importancia">
+
+            <h2>Importancia dentro del proyecto BioVent</h2>
+
+            <p>
+                Los casos de uso permiten definir claramente las
+                funciones que debe cumplir la plataforma y la
+                interacción de los usuarios con cada módulo.
+                Además, sirven como referencia para el diseño,
+                desarrollo y validación del sistema.
+            </p>
+
+            <ul>
+
+                <li>
+                    Facilitan la identificación de las funciones
+                    principales del sistema.
+                </li>
+
+                <li>
+                    Permiten establecer los actores que interactúan
+                    con la plataforma.
+                </li>
+
+                <li>
+                    Ayudan a definir los requisitos funcionales.
+                </li>
+
+                <li>
+                    Facilitan la validación de las funcionalidades
+                    desarrolladas.
+                </li>
+
+                <li>
+                    Permiten relacionar los módulos de BioVent
+                    con las necesidades del usuario.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <div class="pie">
+
+            BioVent — Plataforma para la gestión de
+            ventiladores mecánicos
+
+        </div>
+
+
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manuales de Equipos - BioVent</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: #f4f7fb;
+
+            color: #263238;
+        }
+
+
+        /* =========================================
+           ENCABEZADO
+        ========================================= */
+
+        header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6f42c1,
+                    #4c2889
+                );
+
+            color: white;
+
+            text-align: center;
+
+            padding: 45px 20px;
+        }
+
+
+        header .icono {
+
+            font-size: 55px;
+
+            margin-bottom: 10px;
+        }
+
+
+        header h1 {
+
+            margin: 0;
+
+            font-size: 35px;
+        }
+
+
+        header p {
+
+            margin: 12px auto 0;
+
+            max-width: 750px;
+
+            line-height: 1.6;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================================
+           MENÚ
+        ========================================= */
+
+        nav {
+
+            background: white;
+
+            padding: 15px;
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            box-shadow:
+                0 2px 10px rgba(0,0,0,0.08);
+        }
+
+
+        nav a {
+
+            text-decoration: none;
+
+            color: #0d6efd;
+
+            font-weight: bold;
+
+            padding: 10px 14px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+
+        nav a:hover {
+
+            background: #e8f1ff;
+        }
+
+
+        nav a.activo {
+
+            background: #6f42c1;
+
+            color: white;
+        }
+
+
+        /* =========================================
+           CONTENEDOR
+        ========================================= */
+
+        .contenedor {
+
+            width: 94%;
+
+            max-width: 1250px;
+
+            margin: 40px auto;
+        }
+
+
+        /* =========================================
+           TARJETA INTRODUCCIÓN
+        ========================================= */
+
+        .introduccion {
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .introduccion h2 {
+
+            margin-top: 0;
+
+            color: #4c2889;
+
+            font-size: 27px;
+        }
+
+
+        .introduccion p {
+
+            max-width: 900px;
+
+            margin: 12px auto;
+
+            color: #666;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           TÍTULO EQUIPOS
+        ========================================= */
+
+        .titulo-equipos {
+
+            text-align: center;
+
+            margin: 35px 0 25px;
+        }
+
+
+        .titulo-equipos h2 {
+
+            color: #084298;
+
+            margin-bottom: 8px;
+        }
+
+
+        .titulo-equipos p {
+
+            color: #666;
+
+            margin: 0;
+        }
+
+
+        /* =========================================
+           GRID DE EQUIPOS
+        ========================================= */
+
+        .equipos-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+
+        /* =========================================
+           TARJETA EQUIPO
+        ========================================= */
+
+        .equipo-card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            border-top: 5px solid #6f42c1;
+
+            transition: 0.25s;
+        }
+
+
+        .equipo-card:hover {
+
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.13);
+        }
+
+
+        .equipo-icono {
+
+            width: 65px;
+
+            height: 65px;
+
+            border-radius: 15px;
+
+            background: #f1ebff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 36px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .equipo-card h3 {
+
+            margin: 0 0 12px;
+
+            color: #084298;
+
+            font-size: 20px;
+        }
+
+
+        .dato {
+
+            margin: 8px 0;
+
+            font-size: 14px;
+
+            color: #555;
+        }
+
+
+        .dato strong {
+
+            color: #263238;
+        }
+
+
+        /* =========================================
+           ESTADO
+        ========================================= */
+
+        .estado {
+
+            display: inline-block;
+
+            margin-top: 10px;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            background: #eaf8ef;
+
+            color: #146c43;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================================
+           BOTÓN
+        ========================================= */
+
+        .boton {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            padding: 12px;
+
+            background: #6f42c1;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        .boton:hover {
+
+            background: #59339d;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================
+           SIN EQUIPOS
+        ========================================= */
+
+        .sin-equipos {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 50px 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+        }
+
+
+        .sin-equipos .icono {
+
+            font-size: 60px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .sin-equipos h2 {
+
+            color: #084298;
+        }
+
+
+        .sin-equipos p {
+
+            color: #666;
+
+            line-height: 1.6;
+        }
+
+
+        .boton-equipos {
+
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 12px 22px;
+
+            background: #0d6efd;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================================
+           INFORMACIÓN
+        ========================================= */
+
+        .informacion {
+
+            margin-top: 35px;
+
+            background: #fff8e1;
+
+            border-left: 6px solid #ffc107;
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+            line-height: 1.7;
+        }
+
+
+        .informacion strong {
+
+            color: #856404;
+        }
+
+
+        /* =========================================
+           PIE
+        ========================================= */
+
+        footer {
+
+            background: #263238;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 28px 20px;
+
+            margin-top: 50px;
+        }
+
+
+        footer p {
+
+            margin: 6px;
+
+            color: #d5dce0;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1000px) {
+
+            .equipos-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            header h1 {
+
+                font-size: 28px;
+            }
+
+
+            nav {
+
+                flex-direction: column;
+            }
+
+
+            nav a {
+
+                text-align: center;
+            }
+
+
+            .contenedor {
+
+                width: 92%;
+            }
+
+
+            .introduccion {
+
+                padding: 25px 20px;
+            }
+
+
+            .equipos-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     ENCABEZADO
+========================================= -->
+
+<header>
+
+    <div class="icono">
+        📚
+    </div>
+
+
+    <h1>
+        Manuales de Equipos
+    </h1>
+
+
+    <p>
+
+        Consulta la documentación técnica asociada
+        a los equipos biomédicos registrados en BioVent.
+
+    </p>
+
+</header>
+
+
+<!-- =========================================
+     MENÚ
+========================================= -->
+
+<nav>
+
+    <a href="/">
+        Inicio
+    </a>
+
+    <a href="/equipos">
+        Equipos
+    </a>
+
+    <a href="/mantenimientos">
+        Mantenimientos
+    </a>
+
+    <a href="/checklist">
+        Checklists
+    </a>
+
+    <a href="/dashboard">
+        Dashboard
+    </a>
+
+    <a href="/normativa">
+        Normativa
+    </a>
+
+    <a href="/bibliografia">
+        Bibliografía
+    </a>
+
+    <a href="/diagrama-bloques">
+        Diagrama de bloques
+    </a>
+
+    <a href="/manuales" class="activo">
+        Manuales
+    </a>
+
+</nav>
+
+
+<main class="contenedor">
+
+
+<!-- =========================================
+     INTRODUCCIÓN
+========================================= -->
+
+<section class="introduccion">
+
+    <h2>
+        📖 Biblioteca técnica de BioVent
+    </h2>
+
+
+    <p>
+
+        En esta sección se encuentra la documentación
+        técnica asociada a cada equipo biomédico registrado
+        en la plataforma.
+
+    </p>
+
+
+    <p>
+
+        Seleccione un equipo para consultar posteriormente
+        su manual de usuario, manual de servicio técnico
+        y manual de mantenimiento.
+
+    </p>
+
+</section>
+
+
+<!-- =========================================
+     TÍTULO
+========================================= -->
+
+<section class="titulo-equipos">
+
+    <h2>
+        🫁 Equipos registrados
+    </h2>
+
+
+    <p>
+        Seleccione el equipo cuya documentación desea consultar.
+    </p>
+
+</section>
+
+
+<!-- =========================================
+     EQUIPOS
+========================================= -->
+
+{% if equipos %}
+
+
+<div class="equipos-grid">
+
+
+    {% for equipo in equipos %}
+
+
+    <div class="equipo-card">
+
+
+        <div class="equipo-icono">
+            🫁
+        </div>
+
+
+        <h3>
+
+            {{ equipo["codigo"] }}
+
+        </h3>
+
+
+        <div class="dato">
+
+            <strong>Marca:</strong>
+
+            {{ equipo["marca"] }}
+
+        </div>
+
+
+        <div class="dato">
+
+            <strong>Modelo:</strong>
+
+            {{ equipo["modelo"] }}
+
+        </div>
+
+
+        <div class="dato">
+
+            <strong>Serie:</strong>
+
+            {{ equipo["serie"] }}
+
+        </div>
+
+
+        <div class="dato">
+
+            <strong>Ubicación:</strong>
+
+            {{ equipo["ubicacion"] }}
+
+        </div>
+
+
+        <div class="dato">
+
+            <strong>Servicio:</strong>
+
+            {{ equipo["servicio"] }}
+
+        </div>
+
+
+        <span class="estado">
+
+            {{ equipo["estado"] }}
+
+        </span>
+
+
+        <a
+            href="/manuales/{{ equipo['id'] }}"
+            class="boton"
+        >
+
+            📚 Ver manuales →
+
+        </a>
+
+
+    </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+
+{% else %}
+
+
+<!-- =========================================
+     SIN EQUIPOS
+========================================= -->
+
+<section class="sin-equipos">
+
+    <div class="icono">
+        🫁
+    </div>
+
+
+    <h2>
+        No hay equipos registrados
+    </h2>
+
+
+    <p>
+
+        Actualmente no existen equipos registrados
+        en BioVent.
+
+    </p>
+
+
+    <p>
+
+        Registre primero un equipo para poder
+        asociarle su documentación técnica.
+
+    </p>
+
+
+    <a
+        href="/equipos"
+        class="boton-equipos"
+    >
+
+        ➕ Registrar equipo
+
+    </a>
+
+</section>
+
+
+{% endif %}
+
+
+<!-- =========================================
+     INFORMACIÓN
+========================================= -->
+
+<section class="informacion">
+
+    <strong>
+        📌 Información
+    </strong>
+
+
+    <p>
+
+        Los manuales de cada equipo serán incorporados
+        posteriormente de acuerdo con la documentación
+        disponible del fabricante.
+
+    </p>
+
+
+    <p>
+
+        La documentación estará organizada por equipo
+        para facilitar el acceso al manual de usuario,
+        servicio técnico y mantenimiento.
+
+    </p>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================================
+     PIE DE PÁGINA
+========================================= -->
+
+<footer>
+
+    <p>
+        <strong>BioVent</strong>
+    </p>
+
+
+    <p>
+        Plataforma para la gestión y seguimiento
+        de equipos biomédicos
+    </p>
+
+
+    <p>
+        Diseño e Ingeniería Clínica — Entrega 1
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
