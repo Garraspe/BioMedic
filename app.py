@@ -1520,17 +1520,15 @@ def equipo_biomedico():
 # =========================================================
 # NORMATIVA
 # =========================================================
-
 @app.route("/normativa")
 def normativa():
-
     return render_template(
         "normativa.html"
     )
 
+
 # =========================================================
 # CASOS DE USO
-# =========================================================
 
 @app.route("/casos-uso")
 def casos_uso():
@@ -1553,27 +1551,28 @@ def bibliografia():
 
 # =========================================================
 # DIAGRAMA DE BLOQUES
-# =========================================================
 
 @app.route("/diagrama-bloques")
 def diagrama_bloques():
-
     return render_template(
         "diagrama_bloques.html"
     )
+    # =========================================================
+# DIAGRAMA DE BLOQUES
 
+@app.route("/cronograma")
+def cronograma():
+    return render_template("cronograma.html")
 
 # =========================================================
 # CREAR BASE DE DATOS
 # =========================================================
-
 crear_bd()
 
 
 # =========================================================
 # EJECUTAR APLICACIÓN
 # =========================================================
-
 if __name__ == "__main__":
     app.run(
         debug=True,
