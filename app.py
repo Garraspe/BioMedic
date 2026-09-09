@@ -12,6 +12,9 @@ from werkzeug.utils import secure_filename
 # =========================================================
 
 app = Flask(__name__)
+app.config["JSON_AS_ASCII"] = False
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.jinja_env.auto_reload = True
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, "biovent.db")
@@ -20,6 +23,17 @@ UPLOAD_FOLDER = os.path.join(BASE_DIR, "manuales")
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+
+# =========================================================
+# FORZAR UTF-8 EN TODAS LAS RESPUESTAS HTML
+# =========================================================
+
+@app.after_request
+def forzar_utf8(response):
+    if response.content_type.startswith("text/html"):
+        response.headers["Content-Type"] = "text/html; charset=utf-8"
+    return response
 
 
 # =========================================================

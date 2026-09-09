@@ -1,283 +1,80 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>BibliografÃ­a - BioMedic</title>
-
+    <title>Bibliograf&iacute;a - BioMedic</title>
     <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7fb;
-            color: #263238;
-        }
-
-        header {
-            background: linear-gradient(135deg, #0d6efd, #084298);
-            color: white;
-            text-align: center;
-            padding: 35px 20px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 32px;
-        }
-
-        header p {
-            margin-top: 10px;
-        }
-
-        nav {
-            background: white;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #0d6efd;
-            font-weight: bold;
-            padding: 10px 15px;
-            border-radius: 8px;
-        }
-
-        nav a:hover {
-            background: #e8f1ff;
-        }
-
-        nav a.activo {
-            background: #0d6efd;
-            color: white;
-        }
-
-        .contenedor {
-            width: 92%;
-            max-width: 1100px;
-            margin: 35px auto;
-        }
-
-        .tarjeta {
-            background: white;
-            padding: 30px;
-            border-radius: 18px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
-        }
-
-        .tarjeta h2 {
-            margin-top: 0;
-            color: #084298;
-        }
-
-        .tarjeta p {
-            line-height: 1.7;
-        }
-
-        .fuente {
-            background: #f8fafc;
-            border-left: 5px solid #0d6efd;
-            padding: 18px;
-            margin: 18px 0;
-            border-radius: 10px;
-        }
-
-        .fuente h3 {
-            margin-top: 0;
-            color: #084298;
-        }
-
-        .fuente p {
-            margin-bottom: 0;
-        }
-
-        footer {
-            background: #263238;
-            color: white;
-            text-align: center;
-            padding: 25px;
-            margin-top: 40px;
-        }
-
-        footer p {
-            margin: 6px;
-        }
-
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f4f7fb; color: #263238; }
+        header { background: linear-gradient(135deg, #0d6efd, #084298); color: white; text-align: center; padding: 35px 20px; }
+        header h1 { margin: 0; font-size: 32px; }
+        header p { margin-top: 10px; }
+        nav { background: white; padding: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        nav a { text-decoration: none; color: #0d6efd; font-weight: bold; padding: 10px 15px; border-radius: 8px; }
+        nav a:hover { background: #e8f1ff; }
+        nav a.activo { background: #0d6efd; color: white; }
+        .contenedor { width: 92%; max-width: 1100px; margin: 35px auto; }
+        .tarjeta { background: white; padding: 30px; border-radius: 18px; box-shadow: 0 3px 12px rgba(0,0,0,0.08); margin-bottom: 25px; }
+        .tarjeta h2 { margin-top: 0; color: #084298; }
+        .tarjeta p { line-height: 1.7; }
+        .fuente { background: #f8fafc; border-left: 5px solid #0d6efd; padding: 18px; margin: 18px 0; border-radius: 10px; }
+        .fuente h3 { margin-top: 0; color: #084298; }
+        .fuente p { margin-bottom: 0; }
+        footer { background: #263238; color: white; text-align: center; padding: 25px; margin-top: 40px; }
+        footer p { margin: 6px; }
     </style>
-
 </head>
-
-
 <body>
-
-
 <header>
-
-    <h1>ðŸ“š BibliografÃ­a</h1>
-
-    <p>
-        Fuentes de consulta del proyecto BioMedic
-    </p>
-
+    <h1>&#x1F4DA; Bibliograf&iacute;a</h1>
+    <p>Fuentes de consulta del proyecto BioMedic</p>
 </header>
-
-
 <nav>
-
     <a href="/">Inicio</a>
-
     <a href="/equipos">Equipos</a>
-
     <a href="/mantenimientos">Mantenimientos</a>
-
     <a href="/checklist">Checklists</a>
-
     <a href="/dashboard">Dashboard</a>
-
     <a href="/normativa">Normativa</a>
-
-    <a href="/bibliografia" class="activo">
-        BibliografÃ­a
-    </a>
-
-    <a href="/diagrama-bloques">
-        Diagrama de bloques
-    </a>
-
+    <a href="/bibliografia" class="activo">Bibliograf&iacute;a</a>
+    <a href="/diagrama-bloques">Diagrama de bloques</a>
+    <a href="/cronograma">Cronograma</a>
 </nav>
-
-
 <main class="contenedor">
-
-
     <section class="tarjeta">
-
-        <h2>ðŸ“– Fuentes bibliogrÃ¡ficas</h2>
-
-        <p>
-            En esta secciÃ³n se presentan las fuentes de consulta
-            utilizadas como referencia para el desarrollo del proyecto
-            BioMedic, especialmente en los temas relacionados con
-            ventilaciÃ³n mecÃ¡nica, equipos biomÃ©dicos, ingenierÃ­a clÃ­nica,
-            mantenimiento y seguridad.
-        </p>
-
-
+        <h2>&#x1F4D6; Fuentes bibliogr&aacute;ficas</h2>
+        <p>Fuentes de consulta utilizadas como referencia para el desarrollo del proyecto BioMedic.</p>
         <div class="fuente">
-
-            <h3>1. VentilaciÃ³n mecÃ¡nica</h3>
-
-            <p>
-                BibliografÃ­a acadÃ©mica relacionada con los principios
-                de ventilaciÃ³n mecÃ¡nica, funcionamiento de ventiladores,
-                modos ventilatorios y soporte respiratorio.
-            </p>
-
+            <h3>1. Ventilaci&oacute;n mec&aacute;nica</h3>
+            <p>Bibliograf&iacute;a acad&eacute;mica relacionada con los principios de ventilaci&oacute;n mec&aacute;nica, funcionamiento de ventiladores, modos ventilatorios y soporte respiratorio.</p>
         </div>
-
-
         <div class="fuente">
-
-            <h3>2. IngenierÃ­a clÃ­nica</h3>
-
-            <p>
-                Fuentes acadÃ©micas relacionadas con la gestiÃ³n,
-                evaluaciÃ³n, mantenimiento y seguridad de equipos
-                biomÃ©dicos dentro de las instituciones de salud.
-            </p>
-
+            <h3>2. Ingenier&iacute;a cl&iacute;nica</h3>
+            <p>Fuentes acad&eacute;micas relacionadas con la gesti&oacute;n, evaluaci&oacute;n, mantenimiento y seguridad de equipos biom&eacute;dicos dentro de las instituciones de salud.</p>
         </div>
-
-
         <div class="fuente">
-
-            <h3>3. Equipos biomÃ©dicos</h3>
-
-            <p>
-                DocumentaciÃ³n tÃ©cnica relacionada con la identificaciÃ³n,
-                operaciÃ³n, inspecciÃ³n y seguimiento de equipos mÃ©dicos.
-            </p>
-
+            <h3>3. Equipos biom&eacute;dicos</h3>
+            <p>Documentaci&oacute;n t&eacute;cnica relacionada con la identificaci&oacute;n, operaci&oacute;n, inspecci&oacute;n y seguimiento de equipos m&eacute;dicos.</p>
         </div>
-
-
         <div class="fuente">
-
-            <h3>4. Mantenimiento biomÃ©dico</h3>
-
-            <p>
-                Referencias sobre mantenimiento preventivo,
-                mantenimiento correctivo, inspecciones tÃ©cnicas y
-                gestiÃ³n del ciclo de vida de equipos biomÃ©dicos.
-            </p>
-
+            <h3>4. Mantenimiento biom&eacute;dico</h3>
+            <p>Referencias sobre mantenimiento preventivo, mantenimiento correctivo, inspecciones t&eacute;cnicas y gesti&oacute;n del ciclo de vida de equipos biom&eacute;dicos.</p>
         </div>
-
-
         <div class="fuente">
-
-            <h3>5. Manuales tÃ©cnicos de fabricantes</h3>
-
-            <p>
-                Manuales de usuario, servicio y mantenimiento de
-                ventiladores mecÃ¡nicos utilizados como referencia
-                para comprender el funcionamiento y los procedimientos
-                de inspecciÃ³n del equipo.
-            </p>
-
+            <h3>5. Manuales t&eacute;cnicos de fabricantes</h3>
+            <p>Manuales de usuario, servicio y mantenimiento de ventiladores mec&aacute;nicos utilizados como referencia para comprender el funcionamiento y los procedimientos de inspecci&oacute;n del equipo.</p>
         </div>
-
-
         <div class="fuente">
-
-            <h3>6. Normativa y estÃ¡ndares</h3>
-
-            <p>
-                Normas, reglamentos y estÃ¡ndares tÃ©cnicos relacionados
-                con dispositivos mÃ©dicos, equipos electromÃ©dicos y
-                seguridad del paciente.
-            </p>
-
+            <h3>6. Normativa y est&aacute;ndares</h3>
+            <p>Normas, reglamentos y est&aacute;ndares t&eacute;cnicos relacionados con dispositivos m&eacute;dicos, equipos electrom&eacute;dicos y seguridad del paciente.</p>
         </div>
-
     </section>
-
-
     <section class="tarjeta">
-
-        <h2>ðŸ”— RelaciÃ³n con el proyecto BioMedic</h2>
-
-        <p>
-            La informaciÃ³n bibliogrÃ¡fica sirve como fundamento para
-            las diferentes funcionalidades desarrolladas en BioMedic.
-        </p>
-
-        <p>
-            Estas referencias permiten respaldar la informaciÃ³n
-            presentada en las secciones de equipos, mantenimientos,
-            checklists, normativa y diagrama de bloques.
-        </p>
-
+        <h2>&#x1F517; Relaci&oacute;n con el proyecto BioMedic</h2>
+        <p>La informaci&oacute;n bibliogr&aacute;fica sirve como fundamento para las diferentes funcionalidades desarrolladas en BioMedic.</p>
+        <p>Estas referencias permiten respaldar la informaci&oacute;n presentada en las secciones de equipos, mantenimientos, checklists, normativa y diagrama de bloques.</p>
     </section>
-
-
 </main>
-
 </body>
-
 </html>
-

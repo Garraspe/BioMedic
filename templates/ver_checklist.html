@@ -1,1177 +1,139 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-```
-<title>Detalle del Checklist - BioMedic</title>
-
-<style>
-
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background: #f4f7fb;
-        color: #263238;
-    }
-
-    /* =========================================
-       ENCABEZADO
-    ========================================= */
-
-    header {
-        background: linear-gradient(135deg, #0d6efd, #084298);
-        color: white;
-        text-align: center;
-        padding: 35px 20px;
-    }
-
-    header h1 {
-        margin: 0;
-        font-size: 32px;
-    }
-
-    header p {
-        margin: 10px 0 0;
-        font-size: 16px;
-    }
-
-    /* =========================================
-       MENÃš
-    ========================================= */
-
-    nav {
-        background: white;
-        padding: 15px;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
-
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    nav a {
-        text-decoration: none;
-        color: #0d6efd;
-        font-weight: bold;
-
-        padding: 10px 15px;
-
-        border-radius: 8px;
-
-        transition: 0.2s;
-    }
-
-    nav a:hover {
-        background: #e8f1ff;
-    }
-
-    nav a.activo {
-        background: #0d6efd;
-        color: white;
-    }
-
-    /* =========================================
-       CONTENEDOR
-    ========================================= */
-
-    .contenedor {
-        width: 94%;
-        max-width: 1200px;
-
-        margin: 35px auto;
-    }
-
-    .tarjeta {
-        background: white;
-
-        padding: 30px;
-
-        border-radius: 18px;
-
-        box-shadow:
-            0 4px 15px rgba(0,0,0,0.08);
-
-        margin-bottom: 25px;
-    }
-
-    /* =========================================
-       TÃTULOS
-    ========================================= */
-
-    .tarjeta h2 {
-        margin-top: 0;
-        color: #084298;
-    }
-
-    /* =========================================
-       INFORMACIÃ“N DEL EQUIPO
-    ========================================= */
-
-    .equipo-header {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-
-        margin-bottom: 25px;
-    }
-
-    .equipo-icono {
-        width: 70px;
-        height: 70px;
-
-        border-radius: 16px;
-
-        background: #eaf2ff;
-
-        border: 3px solid #0d6efd;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 38px;
-
-        flex-shrink: 0;
-    }
-
-    .equipo-header h2 {
-        margin: 0 0 5px;
-    }
-
-    .equipo-header p {
-        margin: 4px 0;
-        color: #555;
-    }
-
-    /* =========================================
-       INFORMACIÃ“N
-    ========================================= */
-
-    .informacion-grid {
-        display: grid;
-
-        grid-template-columns:
-            repeat(3, 1fr);
-
-        gap: 15px;
-    }
-
-    .dato {
-        background: #f8fafc;
-
-        border: 1px solid #dce3eb;
-
-        border-radius: 12px;
-
-        padding: 16px;
-    }
-
-    .dato strong {
-        display: block;
-
-        color: #084298;
-
-        margin-bottom: 6px;
-    }
-
-    .dato span {
-        color: #444;
-    }
-
-    /* =========================================
-       RESULTADO
-    ========================================= */
-
-    .resultado {
-        margin: 25px 0;
-
-        padding: 20px;
-
-        border-radius: 15px;
-
-        text-align: center;
-
-        font-size: 22px;
-
-        font-weight: bold;
-    }
-
-    .resultado.aprobado {
-        background: #e9f7ef;
-
-        border: 2px solid #198754;
-
-        color: #146c43;
-    }
-
-    .resultado.atencion {
-        background: #fff8df;
-
-        border: 2px solid #ffc107;
-
-        color: #856404;
-    }
-
-    .resultado.no-aprobado {
-        background: #fff0f1;
-
-        border: 2px solid #dc3545;
-
-        color: #b02a37;
-    }
-
-    /* =========================================
-       TABLA
-    ========================================= */
-
-    .tabla-contenedor {
-        overflow-x: auto;
-    }
-
-    table {
-        width: 100%;
-
-        border-collapse: collapse;
-
-        margin-top: 15px;
-    }
-
-    th,
-    td {
-        border: 1px solid #dce3eb;
-
-        padding: 14px;
-
-        text-align: left;
-
-        vertical-align: middle;
-    }
-
-    th {
-        background: #eaf2ff;
-
-        color: #084298;
-    }
-
-    tr:nth-child(even) {
-        background: #f8fafc;
-    }
-
-    /* =========================================
-       RESULTADOS DE CADA PUNTO
-    ========================================= */
-
-    .estado {
-        display: inline-flex;
-
-        align-items: center;
-
-        gap: 8px;
-
-        font-weight: bold;
-    }
-
-    .circulo {
-        width: 16px;
-        height: 16px;
-
-        border-radius: 50%;
-
-        display: inline-block;
-    }
-
-    .verde {
-        background: #198754;
-    }
-
-    .amarillo {
-        background: #ffc107;
-    }
-
-    .rojo {
-        background: #dc3545;
-    }
-
-    /* =========================================
-       OBSERVACIONES
-    ========================================= */
-
-    .observaciones {
-        background: #f8fafc;
-
-        border-left: 5px solid #0d6efd;
-
-        padding: 20px;
-
-        border-radius: 10px;
-
-        line-height: 1.6;
-
-        min-height: 70px;
-    }
-
-    /* =========================================
-       BOTONES
-    ========================================= */
-
-    .acciones {
-        display: flex;
-
-        justify-content: center;
-
-        gap: 12px;
-
-        margin-top: 25px;
-
-        flex-wrap: wrap;
-    }
-
-    .boton {
-        display: inline-block;
-
-        padding: 12px 20px;
-
-        border-radius: 10px;
-
-        text-decoration: none;
-
-        font-weight: bold;
-
-        transition: 0.2s;
-    }
-
-    .boton:hover {
-        transform: translateY(-2px);
-    }
-
-    .boton-volver {
-        background: #0d6efd;
-        color: white;
-    }
-
-    .boton-volver:hover {
-        background: #084298;
-    }
-
-    /* =========================================
-       PIE DE PÃGINA
-    ========================================= */
-
-    footer {
-        background: #263238;
-
-        color: white;
-
-        text-align: center;
-
-        padding: 25px;
-
-        margin-top: 40px;
-    }
-
-    footer p {
-        margin: 6px;
-    }
-
-    /* =========================================
-       RESPONSIVE
-    ========================================= */
-
-    @media (max-width: 800px) {
-
-        .informacion-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-
-    }
-
-    @media (max-width: 600px) {
-
-        header h1 {
-            font-size: 25px;
-        }
-
-        .tarjeta {
-            padding: 20px;
-        }
-
-        nav {
-            flex-direction: column;
-        }
-
-        nav a {
-            text-align: center;
-        }
-
-        .informacion-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .equipo-header {
-            flex-direction: column;
-            text-align: center;
-        }
-
-    }
-
-</style>
-```
-
+    <title>Detalle del Checklist - BioMedic</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f4f7fb; color: #263238; }
+        header { background: linear-gradient(135deg, #0d6efd, #084298); color: white; text-align: center; padding: 35px 20px; }
+        header h1 { margin: 0; font-size: 32px; }
+        header p { margin: 10px 0 0; font-size: 16px; }
+        nav { background: white; padding: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        nav a { text-decoration: none; color: #0d6efd; font-weight: bold; padding: 10px 15px; border-radius: 8px; transition: 0.2s; }
+        nav a:hover { background: #e8f1ff; }
+        nav a.activo { background: #0d6efd; color: white; }
+        .contenedor { width: 94%; max-width: 1200px; margin: 35px auto; }
+        .tarjeta { background: white; padding: 30px; border-radius: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 25px; }
+        .tarjeta h2 { margin-top: 0; color: #084298; }
+        .equipo-header { display: flex; align-items: center; gap: 20px; margin-bottom: 25px; }
+        .equipo-icono { width: 70px; height: 70px; border-radius: 16px; background: #eaf2ff; border: 3px solid #0d6efd; display: flex; align-items: center; justify-content: center; font-size: 38px; flex-shrink: 0; }
+        .equipo-header h2 { margin: 0 0 5px; }
+        .equipo-header p { margin: 4px 0; color: #555; }
+        .informacion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .dato { background: #f8fafc; border: 1px solid #dce3eb; border-radius: 12px; padding: 16px; }
+        .dato strong { display: block; color: #084298; margin-bottom: 6px; }
+        .dato span { color: #444; }
+        .resultado { margin: 25px 0; padding: 20px; border-radius: 15px; text-align: center; font-size: 22px; font-weight: bold; }
+        .resultado.aprobado { background: #e9f7ef; border: 2px solid #198754; color: #146c43; }
+        .resultado.atencion { background: #fff8df; border: 2px solid #ffc107; color: #856404; }
+        .resultado.no-aprobado { background: #fff0f1; border: 2px solid #dc3545; color: #b02a37; }
+        .tabla-contenedor { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #dce3eb; padding: 14px; text-align: left; vertical-align: middle; }
+        th { background: #eaf2ff; color: #084298; }
+        tr:nth-child(even) { background: #f8fafc; }
+        .estado-check { display: inline-flex; align-items: center; gap: 8px; font-weight: bold; }
+        .circulo { width: 16px; height: 16px; border-radius: 50%; display: inline-block; }
+        .verde { background: #198754; }
+        .amarillo { background: #ffc107; }
+        .rojo { background: #dc3545; }
+        .observaciones { background: #f8fafc; border-left: 5px solid #0d6efd; padding: 20px; border-radius: 10px; line-height: 1.6; min-height: 70px; }
+        .acciones { display: flex; justify-content: center; gap: 12px; margin-top: 25px; }
+        .boton-volver { display: inline-block; padding: 12px 20px; border-radius: 10px; text-decoration: none; font-weight: bold; background: #0d6efd; color: white; }
+        .boton-volver:hover { background: #084298; }
+        footer { background: #263238; color: white; text-align: center; padding: 25px; margin-top: 40px; }
+        footer p { margin: 6px; }
+        @media (max-width: 800px) { .informacion-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { header h1 { font-size: 25px; } .tarjeta { padding: 20px; } nav { flex-direction: column; } nav a { text-align: center; } .informacion-grid { grid-template-columns: 1fr; } .equipo-header { flex-direction: column; text-align: center; } }
+    </style>
 </head>
-
 <body>
-
-<!-- =========================================
-     ENCABEZADO
-========================================= -->
-
 <header>
-
-```
-<h1>ðŸ“‹ Detalle del Checklist</h1>
-
-<p>
-    Registro de inspecciÃ³n del ventilador mecÃ¡nico
-</p>
-```
-
+    <h1>&#x1F4CB; Detalle del Checklist</h1>
+    <p>Registro de inspecci&oacute;n del ventilador mec&aacute;nico</p>
 </header>
-
-<!-- =========================================
-     MENÃš
-========================================= -->
-
 <nav>
-
-```
-<a href="/">
-    Inicio
-</a>
-
-<a href="/equipos">
-    Equipos
-</a>
-
-<a href="/mantenimientos">
-    Mantenimientos
-</a>
-
-<a href="/checklist" class="activo">
-    Checklists
-</a>
-
-<a href="/dashboard">
-    Dashboard
-</a>
-
-<a href="/normativa">
-    Normativa
-</a>
-
-<a href="/bibliografia">
-    BibliografÃ­a
-</a>
-
-<a href="/diagrama-bloques">
-    Diagrama de bloques
-</a>
-```
-
+    <a href="/">Inicio</a>
+    <a href="/equipos">Equipos</a>
+    <a href="/mantenimientos">Mantenimientos</a>
+    <a href="/checklist" class="activo">Checklists</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/normativa">Normativa</a>
+    <a href="/bibliografia">Bibliograf&iacute;a</a>
+    <a href="/diagrama-bloques">Diagrama de bloques</a>
 </nav>
-
 <main class="contenedor">
-
-<!-- =========================================
-     INFORMACIÃ“N DEL EQUIPO
-========================================= -->
-
-<section class="tarjeta">
-
-```
-<div class="equipo-header">
-
-    <div class="equipo-icono">
-        ðŸ«
-    </div>
-
-    <div>
-
-        <h2>
-            {{ checklist.codigo }}
-        </h2>
-
-        <p>
-            <strong>Marca:</strong>
-            {{ checklist.marca }}
-        </p>
-
-        <p>
-            <strong>Modelo:</strong>
-            {{ checklist.modelo }}
-        </p>
-
-    </div>
-
-</div>
-
-
-<div class="informacion-grid">
-
-
-    <div class="dato">
-
-        <strong>
-            NÃºmero de serie
-        </strong>
-
-        <span>
-            {{ checklist.serie }}
-        </span>
-
-    </div>
-
-
-    <div class="dato">
-
-        <strong>
-            UbicaciÃ³n
-        </strong>
-
-        <span>
-            {{ checklist.ubicacion }}
-        </span>
-
-    </div>
-
-
-    <div class="dato">
-
-        <strong>
-            Servicio
-        </strong>
-
-        <span>
-            {{ checklist.servicio }}
-        </span>
-
-    </div>
-
-
-    <div class="dato">
-
-        <strong>
-            Fecha
-        </strong>
-
-        <span>
-            {{ checklist.fecha }}
-        </span>
-
-    </div>
-
-
-    <div class="dato">
-
-        <strong>
-            TÃ©cnico
-        </strong>
-
-        <span>
-            {{ checklist.tecnico }}
-        </span>
-
-    </div>
-
-
-    <div class="dato">
-
-        <strong>
-            Resultado
-        </strong>
-
-        <span>
-            {{ checklist.resultado }}
-        </span>
-
-    </div>
-
-
-</div>
-```
-
-</section>
-
-<!-- =========================================
-     RESULTADO GENERAL
-========================================= -->
-
-<section class="tarjeta">
-
-```
-{% if checklist.resultado == "APROBADO" %}
-
-    <div class="resultado aprobado">
-
-        ðŸŸ¢ APROBADO
-
-        <div style="font-size:15px; margin-top:8px; font-weight:normal;">
-
-            El equipo cumple con los puntos evaluados
-            en el checklist.
-
+    <section class="tarjeta">
+        <div class="equipo-header">
+            <div class="equipo-icono">&#x1FAC1;</div>
+            <div>
+                <h2>{{ checklist.codigo }}</h2>
+                <p><strong>Marca:</strong> {{ checklist.marca }}</p>
+                <p><strong>Modelo:</strong> {{ checklist.modelo }}</p>
+            </div>
         </div>
-
-    </div>
-
-
-{% elif checklist.resultado == "ATENCIÃ“N REQUERIDA" %}
-
-    <div class="resultado atencion">
-
-        ðŸŸ¡ ATENCIÃ“N REQUERIDA
-
-        <div style="font-size:15px; margin-top:8px; font-weight:normal;">
-
-            Se identificaron puntos que requieren
-            atenciÃ³n o seguimiento.
-
+        <div class="informacion-grid">
+            <div class="dato"><strong>N&uacute;mero de serie</strong><span>{{ checklist.serie }}</span></div>
+            <div class="dato"><strong>Ubicaci&oacute;n</strong><span>{{ checklist.ubicacion }}</span></div>
+            <div class="dato"><strong>Servicio</strong><span>{{ checklist.servicio }}</span></div>
+            <div class="dato"><strong>Fecha</strong><span>{{ checklist.fecha }}</span></div>
+            <div class="dato"><strong>T&eacute;cnico</strong><span>{{ checklist.tecnico }}</span></div>
+            <div class="dato"><strong>Resultado</strong><span>{{ checklist.resultado }}</span></div>
         </div>
-
-    </div>
-
-
-{% else %}
-
-    <div class="resultado no-aprobado">
-
-        ðŸ”´ NO APROBADO
-
-        <div style="font-size:15px; margin-top:8px; font-weight:normal;">
-
-            Se identificaron uno o mÃ¡s puntos
-            que no cumplen.
-
+    </section>
+    <section class="tarjeta">
+        {% if checklist.resultado == "APROBADO" %}
+            <div class="resultado aprobado">&#x1F7E2; APROBADO<div style="font-size:15px;margin-top:8px;font-weight:normal;">El equipo cumple con los puntos evaluados.</div></div>
+        {% elif "ATEN" in checklist.resultado %}
+            <div class="resultado atencion">&#x1F7E1; ATENCI&Oacute;N REQUERIDA<div style="font-size:15px;margin-top:8px;font-weight:normal;">Se identificaron puntos que requieren atenci&oacute;n.</div></div>
+        {% else %}
+            <div class="resultado no-aprobado">&#x1F534; NO APROBADO<div style="font-size:15px;margin-top:8px;font-weight:normal;">Se identificaron uno o m&aacute;s puntos que no cumplen.</div></div>
+        {% endif %}
+    </section>
+    <section class="tarjeta">
+        <h2>&#x1F50D; Puntos inspeccionados</h2>
+        <div class="tabla-contenedor">
+            <table>
+                <thead><tr><th>#</th><th>Punto de inspecci&oacute;n</th><th>Resultado</th></tr></thead>
+                <tbody>
+                {% set puntos = [
+                    ('inspeccion_visual','Inspecci\u00f3n visual'),
+                    ('estado_fisico','Estado f\u00edsico'),
+                    ('cable_alimentacion','Cable de alimentaci\u00f3n'),
+                    ('pantalla','Pantalla'),
+                    ('alarmas','Alarmas'),
+                    ('encendido','Encendido'),
+                    ('bateria','Bater\u00eda'),
+                    ('circuito_respiratorio','Circuito respiratorio'),
+                    ('filtros','Filtros'),
+                    ('sensores','Sensores'),
+                    ('prueba_funcionamiento','Prueba de funcionamiento'),
+                    ('limpieza','Limpieza')
+                ] %}
+                {% for campo, nombre in puntos %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ nombre }}</td>
+                    <td>
+                        {% set v = checklist[campo] %}
+                        {% if v == "Cumple" %}<span class="estado-check"><span class="circulo verde"></span> Cumple</span>
+                        {% elif "ten" in v|lower %}<span class="estado-check"><span class="circulo amarillo"></span> Atenci&oacute;n</span>
+                        {% else %}<span class="estado-check"><span class="circulo rojo"></span> No cumple</span>{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
-
-    </div>
-
-{% endif %}
-```
-
-</section>
-
-<!-- =========================================
-     PUNTOS DEL CHECKLIST
-========================================= -->
-
-<section class="tarjeta">
-
-```
-<h2>
-    ðŸ” Puntos inspeccionados
-</h2>
-
-
-<div class="tabla-contenedor">
-
-    <table>
-
-        <thead>
-
-            <tr>
-
-                <th>
-                    #
-                </th>
-
-                <th>
-                    Punto de inspecciÃ³n
-                </th>
-
-                <th>
-                    Resultado
-                </th>
-
-            </tr>
-
-        </thead>
-
-
-        <tbody>
-
-
-            <tr>
-
-                <td>1</td>
-
-                <td>
-                    InspecciÃ³n visual
-                </td>
-
-                <td>
-                    {% if checklist.inspeccion_visual == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.inspeccion_visual == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>2</td>
-
-                <td>
-                    Estado fÃ­sico
-                </td>
-
-                <td>
-
-                    {% if checklist.estado_fisico == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.estado_fisico == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>3</td>
-
-                <td>
-                    Cable de alimentaciÃ³n
-                </td>
-
-                <td>
-
-                    {% if checklist.cable_alimentacion == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.cable_alimentacion == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>4</td>
-
-                <td>
-                    Pantalla
-                </td>
-
-                <td>
-
-                    {% if checklist.pantalla == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.pantalla == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>5</td>
-
-                <td>
-                    Alarmas
-                </td>
-
-                <td>
-
-                    {% if checklist.alarmas == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.alarmas == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>6</td>
-
-                <td>
-                    Encendido
-                </td>
-
-                <td>
-
-                    {% if checklist.encendido == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.encendido == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>7</td>
-
-                <td>
-                    BaterÃ­a
-                </td>
-
-                <td>
-
-                    {% if checklist.bateria == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.bateria == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>8</td>
-
-                <td>
-                    Circuito respiratorio
-                </td>
-
-                <td>
-
-                    {% if checklist.circuito_respiratorio == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.circuito_respiratorio == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>9</td>
-
-                <td>
-                    Filtros
-                </td>
-
-                <td>
-
-                    {% if checklist.filtros == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.filtros == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>10</td>
-
-                <td>
-                    Sensores
-                </td>
-
-                <td>
-
-                    {% if checklist.sensores == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.sensores == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>11</td>
-
-                <td>
-                    Prueba de funcionamiento
-                </td>
-
-                <td>
-
-                    {% if checklist.prueba_funcionamiento == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.prueba_funcionamiento == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>12</td>
-
-                <td>
-                    Limpieza
-                </td>
-
-                <td>
-
-                    {% if checklist.limpieza == "Cumple" %}
-                        <span class="estado">
-                            <span class="circulo verde"></span>
-                            Cumple
-                        </span>
-                    {% elif checklist.limpieza == "AtenciÃ³n" %}
-                        <span class="estado">
-                            <span class="circulo amarillo"></span>
-                            AtenciÃ³n
-                        </span>
-                    {% else %}
-                        <span class="estado">
-                            <span class="circulo rojo"></span>
-                            No cumple
-                        </span>
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-        </tbody>
-
-    </table>
-
-</div>
-```
-
-</section>
-
-<!-- =========================================
-     OBSERVACIONES
-========================================= -->
-
-<section class="tarjeta">
-
-```
-<h2>
-    ðŸ“ Observaciones
-</h2>
-
-<div class="observaciones">
-
-    {% if checklist.observaciones %}
-
-        {{ checklist.observaciones }}
-
-    {% else %}
-
-        No se registraron observaciones.
-
-    {% endif %}
-
-</div>
-```
-
-</section>
-
-<!-- =========================================
-     BOTÃ“N VOLVER
-========================================= -->
-
-<div class="acciones">
-
-```
-<a
-    href="/checklist"
-    class="boton boton-volver"
->
-    â† Volver al historial
-</a>
-```
-
-</div>
-
+    </section>
+    <section class="tarjeta">
+        <h2>&#x1F4DD; Observaciones</h2>
+        <div class="observaciones">{% if checklist.observaciones %}{{ checklist.observaciones }}{% else %}No se registraron observaciones.{% endif %}</div>
+    </section>
+    <div class="acciones"><a href="/checklist" class="boton-volver">&larr; Volver al historial</a></div>
 </main>
-
-<!-- =========================================
-     PIE DE PÃGINA
-========================================= -->
-
-<footer>
-
-```
-<p>
-    <strong>BioMedic</strong>
-</p>
-
-<p>
-    Plataforma para la gestiÃ³n y seguimiento
-    de equipos biomÃ©dicos
-</p>
-
-<p>
-    DiseÃ±o e IngenierÃ­a ClÃ­nica â€” Entrega 1
-</p>
-```
-
-</footer>
-
+<footer><p><strong>BioMedic</strong></p><p>Plataforma para la gesti&oacute;n y seguimiento de equipos biom&eacute;dicos</p></footer>
 </body>
-
 </html>
-
-

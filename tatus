@@ -1,0 +1,100 @@
+[35mtemplates/bibliografia.html[m[36m:[m[32m10[m[36m:[m    <title>Bibliografía - [1;31mBioVent[m</title>
+[35mtemplates/bibliografia.html[m[36m:[m[32m133[m[36m:[m        Fuentes de consulta del proyecto [1;31mBioVent[m
+[35mtemplates/bibliografia.html[m[36m:[m[32m174[m[36m:[m            [1;31mBioVent[m, especialmente en los temas relacionados con
+[35mtemplates/bibliografia.html[m[36m:[m[32m262[m[36m:[m        <h2>🔗 Relación con el proyecto [1;31mBioVent[m</h2>
+[35mtemplates/bibliografia.html[m[36m:[m[32m266[m[36m:[m            las diferentes funcionalidades desarrolladas en [1;31mBioVent[m.
+[35mtemplates/casos_uso.html[m[36m:[m[32m11[m[36m:[m    <title>Casos de Uso - [1;31mBioVent[m</title>
+[35mtemplates/checklist.html[m[36m:[m[32m8[m[36m:[m    <title>Checklists - [1;31mBioVent[m</title>
+[35mtemplates/checklist.html[m[36m:[m[32m1649[m[36m:[m                Registros realizados en [1;31mBioVent[m
+[35mtemplates/dashboard.html[m[36m:[m[32m9[m[36m:[m<title>Dashboard - [1;31mBioVent[m</title>
+[35mtemplates/diagrama_bloques.html[m[36m:[m[32m10[m[36m:[m    <title>Diagrama de Bloques - [1;31mBioVent[m</title>
+[35mtemplates/diagrama_bloques.html[m[36m:[m[32m1162[m[36m:[m                        Relación con [1;31mBioVent[m
+[35mtemplates/diagrama_bloques.html[m[36m:[m[32m1399[m[36m:[m        💻 Relación del diagrama con [1;31mBioVent[m
+[35mtemplates/diagrama_bloques.html[m[36m:[m[32m1407[m[36m:[m        diferentes funciones de la plataforma [1;31mBioVent[m.
+[35mtemplates/diagrama_bloques.html[m[36m:[m[32m1525[m[36m:[m        Para el proyecto [1;31mBioVent[m, este esquema se utiliza
+[35mtemplates/equipo_detalle.html[m[36m:[m[32m10[m[36m:[m    <title>Ficha del equipo - [1;31mBioVent[m</title>
+[35mtemplates/equipo_detalle.html[m[36m:[m[32m256[m[36m:[m    <h1>[1;31mBioVent[m</h1>
+[35mtemplates/equipos.html[m[36m:[m[32m10[m[36m:[m    <title>Equipos - [1;31mBioVent[m</title>
+[35mtemplates/equipos.html[m[36m:[m[32m708[m[36m:[m    <h1>🫁 [1;31mBioVent[m</h1>
+[35mtemplates/equipos.html[m[36m:[m[32m976[m[36m:[m            Al registrar un nuevo ventilador, [1;31mBioVent[m lo
+[35mtemplates/index.html[m[36m:[m[32m10[m[36m:[m    <title>[1;31mBioVent[m - Inicio</title>
+[35mtemplates/index.html[m[36m:[m[32m868[m[36m:[m        [1;31mBioVent[m
+[35mtemplates/index.html[m[36m:[m[32m961[m[36m:[m        Bienvenido a [1;31mBioVent[m
+[35mtemplates/index.html[m[36m:[m[32m967[m[36m:[m        [1;31mBioVent[m es una plataforma orientada a la gestión
+[35mtemplates/index.html[m[36m:[m[32m996[m[36m:[m            🧩 Módulos de [1;31mBioVent[m
+[35mtemplates/index.html[m[36m:[m[32m1267[m[36m:[m            🚀 ¿Qué permite [1;31mBioVent[m?
+[35mtemplates/index.html[m[36m:[m[32m1512[m[36m:[m            <strong>[1;31mBioVent[m</strong> es una propuesta
+[35mtemplates/index.html[m[36m:[m[32m1556[m[36m:[m        [1;31mBioVent[m corresponde a un proyecto académico
+[35mtemplates/mantenimientos.html[m[36m:[m[32m10[m[36m:[m    <title>Mantenimientos - [1;31mBioVent[m</title>
+[35mtemplates/mantenimientos.html[m[36m:[m[32m814[m[36m:[m    <h1>🫁 [1;31mBioVent[m</h1>
+[35mtemplates/mantenimientos.html[m[36m:[m[32m1090[m[36m:[m            [1;31mBioVent[m calcula automáticamente si el mantenimiento
+[35mtemplates/manual_equipo.html[m[36m:[m[32m10[m[36m:[m    <title>Manuales - {{ equipo.marca }} {{ equipo.modelo }} | [1;31mBioVent[m</title>
+[35mtemplates/manual_equipo.html[m[36m:[m[32m1282[m[36m:[m                [1;31mBioVent[m permite mantener organizada la
+[35mtemplates/manual_equipo.html[m[36m:[m[32m1305[m[36m:[m        <strong>[1;31mBioVent[m</strong>
+[35mtemplates/manuales.html[m[36m:[m[32m10[m[36m:[m    <title>Manuales de Equipos - [1;31mBioVent[m</title>
+[35mtemplates/manuales.html[m[36m:[m[32m565[m[36m:[m        a los equipos biomédicos registrados en [1;31mBioVent[m.
+[35mtemplates/manuales.html[m[36m:[m[32m627[m[36m:[m        📖 Biblioteca técnica de [1;31mBioVent[m
+[35mtemplates/manuales.html[m[36m:[m[32m790[m[36m:[m        en [1;31mBioVent[m.
+[35mtemplates/manuales.html[m[36m:[m[32m859[m[36m:[m        <strong>[1;31mBioVent[m</strong>
+[35mtemplates/normativa.html[m[36m:[m[32m10[m[36m:[m    <title>Normativa - [1;31mBioVent[m</title>
+[35mtemplates/normativa.html[m[36m:[m[32m469[m[36m:[m            📚 Normativa - [1;31mBioVent[m
+[35mtemplates/normativa.html[m[36m:[m[32m513[m[36m:[m            [1;31mBioVent[m considera los principales referentes regulatorios y
+[35mtemplates/templates/equipo_biomedico.html[m[36m:[m[32m7[m[36m:[m    <title>Equipo Biomédico - [1;31mBioVent[m</title>
+[35mtemplates/templates/equipo_biomedico.html[m[36m:[m[32m160[m[36m:[m<h1>[1;31mBioVent[m</h1>
+[35mtemplates/templates/equipo_biomedico.html[m[36m:[m[32m193[m[36m:[m        [1;31mBioVent[m es un ventilador mecánico de uso hospitalario destinado
+[35mtemplates/templates/equipo_biomedico.html[m[36m:[m[32m204[m[36m:[m        gestionados mediante la plataforma [1;31mBioVent[m.
+[35mtemplates/templates/equipo_biomedico.html[m[36m:[m[32m243[m[36m:[m            <td>[1;31mBioVent[m</td>
+[35mtemplates/templates/equipo_biomedico.html[m[36m:[m[32m274[m[36m:[m    <h2>Relación con [1;31mBioVent[m</h2>
+[35mtemplates/templates/equipo_biomedico.html[m[36m:[m[32m277[m[36m:[m        La plataforma [1;31mBioVent[m fue diseñada para registrar y gestionar
+[35mtemplates/ver_checklist.html[m[36m:[m[32m10[m[36m:[m<title>Detalle del Checklist - [1;31mBioVent[m</title>
+[35mtemplates/ver_checklist.html[m[36m:[m[32m1158[m[36m:[m    <strong>[1;31mBioVent[m</strong>
+[35mbibliografia.html[m[36m:[m[32m10[m[36m:[m    <title>Bibliografía - [1;31mBioVent[m</title>
+[35mbibliografia.html[m[36m:[m[32m133[m[36m:[m        Fuentes de consulta del proyecto [1;31mBioVent[m
+[35mbibliografia.html[m[36m:[m[32m174[m[36m:[m            [1;31mBioVent[m, especialmente en los temas relacionados con
+[35mbibliografia.html[m[36m:[m[32m262[m[36m:[m        <h2>🔗 Relación con el proyecto [1;31mBioVent[m</h2>
+[35mbibliografia.html[m[36m:[m[32m266[m[36m:[m            las diferentes funcionalidades desarrolladas en [1;31mBioVent[m.
+[35mcasos_uso.html[m[36m:[m[32m11[m[36m:[m    <title>Casos de Uso - [1;31mBioVent[m</title>
+[35mchecklist.html[m[36m:[m[32m8[m[36m:[m    <title>Checklists - [1;31mBioVent[m</title>
+[35mchecklist.html[m[36m:[m[32m1649[m[36m:[m                Registros realizados en [1;31mBioVent[m
+[35mdashboard.html[m[36m:[m[32m9[m[36m:[m<title>Dashboard - [1;31mBioVent[m</title>
+[35mdiagrama_bloques.html[m[36m:[m[32m10[m[36m:[m    <title>Diagrama de Bloques - [1;31mBioVent[m</title>
+[35mdiagrama_bloques.html[m[36m:[m[32m1162[m[36m:[m                        Relación con [1;31mBioVent[m
+[35mdiagrama_bloques.html[m[36m:[m[32m1399[m[36m:[m        💻 Relación del diagrama con [1;31mBioVent[m
+[35mdiagrama_bloques.html[m[36m:[m[32m1407[m[36m:[m        diferentes funciones de la plataforma [1;31mBioVent[m.
+[35mdiagrama_bloques.html[m[36m:[m[32m1525[m[36m:[m        Para el proyecto [1;31mBioVent[m, este esquema se utiliza
+[35mequipo_detalle.html[m[36m:[m[32m10[m[36m:[m    <title>Ficha del equipo - [1;31mBioVent[m</title>
+[35mequipo_detalle.html[m[36m:[m[32m256[m[36m:[m    <h1>[1;31mBioVent[m</h1>
+[35mequipos.html[m[36m:[m[32m10[m[36m:[m    <title>Equipos - [1;31mBioVent[m</title>
+[35mequipos.html[m[36m:[m[32m708[m[36m:[m    <h1>🫁 [1;31mBioVent[m</h1>
+[35mequipos.html[m[36m:[m[32m976[m[36m:[m            Al registrar un nuevo ventilador, [1;31mBioVent[m lo
+[35mindex.html[m[36m:[m[32m10[m[36m:[m    <title>[1;31mBioVent[m - Inicio</title>
+[35mindex.html[m[36m:[m[32m868[m[36m:[m        [1;31mBioVent[m
+[35mindex.html[m[36m:[m[32m961[m[36m:[m        Bienvenido a [1;31mBioVent[m
+[35mindex.html[m[36m:[m[32m967[m[36m:[m        [1;31mBioVent[m es una plataforma orientada a la gestión
+[35mindex.html[m[36m:[m[32m996[m[36m:[m            🧩 Módulos de [1;31mBioVent[m
+[35mindex.html[m[36m:[m[32m1267[m[36m:[m            🚀 ¿Qué permite [1;31mBioVent[m?
+[35mindex.html[m[36m:[m[32m1512[m[36m:[m            <strong>[1;31mBioVent[m</strong> es una propuesta
+[35mindex.html[m[36m:[m[32m1556[m[36m:[m        [1;31mBioVent[m corresponde a un proyecto académico
+[35mmantenimientos.html[m[36m:[m[32m10[m[36m:[m    <title>Mantenimientos - [1;31mBioVent[m</title>
+[35mmantenimientos.html[m[36m:[m[32m814[m[36m:[m    <h1>🫁 [1;31mBioVent[m</h1>
+[35mmantenimientos.html[m[36m:[m[32m1090[m[36m:[m            [1;31mBioVent[m calcula automáticamente si el mantenimiento
+[35mmanual_equipo.html[m[36m:[m[32m10[m[36m:[m    <title>Manuales - {{ equipo.marca }} {{ equipo.modelo }} | [1;31mBioVent[m</title>
+[35mmanual_equipo.html[m[36m:[m[32m1282[m[36m:[m                [1;31mBioVent[m permite mantener organizada la
+[35mmanual_equipo.html[m[36m:[m[32m1305[m[36m:[m        <strong>[1;31mBioVent[m</strong>
+[35mmanuales.html[m[36m:[m[32m10[m[36m:[m    <title>Manuales de Equipos - [1;31mBioVent[m</title>
+[35mmanuales.html[m[36m:[m[32m565[m[36m:[m        a los equipos biomédicos registrados en [1;31mBioVent[m.
+[35mmanuales.html[m[36m:[m[32m627[m[36m:[m        📖 Biblioteca técnica de [1;31mBioVent[m
+[35mmanuales.html[m[36m:[m[32m790[m[36m:[m        en [1;31mBioVent[m.
+[35mmanuales.html[m[36m:[m[32m859[m[36m:[m        <strong>[1;31mBioVent[m</strong>
+[35mnormativa.html[m[36m:[m[32m10[m[36m:[m    <title>Normativa - [1;31mBioVent[m</title>
+[35mnormativa.html[m[36m:[m[32m469[m[36m:[m            📚 Normativa - [1;31mBioVent[m
+[35mnormativa.html[m[36m:[m[32m513[m[36m:[m            [1;31mBioVent[m considera los principales referentes regulatorios y
+[35mtemplates/equipo_biomedico.html[m[36m:[m[32m7[m[36m:[m    <title>Equipo Biomédico - [1;31mBioVent[m</title>
+[35mtemplates/equipo_biomedico.html[m[36m:[m[32m160[m[36m:[m<h1>[1;31mBioVent[m</h1>
+[35mtemplates/equipo_biomedico.html[m[36m:[m[32m193[m[36m:[m        [1;31mBioVent[m es un ventilador mecánico de uso hospitalario destinado
+[35mtemplates/equipo_biomedico.html[m[36m:[m[32m204[m[36m:[m        gestionados mediante la plataforma [1;31mBioVent[m.
+[35mtemplates/equipo_biomedico.html[m[36m:[m[32m243[m[36m:[m            <td>[1;31mBioVent[m</td>
+[35mtemplates/equipo_biomedico.html[m[36m:[m[32m274[m[36m:[m    <h2>Relación con [1;31mBioVent[m</h2>
+[35mtemplates/equipo_biomedico.html[m[36m:[m[32m277[m[36m:[m        La plataforma [1;31mBioVent[m fue diseñada para registrar y gestionar
+[35mver_checklist.html[m[36m:[m[32m10[m[36m:[m<title>Detalle del Checklist - [1;31mBioVent[m</title>
+[35mver_checklist.html[m[36m:[m[32m1158[m[36m:[m    <strong>[1;31mBioVent[m</strong>

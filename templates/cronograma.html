@@ -1,221 +1,69 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Plan de Trabajo y Cronograma - BioMedic</title>
-
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
-        }
-
-        .contenedor {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        .encabezado {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
-            text-align: center;
-        }
-
-        .encabezado h1 {
-            margin: 0 0 10px;
-            color: #1976d2;
-            font-size: 32px;
-        }
-
-        .encabezado p {
-            margin: 0;
-            color: #555;
-            font-size: 16px;
-        }
-
-        .seccion {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
-        }
-
-        .seccion h2 {
-            margin-top: 0;
-            color: #1976d2;
-            border-bottom: 2px solid #e5e5e5;
-            padding-bottom: 12px;
-        }
-
-        .seccion p {
-            line-height: 1.6;
-            color: #444;
-        }
-
-        /* TABLA */
-
-        .tabla-contenedor {
-            overflow-x: auto;
-        }
-
-        .cronograma {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            min-width: 750px;
-            overflow: hidden;
-            border-radius: 12px;
-        }
-
-        .cronograma th {
-            background: #1976d2;
-            color: white;
-            padding: 16px 12px;
-            text-align: center;
-            font-size: 15px;
-        }
-
-        .cronograma th:first-child {
-            text-align: left;
-            min-width: 280px;
-        }
-
-        .cronograma td {
-            padding: 16px 12px;
-            border-bottom: 1px solid #e5e5e5;
-            text-align: center;
-            background: #ffffff;
-        }
-
-        .cronograma td:first-child {
-            text-align: left;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .cronograma tr:hover td {
-            background: #f5f9ff;
-        }
-
-        /* CÃRCULO VERDE */
-
-        .activo {
-            width: 18px;
-            height: 18px;
-            background: #22c55e;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 2px 6px rgba(34,197,94,0.35);
-        }
-
-        .vacio {
-            width: 18px;
-            height: 18px;
-            border: 2px solid #d8dee8;
-            border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-        }
-
-        /* LEYENDA */
-
-        .leyenda {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .leyenda-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #555;
-        }
-
-        /* RESPONSIVE */
-
+        body { margin: 0; font-family: Arial, sans-serif; background: #f4f7fb; color: #222; }
+        .contenedor { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .encabezado { background: white; border-radius: 16px; padding: 30px; margin-bottom: 25px; box-shadow: 0 5px 18px rgba(0,0,0,0.08); text-align: center; }
+        .encabezado h1 { margin: 0 0 10px; color: #1976d2; font-size: 32px; }
+        .encabezado p { margin: 0; color: #555; font-size: 16px; }
+        .seccion { background: white; border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 5px 18px rgba(0,0,0,0.08); }
+        .seccion h2 { margin-top: 0; color: #1976d2; border-bottom: 2px solid #e5e5e5; padding-bottom: 12px; }
+        .seccion p { line-height: 1.6; color: #444; }
+        .tabla-contenedor { overflow-x: auto; }
+        .cronograma { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 750px; overflow: hidden; border-radius: 12px; }
+        .cronograma th { background: #1976d2; color: white; padding: 16px 12px; text-align: center; font-size: 15px; }
+        .cronograma th:first-child { text-align: left; min-width: 280px; }
+        .cronograma td { padding: 16px 12px; border-bottom: 1px solid #e5e5e5; text-align: center; background: #ffffff; }
+        .cronograma td:first-child { text-align: left; font-weight: bold; color: #333; }
+        .cronograma tr:hover td { background: #f5f9ff; }
+        .activo { width: 18px; height: 18px; background: #22c55e; border-radius: 50%; display: inline-block; box-shadow: 0 2px 6px rgba(34,197,94,0.35); }
+        .vacio { width: 18px; height: 18px; border: 2px solid #d8dee8; border-radius: 50%; display: inline-block; box-sizing: border-box; }
+        .leyenda { display: flex; justify-content: center; gap: 30px; margin-top: 20px; flex-wrap: wrap; }
+        .leyenda-item { display: flex; align-items: center; gap: 8px; color: #555; }
         @media (max-width: 700px) {
-
-            .contenedor {
-                margin: 20px auto;
-                padding: 10px;
-            }
-
-            .encabezado h1 {
-                font-size: 25px;
-            }
-
-            .seccion {
-                padding: 18px;
-            }
+            .contenedor { margin: 20px auto; padding: 10px; }
+            .encabezado h1 { font-size: 25px; }
+            .seccion { padding: 18px; }
         }
     </style>
 </head>
-
 <body>
 
 <div class="contenedor">
 
-    <!-- ENCABEZADO -->
-
     <div class="encabezado">
-
-        <h1> Plan de Trabajo y Cronograma</h1>
-
+        <h1>Plan de Trabajo y Cronograma</h1>
         <p>
-            OrganizaciÃ³n de las actividades operativas de la empresa
-            para la gestiÃ³n y mantenimiento de equipos biomÃ©dicos.
+            Organizaci&oacute;n de las actividades operativas de la empresa
+            para la gesti&oacute;n y mantenimiento de equipos biom&eacute;dicos.
         </p>
-
     </div>
 
-
-    <!-- PLAN DE TRABAJO -->
-
     <div class="seccion">
-
         <h2>Plan de trabajo</h2>
-
         <p>
             El plan de trabajo establece las principales actividades que
-            desarrolla la empresa para la recepciÃ³n, inspecciÃ³n,
-            mantenimiento, verificaciÃ³n y seguimiento de los equipos
-            biomÃ©dicos.
+            desarrolla la empresa para la recepci&oacute;n, inspecci&oacute;n,
+            mantenimiento, verificaci&oacute;n y seguimiento de los equipos
+            biom&eacute;dicos.
         </p>
-
         <p>
             Las actividades se organizan de manera secuencial con el
-            propÃ³sito de garantizar una adecuada gestiÃ³n tÃ©cnica de los
+            prop&oacute;sito de garantizar una adecuada gesti&oacute;n t&eacute;cnica de los
             equipos y mantener un registro de las intervenciones
             realizadas.
         </p>
-
     </div>
 
-
-    <!-- CRONOGRAMA -->
-
     <div class="seccion">
-
-        <h2> Cronograma de actividades</h2>
-
+        <h2>Cronograma de actividades</h2>
         <div class="tabla-contenedor">
-
             <table class="cronograma">
-
                 <thead>
-
                     <tr>
                         <th>Actividad</th>
                         <th>Semana 1</th>
@@ -223,123 +71,77 @@
                         <th>Semana 3</th>
                         <th>Semana 4</th>
                     </tr>
-
                 </thead>
-
                 <tbody>
-
                     <tr>
-                        <td>ðŸ©»Registro de equipos</td>
-                        
+                        <td>Registro de equipos</td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                     </tr>
-
-
                     <tr>
-                        <td>InspecciÃ³n tÃ©cnica</td>
-
+                        <td>Inspecci&oacute;n t&eacute;cnica</td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                     </tr>
-
-
                     <tr>
                         <td>Mantenimiento preventivo</td>
-
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                     </tr>
-
-
                     <tr>
                         <td>Mantenimiento correctivo</td>
-
                         <td><span class="vacio"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                     </tr>
-
-
                     <tr>
                         <td>Pruebas de funcionamiento</td>
-
                         <td><span class="vacio"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                     </tr>
-
-
                     <tr>
-                        <td>ElaboraciÃ³n de informes</td>
-
+                        <td>Elaboraci&oacute;n de informes</td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                     </tr>
-
-
                     <tr>
                         <td>Seguimiento de equipos</td>
-
                         <td><span class="vacio"></span></td>
                         <td><span class="vacio"></span></td>
                         <td><span class="activo"></span></td>
                         <td><span class="activo"></span></td>
                     </tr>
-
                 </tbody>
-
             </table>
-
         </div>
-
-
-        <!-- LEYENDA -->
 
         <div class="leyenda">
-
-            <div class="leyenda-item">
-                <span class="activo"></span>
-                Actividad programada
-            </div>
-
-            <div class="leyenda-item">
-                <span class="vacio"></span>
-                Sin actividad programada
-            </div>
-
+            <div class="leyenda-item"><span class="activo"></span> Actividad programada</div>
+            <div class="leyenda-item"><span class="vacio"></span> Sin actividad programada</div>
         </div>
-
     </div>
 
-
-    <!-- OBJETIVO -->
-
     <div class="seccion">
-
-        <h2> Objetivo del plan de trabajo</h2>
-
+        <h2>Objetivo del plan de trabajo</h2>
         <p>
-            Organizar las actividades relacionadas con la gestiÃ³n tÃ©cnica
-            de los equipos biomÃ©dicos, garantizando que cada equipo sea
+            Organizar las actividades relacionadas con la gesti&oacute;n t&eacute;cnica
+            de los equipos biom&eacute;dicos, garantizando que cada equipo sea
             recibido, inspeccionado, mantenido, probado y documentado
             adecuadamente.
         </p>
-
     </div>
 
 </div>
-
 </body>
 </html>
-
