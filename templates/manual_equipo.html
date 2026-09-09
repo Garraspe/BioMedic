@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Manuales - {{ equipo.marca }} {{ equipo.modelo }} | BioVent</title>
+    <title>Manuales - {{ equipo.marca }} {{ equipo.modelo }} | BioMedic</title>
 
 
     <style>
@@ -73,7 +73,7 @@
 
 
         /* =========================================
-           MENÚ
+           MENÃš
         ========================================= */
 
         nav {
@@ -145,7 +145,7 @@
 
 
         /* =========================================
-           BOTÓN VOLVER
+           BOTÃ“N VOLVER
         ========================================= */
 
         .volver {
@@ -252,7 +252,7 @@
 
 
         /* =========================================
-           INFORMACIÓN
+           INFORMACIÃ“N
         ========================================= */
 
         .informacion {
@@ -303,7 +303,7 @@
 
 
         /* =========================================
-           DOCUMENTACIÓN
+           DOCUMENTACIÃ“N
         ========================================= */
 
         .documentacion {
@@ -576,7 +576,7 @@
 
 
         /* =========================================
-           INFORMACIÓN
+           INFORMACIÃ“N
         ========================================= */
 
         .nota {
@@ -701,17 +701,17 @@
 
 <header>
 
-    <h1>📚 Manuales de Equipos</h1>
+    <h1>ðŸ“š Manuales de Equipos</h1>
 
     <p>
-        Documentación técnica del equipo biomédico
+        DocumentaciÃ³n tÃ©cnica del equipo biomÃ©dico
     </p>
 
 </header>
 
 
 <!-- =========================================
-     MENÚ
+     MENÃš
 ========================================= -->
 
 <nav>
@@ -741,7 +741,7 @@
     </a>
 
     <a href="/bibliografia">
-        Bibliografía
+        BibliografÃ­a
     </a>
 
     <a href="/diagrama-bloques">
@@ -763,12 +763,12 @@
     ====================================== -->
 
     <a href="/manuales" class="volver">
-        ← Volver a equipos
+        â† Volver a equipos
     </a>
 
 
     <!-- =====================================
-         INFORMACIÓN DEL EQUIPO
+         INFORMACIÃ“N DEL EQUIPO
     ====================================== -->
 
     <section class="equipo">
@@ -776,7 +776,7 @@
         <div class="equipo-titulo">
 
             <div class="equipo-icono">
-                🫁
+                ðŸ«
             </div>
 
             <div>
@@ -786,7 +786,7 @@
                 </h2>
 
                 <p>
-                    {{ equipo.marca }} — {{ equipo.modelo }}
+                    {{ equipo.marca }} â€” {{ equipo.modelo }}
                 </p>
 
             </div>
@@ -800,7 +800,7 @@
             <div class="dato">
 
                 <strong>
-                    CÓDIGO
+                    CÃ“DIGO
                 </strong>
 
                 <span>
@@ -839,7 +839,7 @@
             <div class="dato">
 
                 <strong>
-                    NÚMERO DE SERIE
+                    NÃšMERO DE SERIE
                 </strong>
 
                 <span>
@@ -852,7 +852,7 @@
             <div class="dato">
 
                 <strong>
-                    UBICACIÓN
+                    UBICACIÃ“N
                 </strong>
 
                 <span>
@@ -894,19 +894,19 @@
 
 
     <!-- =====================================
-         DOCUMENTACIÓN
+         DOCUMENTACIÃ“N
     ====================================== -->
 
     <section class="documentacion">
 
         <h2>
-            📖 Documentación disponible
+            ðŸ“– DocumentaciÃ³n disponible
         </h2>
 
         <p class="documentacion-intro">
 
-            Desde esta sección puedes almacenar y consultar
-            los documentos técnicos correspondientes a este
+            Desde esta secciÃ³n puedes almacenar y consultar
+            los documentos tÃ©cnicos correspondientes a este
             equipo.
 
         </p>
@@ -922,7 +922,7 @@
             <div class="manual">
 
                 <div class="manual-icono">
-                    📘
+                    ðŸ“˜
                 </div>
 
                 <h3>
@@ -955,7 +955,7 @@
                     <div class="archivo">
 
                         <strong>
-                            📄 {{ manual_usuario.archivo }}
+                            ðŸ“„ {{ manual_usuario.archivo }}
                         </strong>
 
                         <small>
@@ -970,7 +970,7 @@
                             target="_blank"
                             class="btn-abrir"
                         >
-                            📖 Abrir PDF
+                            ðŸ“– Abrir PDF
                         </a>
 
                     </div>
@@ -979,7 +979,7 @@
 
                     <div class="pendiente">
 
-                        📄 No hay manual de usuario cargado.
+                        ðŸ“„ No hay manual de usuario cargado.
 
                     </div>
 
@@ -1002,7 +1002,7 @@
 
 
                         <label>
-                            📤 Cargar PDF
+                            ðŸ“¤ Cargar PDF
                         </label>
 
 
@@ -1018,7 +1018,7 @@
                             type="submit"
                             class="btn-subir"
                         >
-                            📤 Subir manual
+                            ðŸ“¤ Subir manual
                         </button>
 
                     </form>
@@ -1035,17 +1035,17 @@
             <div class="manual">
 
                 <div class="manual-icono">
-                    🔧
+                    ðŸ”§
                 </div>
 
                 <h3>
-                    Manual de servicio técnico
+                    Manual de servicio tÃ©cnico
                 </h3>
 
                 <p>
 
-                    Documentación relacionada con
-                    la revisión y servicio técnico
+                    DocumentaciÃ³n relacionada con
+                    la revisiÃ³n y servicio tÃ©cnico
                     del equipo.
 
                 </p>
@@ -1069,7 +1069,7 @@
                     <div class="archivo">
 
                         <strong>
-                            📄 {{ manual_servicio.archivo }}
+                            ðŸ“„ {{ manual_servicio.archivo }}
                         </strong>
 
                         <small>
@@ -1084,7 +1084,7 @@
                             target="_blank"
                             class="btn-abrir"
                         >
-                            📖 Abrir PDF
+                            ðŸ“– Abrir PDF
                         </a>
 
                     </div>
@@ -1093,7 +1093,7 @@
 
                     <div class="pendiente">
 
-                        📄 No hay manual de servicio cargado.
+                        ðŸ“„ No hay manual de servicio cargado.
 
                     </div>
 
@@ -1116,7 +1116,7 @@
 
 
                         <label>
-                            📤 Cargar PDF
+                            ðŸ“¤ Cargar PDF
                         </label>
 
 
@@ -1132,7 +1132,7 @@
                             type="submit"
                             class="btn-subir"
                         >
-                            📤 Subir manual
+                            ðŸ“¤ Subir manual
                         </button>
 
                     </form>
@@ -1149,7 +1149,7 @@
             <div class="manual">
 
                 <div class="manual-icono">
-                    🛠️
+                    ðŸ› ï¸
                 </div>
 
                 <h3>
@@ -1158,7 +1158,7 @@
 
                 <p>
 
-                    Información relacionada con las
+                    InformaciÃ³n relacionada con las
                     actividades y procedimientos
                     de mantenimiento.
 
@@ -1183,7 +1183,7 @@
                     <div class="archivo">
 
                         <strong>
-                            📄 {{ manual_mantenimiento.archivo }}
+                            ðŸ“„ {{ manual_mantenimiento.archivo }}
                         </strong>
 
                         <small>
@@ -1198,7 +1198,7 @@
                             target="_blank"
                             class="btn-abrir"
                         >
-                            📖 Abrir PDF
+                            ðŸ“– Abrir PDF
                         </a>
 
                     </div>
@@ -1207,7 +1207,7 @@
 
                     <div class="pendiente">
 
-                        📄 No hay manual de mantenimiento cargado.
+                        ðŸ“„ No hay manual de mantenimiento cargado.
 
                     </div>
 
@@ -1230,7 +1230,7 @@
 
 
                         <label>
-                            📤 Cargar PDF
+                            ðŸ“¤ Cargar PDF
                         </label>
 
 
@@ -1246,7 +1246,7 @@
                             type="submit"
                             class="btn-subir"
                         >
-                            📤 Subir manual
+                            ðŸ“¤ Subir manual
                         </button>
 
                     </form>
@@ -1266,7 +1266,7 @@
         <div class="nota">
 
             <strong>
-                📌 Información sobre la documentación
+                ðŸ“Œ InformaciÃ³n sobre la documentaciÃ³n
             </strong>
 
             <p>
@@ -1279,10 +1279,10 @@
 
             <p>
 
-                BioVent permite mantener organizada la
-                documentación de cada equipo para facilitar
+                BioMedic permite mantener organizada la
+                documentaciÃ³n de cada equipo para facilitar
                 su consulta durante las actividades de
-                operación, inspección y mantenimiento.
+                operaciÃ³n, inspecciÃ³n y mantenimiento.
 
             </p>
 
@@ -1296,22 +1296,22 @@
 
 
 <!-- =========================================
-     PIE DE PÁGINA
+     PIE DE PÃGINA
 ========================================= -->
 
 <footer>
 
     <p>
-        <strong>BioVent</strong>
+        <strong>BioMedic</strong>
     </p>
 
     <p>
-        Plataforma para la gestión y seguimiento
-        de equipos biomédicos
+        Plataforma para la gestiÃ³n y seguimiento
+        de equipos biomÃ©dicos
     </p>
 
     <p>
-        Diseño e Ingeniería Clínica — Entrega 1
+        DiseÃ±o e IngenierÃ­a ClÃ­nica â€” Entrega 1
     </p>
 
 </footer>

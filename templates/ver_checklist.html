@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="es">
 
@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 ```
-<title>Detalle del Checklist - BioVent</title>
+<title>Detalle del Checklist - BioMedic</title>
 
 <style>
 
@@ -44,7 +44,7 @@
     }
 
     /* =========================================
-       MENÚ
+       MENÃš
     ========================================= */
 
     nav {
@@ -104,7 +104,7 @@
     }
 
     /* =========================================
-       TÍTULOS
+       TÃTULOS
     ========================================= */
 
     .tarjeta h2 {
@@ -113,7 +113,7 @@
     }
 
     /* =========================================
-       INFORMACIÓN DEL EQUIPO
+       INFORMACIÃ“N DEL EQUIPO
     ========================================= */
 
     .equipo-header {
@@ -153,7 +153,7 @@
     }
 
     /* =========================================
-       INFORMACIÓN
+       INFORMACIÃ“N
     ========================================= */
 
     .informacion-grid {
@@ -363,7 +363,7 @@
     }
 
     /* =========================================
-       PIE DE PÁGINA
+       PIE DE PÃGINA
     ========================================= */
 
     footer {
@@ -437,17 +437,17 @@
 <header>
 
 ```
-<h1>📋 Detalle del Checklist</h1>
+<h1>ðŸ“‹ Detalle del Checklist</h1>
 
 <p>
-    Registro de inspección del ventilador mecánico
+    Registro de inspecciÃ³n del ventilador mecÃ¡nico
 </p>
 ```
 
 </header>
 
 <!-- =========================================
-     MENÚ
+     MENÃš
 ========================================= -->
 
 <nav>
@@ -478,7 +478,7 @@
 </a>
 
 <a href="/bibliografia">
-    Bibliografía
+    BibliografÃ­a
 </a>
 
 <a href="/diagrama-bloques">
@@ -491,7 +491,7 @@
 <main class="contenedor">
 
 <!-- =========================================
-     INFORMACIÓN DEL EQUIPO
+     INFORMACIÃ“N DEL EQUIPO
 ========================================= -->
 
 <section class="tarjeta">
@@ -500,7 +500,7 @@
 <div class="equipo-header">
 
     <div class="equipo-icono">
-        🫁
+        ðŸ«
     </div>
 
     <div>
@@ -530,7 +530,7 @@
     <div class="dato">
 
         <strong>
-            Número de serie
+            NÃºmero de serie
         </strong>
 
         <span>
@@ -543,7 +543,7 @@
     <div class="dato">
 
         <strong>
-            Ubicación
+            UbicaciÃ³n
         </strong>
 
         <span>
@@ -582,7 +582,7 @@
     <div class="dato">
 
         <strong>
-            Técnico
+            TÃ©cnico
         </strong>
 
         <span>
@@ -621,7 +621,7 @@
 
     <div class="resultado aprobado">
 
-        🟢 APROBADO
+        ðŸŸ¢ APROBADO
 
         <div style="font-size:15px; margin-top:8px; font-weight:normal;">
 
@@ -633,16 +633,16 @@
     </div>
 
 
-{% elif checklist.resultado == "ATENCIÓN REQUERIDA" %}
+{% elif checklist.resultado == "ATENCIÃ“N REQUERIDA" %}
 
     <div class="resultado atencion">
 
-        🟡 ATENCIÓN REQUERIDA
+        ðŸŸ¡ ATENCIÃ“N REQUERIDA
 
         <div style="font-size:15px; margin-top:8px; font-weight:normal;">
 
             Se identificaron puntos que requieren
-            atención o seguimiento.
+            atenciÃ³n o seguimiento.
 
         </div>
 
@@ -653,11 +653,11 @@
 
     <div class="resultado no-aprobado">
 
-        🔴 NO APROBADO
+        ðŸ”´ NO APROBADO
 
         <div style="font-size:15px; margin-top:8px; font-weight:normal;">
 
-            Se identificaron uno o más puntos
+            Se identificaron uno o mÃ¡s puntos
             que no cumplen.
 
         </div>
@@ -677,7 +677,7 @@
 
 ```
 <h2>
-    🔍 Puntos inspeccionados
+    ðŸ” Puntos inspeccionados
 </h2>
 
 
@@ -694,7 +694,7 @@
                 </th>
 
                 <th>
-                    Punto de inspección
+                    Punto de inspecciÃ³n
                 </th>
 
                 <th>
@@ -714,7 +714,7 @@
                 <td>1</td>
 
                 <td>
-                    Inspección visual
+                    InspecciÃ³n visual
                 </td>
 
                 <td>
@@ -723,10 +723,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.inspeccion_visual == "Atención" %}
+                    {% elif checklist.inspeccion_visual == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -744,7 +744,7 @@
                 <td>2</td>
 
                 <td>
-                    Estado físico
+                    Estado fÃ­sico
                 </td>
 
                 <td>
@@ -754,10 +754,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.estado_fisico == "Atención" %}
+                    {% elif checklist.estado_fisico == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -776,7 +776,7 @@
                 <td>3</td>
 
                 <td>
-                    Cable de alimentación
+                    Cable de alimentaciÃ³n
                 </td>
 
                 <td>
@@ -786,10 +786,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.cable_alimentacion == "Atención" %}
+                    {% elif checklist.cable_alimentacion == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -818,10 +818,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.pantalla == "Atención" %}
+                    {% elif checklist.pantalla == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -850,10 +850,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.alarmas == "Atención" %}
+                    {% elif checklist.alarmas == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -882,10 +882,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.encendido == "Atención" %}
+                    {% elif checklist.encendido == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -904,7 +904,7 @@
                 <td>7</td>
 
                 <td>
-                    Batería
+                    BaterÃ­a
                 </td>
 
                 <td>
@@ -914,10 +914,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.bateria == "Atención" %}
+                    {% elif checklist.bateria == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -946,10 +946,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.circuito_respiratorio == "Atención" %}
+                    {% elif checklist.circuito_respiratorio == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -978,10 +978,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.filtros == "Atención" %}
+                    {% elif checklist.filtros == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -1010,10 +1010,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.sensores == "Atención" %}
+                    {% elif checklist.sensores == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -1042,10 +1042,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.prueba_funcionamiento == "Atención" %}
+                    {% elif checklist.prueba_funcionamiento == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -1074,10 +1074,10 @@
                             <span class="circulo verde"></span>
                             Cumple
                         </span>
-                    {% elif checklist.limpieza == "Atención" %}
+                    {% elif checklist.limpieza == "AtenciÃ³n" %}
                         <span class="estado">
                             <span class="circulo amarillo"></span>
-                            Atención
+                            AtenciÃ³n
                         </span>
                     {% else %}
                         <span class="estado">
@@ -1108,7 +1108,7 @@
 
 ```
 <h2>
-    📝 Observaciones
+    ðŸ“ Observaciones
 </h2>
 
 <div class="observaciones">
@@ -1129,7 +1129,7 @@
 </section>
 
 <!-- =========================================
-     BOTÓN VOLVER
+     BOTÃ“N VOLVER
 ========================================= -->
 
 <div class="acciones">
@@ -1139,7 +1139,7 @@
     href="/checklist"
     class="boton boton-volver"
 >
-    ← Volver al historial
+    â† Volver al historial
 </a>
 ```
 
@@ -1148,23 +1148,23 @@
 </main>
 
 <!-- =========================================
-     PIE DE PÁGINA
+     PIE DE PÃGINA
 ========================================= -->
 
 <footer>
 
 ```
 <p>
-    <strong>BioVent</strong>
+    <strong>BioMedic</strong>
 </p>
 
 <p>
-    Plataforma para la gestión y seguimiento
-    de equipos biomédicos
+    Plataforma para la gestiÃ³n y seguimiento
+    de equipos biomÃ©dicos
 </p>
 
 <p>
-    Diseño e Ingeniería Clínica — Entrega 1
+    DiseÃ±o e IngenierÃ­a ClÃ­nica â€” Entrega 1
 </p>
 ```
 
@@ -1173,3 +1173,4 @@
 </body>
 
 </html>
+

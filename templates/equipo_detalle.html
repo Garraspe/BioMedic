@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Ficha del equipo - BioVent</title>
+    <title>Ficha del equipo - BioMedic</title>
 
     <style>
 
@@ -92,7 +92,7 @@
         }
 
         /* ========================================= */
-        /* INFORMACIÓN */
+        /* INFORMACIÃ“N */
         /* ========================================= */
 
         .equipo-titulo {
@@ -253,9 +253,9 @@
 
 <header>
 
-    <h1>BioVent</h1>
+    <h1>BioMedic</h1>
 
-    <p>Ficha técnica del equipo</p>
+    <p>Ficha tÃ©cnica del equipo</p>
 
 </header>
 
@@ -270,7 +270,7 @@
     <div class="botones">
 
         <a href="/equipos" class="boton">
-            ← Volver a equipos
+            â† Volver a equipos
         </a>
 
         <a href="/dashboard" class="boton">
@@ -281,7 +281,7 @@
 
 
     <!-- ========================================= -->
-    <!-- INFORMACIÓN DEL EQUIPO -->
+    <!-- INFORMACIÃ“N DEL EQUIPO -->
     <!-- ========================================= -->
 
     <div class="card">
@@ -309,19 +309,19 @@
                 {% if equipo.estado|lower == "operativo" %}
 
                     <span class="estado operativo">
-                        🟢 OPERATIVO
+                        ðŸŸ¢ OPERATIVO
                     </span>
 
                 {% elif equipo.estado|lower == "mantenimiento" %}
 
                     <span class="estado mantenimiento">
-                        🟡 MANTENIMIENTO
+                        ðŸŸ¡ MANTENIMIENTO
                     </span>
 
                 {% else %}
 
                     <span class="estado fuera-servicio">
-                        🔴 {{ equipo.estado|upper }}
+                        ðŸ”´ {{ equipo.estado|upper }}
                     </span>
 
                 {% endif %}
@@ -332,7 +332,7 @@
 
 
         <h2>
-            Información del equipo
+            InformaciÃ³n del equipo
         </h2>
 
 
@@ -342,7 +342,7 @@
             <div class="dato">
 
                 <strong>
-                    Código
+                    CÃ³digo
                 </strong>
 
                 {{ equipo.codigo }}
@@ -375,7 +375,7 @@
             <div class="dato">
 
                 <strong>
-                    Número de serie
+                    NÃºmero de serie
                 </strong>
 
                 {{ equipo.serie }}
@@ -386,7 +386,7 @@
             <div class="dato">
 
                 <strong>
-                    Ubicación
+                    UbicaciÃ³n
                 </strong>
 
                 {{ equipo.ubicacion }}
@@ -474,7 +474,7 @@
                         </th>
 
                         <th>
-                            Técnico
+                            TÃ©cnico
                         </th>
 
                         <th>
@@ -509,19 +509,19 @@
                             {% if checklist.resultado == "APROBADO" %}
 
                                 <span class="aprobado">
-                                    🟢 APROBADO
+                                    ðŸŸ¢ APROBADO
                                 </span>
 
-                            {% elif checklist.resultado == "ATENCIÓN REQUERIDA" %}
+                            {% elif checklist.resultado == "ATENCIÃ“N REQUERIDA" %}
 
                                 <span class="atencion">
-                                    🟡 ATENCIÓN
+                                    ðŸŸ¡ ATENCIÃ“N
                                 </span>
 
                             {% else %}
 
                                 <span class="no-aprobado">
-                                    🔴 NO APROBADO
+                                    ðŸ”´ NO APROBADO
                                 </span>
 
                             {% endif %}
@@ -556,7 +556,7 @@
 
         <div class="sin-datos">
 
-            Este equipo todavía no tiene checklists registrados.
+            Este equipo todavÃ­a no tiene checklists registrados.
 
         </div>
 
@@ -596,11 +596,11 @@
                         </th>
 
                         <th>
-                            Próxima fecha
+                            PrÃ³xima fecha
                         </th>
 
                         <th>
-                            Técnico
+                            TÃ©cnico
                         </th>
 
                         <th>
@@ -662,7 +662,7 @@
 
         <div class="sin-datos">
 
-            Este equipo todavía no tiene mantenimientos registrados.
+            Este equipo todavÃ­a no tiene mantenimientos registrados.
 
         </div>
 

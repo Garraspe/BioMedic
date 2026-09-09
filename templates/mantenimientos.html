@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mantenimientos - BioVent</title>
+    <title>Mantenimientos - BioMedic</title>
 
     <style>
 
@@ -50,7 +50,7 @@
         }
 
         /* =====================================================
-           MENÚ
+           MENÃš
         ===================================================== */
 
         nav {
@@ -233,7 +233,7 @@
         }
 
         /* =====================================================
-           INFORMACIÓN TIPO
+           INFORMACIÃ“N TIPO
         ===================================================== */
 
         .ayuda {
@@ -246,7 +246,7 @@
         }
 
         /* =====================================================
-           BOTÓN
+           BOTÃ“N
         ===================================================== */
 
         .zona-boton {
@@ -458,7 +458,7 @@
         }
 
         /* =====================================================
-           INFORMACIÓN
+           INFORMACIÃ“N
         ===================================================== */
 
         .informacion {
@@ -536,7 +536,7 @@
             border-radius: 50%;
         }
 
-        /* AL DÍA */
+        /* AL DÃA */
 
         .estado-al-dia {
 
@@ -552,7 +552,7 @@
             background: #198754;
         }
 
-        /* PRÓXIMO */
+        /* PRÃ“XIMO */
 
         .estado-proximo {
 
@@ -676,7 +676,7 @@
         }
 
         /* =====================================================
-           INFORMACIÓN
+           INFORMACIÃ“N
         ===================================================== */
 
         .nota {
@@ -811,17 +811,17 @@
 
 <header>
 
-    <h1>🫁 BioVent</h1>
+    <h1>ðŸ« BioMedic</h1>
 
     <p>
-        Gestión de Mantenimientos Biomédicos
+        GestiÃ³n de Mantenimientos BiomÃ©dicos
     </p>
 
 </header>
 
 
 <!-- =====================================================
-     MENÚ
+     MENÃš
 ===================================================== -->
 
 <nav>
@@ -851,7 +851,7 @@
     </a>
 
     <a href="/bibliografia">
-        Bibliografía
+        BibliografÃ­a
     </a>
 
     <a href="/diagrama-bloques">
@@ -874,7 +874,7 @@
         <div class="titulo-seccion">
 
             <div class="titulo-icono">
-                🔧
+                ðŸ”§
             </div>
 
             <div>
@@ -891,7 +891,7 @@
         <p class="descripcion">
 
             Registra las actividades de mantenimiento realizadas
-            al ventilador mecánico y programa la próxima intervención.
+            al ventilador mecÃ¡nico y programa la prÃ³xima intervenciÃ³n.
 
         </p>
 
@@ -968,12 +968,12 @@
                             Correctivo
                         </option>
 
-                        <option value="Calibración">
-                            Calibración
+                        <option value="CalibraciÃ³n">
+                            CalibraciÃ³n
                         </option>
 
-                        <option value="Inspección">
-                            Inspección
+                        <option value="InspecciÃ³n">
+                            InspecciÃ³n
                         </option>
 
                     </select>
@@ -999,12 +999,12 @@
                 </div>
 
 
-                <!-- PRÓXIMA FECHA -->
+                <!-- PRÃ“XIMA FECHA -->
 
                 <div class="campo">
 
                     <label for="proxima_fecha">
-                        Próxima fecha de mantenimiento
+                        PrÃ³xima fecha de mantenimiento
                     </label>
 
                     <input
@@ -1015,25 +1015,25 @@
                     >
 
                     <span class="ayuda">
-                        Fecha programada para la próxima intervención.
+                        Fecha programada para la prÃ³xima intervenciÃ³n.
                     </span>
 
                 </div>
 
 
-                <!-- TÉCNICO -->
+                <!-- TÃ‰CNICO -->
 
                 <div class="campo">
 
                     <label for="tecnico">
-                        Técnico responsable
+                        TÃ©cnico responsable
                     </label>
 
                     <input
                         type="text"
                         id="tecnico"
                         name="tecnico"
-                        placeholder="Nombre del técnico"
+                        placeholder="Nombre del tÃ©cnico"
                         required
                     >
 
@@ -1060,7 +1060,7 @@
             </div>
 
 
-            <!-- BOTÓN -->
+            <!-- BOTÃ“N -->
 
             <div class="zona-boton">
 
@@ -1069,7 +1069,7 @@
                     class="btn-guardar"
                 >
 
-                    💾 Guardar mantenimiento
+                    ðŸ’¾ Guardar mantenimiento
 
                 </button>
 
@@ -1084,13 +1084,13 @@
         <div class="nota">
 
             <strong>
-                ℹ️ Estado del mantenimiento:
+                â„¹ï¸ Estado del mantenimiento:
             </strong>
 
-            BioVent calcula automáticamente si el mantenimiento
-            se encuentra <strong>AL DÍA</strong>, <strong>PRÓXIMO</strong>
+            BioMedic calcula automÃ¡ticamente si el mantenimiento
+            se encuentra <strong>AL DÃA</strong>, <strong>PRÃ“XIMO</strong>
             o <strong>VENCIDO</strong> utilizando la fecha programada
-            para la próxima intervención.
+            para la prÃ³xima intervenciÃ³n.
 
         </div>
 
@@ -1109,7 +1109,7 @@
         <div class="encabezado-historial">
 
             <h2>
-                📋 Historial de mantenimientos
+                ðŸ“‹ Historial de mantenimientos
             </h2>
 
 
@@ -1150,7 +1150,7 @@
 
 
                                 <div class="equipo-icono">
-                                    🫁
+                                    ðŸ«
                                 </div>
 
 
@@ -1180,14 +1180,14 @@
 
                         <div class="tipo">
 
-                            🔧
+                            ðŸ”§
 
                             {{ mantenimiento.tipo }}
 
                         </div>
 
 
-                        <!-- INFORMACIÓN -->
+                        <!-- INFORMACIÃ“N -->
 
                         <div class="informacion">
 
@@ -1208,7 +1208,7 @@
                             <div class="dato">
 
                                 <strong>
-                                    Próximo mantenimiento
+                                    PrÃ³ximo mantenimiento
                                 </strong>
 
                                 <span>
@@ -1221,7 +1221,7 @@
                             <div class="dato">
 
                                 <strong>
-                                    Técnico
+                                    TÃ©cnico
                                 </strong>
 
                                 <span>
@@ -1250,24 +1250,24 @@
 
                         <!-- ESTADO -->
 
-                        {% if mantenimiento.estado_mantenimiento == "AL DÍA" %}
+                        {% if mantenimiento.estado_mantenimiento == "AL DÃA" %}
 
                             <div class="estado-mantenimiento estado-al-dia">
 
                                 <span class="estado-punto"></span>
 
-                                AL DÍA
+                                AL DÃA
 
                             </div>
 
 
-                        {% elif mantenimiento.estado_mantenimiento == "PRÓXIMO" %}
+                        {% elif mantenimiento.estado_mantenimiento == "PRÃ“XIMO" %}
 
                             <div class="estado-mantenimiento estado-proximo">
 
                                 <span class="estado-punto"></span>
 
-                                PRÓXIMO
+                                PRÃ“XIMO
 
                             </div>
 
@@ -1304,7 +1304,7 @@
                             <div class="observaciones">
 
                                 <strong>
-                                    📝 Observaciones
+                                    ðŸ“ Observaciones
                                 </strong>
 
                                 <p>
@@ -1331,7 +1331,7 @@
             <div class="sin-mantenimientos">
 
                 <div class="icono">
-                    🔧
+                    ðŸ”§
                 </div>
 
                 <h3>
@@ -1356,4 +1356,5 @@
 
 </body>
 </html>
+
 
