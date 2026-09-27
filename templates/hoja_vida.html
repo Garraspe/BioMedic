@@ -505,6 +505,38 @@
             text-align: center;
         }
     }
+        /* CÓDIGO QR */
+
+    .qr-container {
+        margin-top: 30px;
+        padding: 25px;
+        text-align: center;
+        background: #f8fafc;
+        border: 1px solid #dce3eb;
+        border-radius: 16px;
+    }
+
+    .qr-container h3 {
+        margin-top: 0;
+        color: #084298;
+    }
+
+    .qr-container p {
+        color: #667085;
+        margin-bottom: 20px;
+    }
+
+    .qr-imagen {
+        width: 220px;
+        height: 220px;
+        display: block;
+        margin: 0 auto 15px;
+    }
+
+    .qr-equipo {
+        font-weight: bold;
+        color: #263238;
+    }
 </style>
 
 
@@ -624,6 +656,29 @@
 
             {% endif %}
 
+        </div>
+
+        </div>
+
+    <!-- CÓDIGO QR DEL EQUIPO -->
+
+    <div class="qr-container">
+
+        <h3>📱 Código QR del equipo</h3>
+
+        <p>
+            Escanea este código para acceder directamente
+            a la Hoja de Vida de este equipo.
+        </p>
+
+        <img
+            src="{{ url_for('codigo_qr', id=equipo.id) }}"
+            alt="Código QR de {{ equipo.codigo }}"
+            class="qr-imagen"
+        >
+
+        <div class="qr-equipo">
+            Equipo: {{ equipo.codigo }}
         </div>
 
     </div>

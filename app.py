@@ -173,6 +173,23 @@ def inicio():
         "index.html"
     )
 
+@app.route("/inventario")
+def inventario():
+    conexion = conectar_bd()
+
+    equipos = conexion.execute("""
+        SELECT *
+        FROM equipos
+        ORDER BY id DESC
+    """).fetchall()
+
+    conexion.close()
+
+    return render_template(
+        "inventario.html",
+        equipos=equipos
+    )
+
 
 # =========================================================
 # EQUIPOS
@@ -182,6 +199,7 @@ def inicio():
 def equipos():
 
     conexion = conectar_bd()
+
 
     # =====================================================
     # REGISTRAR EQUIPO
@@ -295,6 +313,7 @@ def equipos():
 @app.route("/hoja-vida/<int:id>")
 def hoja_vida(id):
     conexion = conectar_bd()
+    
 
     # Buscar información del equipo
     equipo = conexion.execute("""
@@ -339,6 +358,48 @@ def hoja_vida(id):
         mantenimientos=mantenimientos_equipo,
         checklists=checklists_equipo,
         manuales=manuales_equipo
+    )
+    # =========================================================
+# CÓDIGO QR DE LA HOJA DE VIDA
+# =========================================================
+
+@app.route("/qr/<int:id>")
+def codigo_qr(id):
+
+    import qrcode
+    from io import BytesIO
+    from flask import send_file
+
+    # URL de la Hoja de Vida del equipo
+    url_hoja_vida = url_for(
+        "hoja_vida",
+        id=id,
+        _external=True
+    )
+
+    # Crear código QR
+    qr = qrcode.QRCode(
+        version=1,
+        box_size=10,
+        border=4
+    )
+
+    qr.add_data(url_hoja_vida)
+    qr.make(fit=True)
+
+    imagen = qr.make_image(
+        fill_color="black",
+        back_color="white"
+    )
+
+    # Guardar el QR temporalmente en memoria
+    archivo = BytesIO()
+    imagen.save(archivo, format="PNG")
+    archivo.seek(0)
+
+    return send_file(
+        archivo,
+        mimetype="image/png"
     )
 # =========================================================
 # ELIMINAR EQUIPO
@@ -1655,8 +1716,5 @@ crear_bd()
 # EJECUTAR APLICACIÓN
 # =========================================================
 if __name__ == "__main__":
-    app.run(
-        debug=True,
-        host="0.0.0.0",
-        port=int(os.environ.get("PORT", 5000))
-    )
+    crear_bd()
+    app.run(debug=True, host="0.0.0.0", port=5000)
