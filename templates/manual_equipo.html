@@ -92,9 +92,9 @@
         <p class="documentacion-intro">Desde esta secci&oacute;n puedes almacenar y consultar los documentos t&eacute;cnicos correspondientes a este equipo.</p>
         <div class="manuales-grid">
             {% for tipo_val, tipo_nombre, tipo_desc, icono in [
-                ('usuario', 'Manual de usuario', 'Documento destinado a explicar el funcionamiento y uso del equipo.', '&#x1F4D8;'),
-                ('servicio_tecnico', 'Manual de servicio t\u00e9cnico', 'Documentaci\u00f3n relacionada con la revisi\u00f3n y servicio t\u00e9cnico del equipo.', '&#x1F527;'),
-                ('mantenimiento', 'Manual de mantenimiento', 'Informaci\u00f3n relacionada con las actividades y procedimientos de mantenimiento.', '&#x1F6E0;&#xFE0F;')
+                ('usuario', 'Manual de usuario', 'Documento destinado a explicar el funcionamiento y uso del equipo.', '📖'),
+                ('servicio_tecnico', 'Manual de servicio t\u00e9cnico', 'Documentaci\u00f3n relacionada con la revisi\u00f3n y servicio t\u00e9cnico del equipo.', '🛠️'),
+                ('mantenimiento', 'Manual de mantenimiento', 'Informaci\u00f3n relacionada con las actividades y procedimientos de mantenimiento.', '📘')
             ] %}
             {% set manual_actual = namespace(found=none) %}
             {% for m in manuales %}{% if m.tipo == tipo_val %}{% set manual_actual.found = m %}{% endif %}{% endfor %}
@@ -106,7 +106,9 @@
                 <div class="archivo">
                     <strong>&#x1F4C4; {{ manual_actual.found.archivo }}</strong>
                     <small>Fecha: {{ manual_actual.found.fecha_subida }}</small><br>
-                    <a href="{{ url_for('static', filename='manuales/' ~ equipo.id ~ '/' ~ manual_actual.found.archivo) }}" target="_blank" class="btn-abrir">&#x1F4D6; Abrir PDF</a>
+                    <a href="{{ url_for('abrir_manual', id=equipo.id, nombre=manual_actual.found.archivo) }}" target="_blank" class="btn-abrir">
+    &#x1F4D6; Abrir PDF
+</a>
                 </div>
                 {% else %}
                 <div class="pendiente">&#x1F4C4; No hay manual cargado.</div>
@@ -122,13 +124,7 @@
             </div>
             {% endfor %}
         </div>
-        <div class="nota">
-            <strong>&#x1F4CC; Informaci&oacute;n sobre la documentaci&oacute;n</strong>
-            <p>Los documentos deben corresponder al equipo seleccionado y preferiblemente ser documentos proporcionados por el fabricante.</p>
-            <p>BioMedic permite mantener organizada la documentaci&oacute;n de cada equipo para facilitar su consulta.</p>
-        </div>
     </section>
 </main>
-<footer><p><strong>BioMedic</strong></p><p>Plataforma para la gesti&oacute;n y seguimiento de equipos biom&eacute;dicos</p></footer>
 </body>
 </html>

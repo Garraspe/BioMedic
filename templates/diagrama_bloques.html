@@ -7,77 +7,307 @@
     <style>
         * { box-sizing: border-box; }
         body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f4f7fb; color: #263238; }
-        header { background: linear-gradient(135deg, #0d6efd, #084298); color: white; text-align: center; padding: 35px 20px; }
+
+        header { background: linear-gradient(135deg, #0d6efd, #084298); color: white; text-align: center; padding: 40px 20px; }
         header h1 { margin: 0; font-size: 32px; }
-        header p { margin: 10px 0 0; font-size: 16px; }
-        nav { background: white; padding: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        nav a { text-decoration: none; color: #0d6efd; font-weight: bold; padding: 10px 15px; border-radius: 8px; transition: 0.2s; }
+        header p { margin: 10px 0 0; font-size: 16px; opacity: 0.9; }
+
+        nav { background: white; padding: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
+        nav a { text-decoration: none; color: #0d6efd; font-weight: bold; padding: 10px 14px; border-radius: 8px; transition: 0.2s; }
         nav a:hover { background: #e8f1ff; }
         nav a.activo { background: #0d6efd; color: white; }
-        .contenedor { width: 94%; max-width: 1300px; margin: 35px auto; }
+
+        .contenedor { width: 94%; max-width: 1400px; margin: 35px auto; }
+
         .tarjeta { background: white; padding: 35px; border-radius: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 30px; }
         .tarjeta h2 { margin-top: 0; color: #084298; }
+
         .introduccion { text-align: center; }
-        .introduccion p { max-width: 950px; margin: 15px auto; line-height: 1.7; color: #555; }
-        .zona-diagrama { overflow-x: auto; padding: 20px 10px 30px; }
-        .diagrama { width: 100%; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-        .bloque { width: 150px; min-height: 130px; flex-shrink: 1; padding: 18px 12px; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-shadow: 0 5px 14px rgba(0,0,0,0.12); transition: 0.2s; }
-        .bloque:hover { transform: translateY(-5px); }
-        .icono { font-size: 38px; margin-bottom: 10px; }
-        .bloque strong { font-size: 16px; margin-bottom: 8px; }
-        .bloque small { font-size: 13px; line-height: 1.45; }
-        .alimentacion { background: #fff8df; border: 3px solid #ffc107; }
-        .alimentacion strong { color: #946c00; }
-        .control { background: #eaf2ff; border: 3px solid #0d6efd; }
-        .control strong { color: #084298; }
-        .neumatico { background: #f4edff; border: 3px solid #6f42c1; }
-        .neumatico strong { color: #59339d; }
-        .actuador { background: #fff1e5; border: 3px solid #fd7e14; }
-        .actuador strong { color: #c45d00; }
-        .circuito { background: #e9fbf5; border: 3px solid #20c997; }
-        .circuito strong { color: #087f5b; }
-        .paciente { background: #eaf8ef; border: 3px solid #198754; }
-        .paciente strong { color: #146c43; }
-        .sensor { background: #f1f3f5; border: 3px solid #6c757d; }
-        .sensor strong { color: #495057; }
-        .interfaz { background: #e9faff; border: 3px solid #0dcaf0; }
-        .interfaz strong { color: #087990; }
-        .alarma { background: #fff0f1; border: 3px solid #dc3545; }
-        .alarma strong { color: #b02a37; }
-        .flecha-horizontal { font-size: 34px; font-weight: bold; color: #0d6efd; display: flex; align-items: center; }
-        .fila-principal { display: flex; justify-content: center; align-items: center; gap: 12px; }
-        .zona-sensores { width: 100%; display: flex; justify-content: center; align-items: center; margin: 25px 0; }
-        .zona-sensores > div { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .conexion { width: 3px; height: 45px; background: #6c757d; margin: 0; }
-        .etiqueta { width: 150px; text-align: center; margin: 10px 0; }
-        .zona-control { display: flex; justify-content: center; align-items: flex-start; gap: 30px; margin-top: 30px; }
-        .subbloque { display: flex; flex-direction: column; align-items: center; }
-        .retroalimentacion { margin: 35px auto 10px; max-width: 850px; background: #f8f9fa; border: 2px dashed #6c757d; border-radius: 15px; padding: 20px; text-align: center; line-height: 1.7; }
-        .retroalimentacion strong { display: block; color: #343a40; margin-bottom: 8px; }
+        .introduccion p { max-width: 900px; margin: 12px auto; line-height: 1.7; color: #555; }
+
+        /* ================================================
+           DIAGRAMA CSS MEJORADO
+        ================================================ */
+
+        .diagrama-wrapper { overflow-x: auto; padding: 10px 0 20px; }
+
+        .diagrama-completo {
+            min-width: 900px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        /* Fila de energia */
+        .fila-energia {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+        }
+
+        /* Fila principal de flujo */
+        .fila-flujo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+            margin: 0;
+        }
+
+        /* Fila inferior: interfaz y alarmas */
+        .fila-inferior {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 60px;
+            margin-top: 0;
+            width: 100%;
+        }
+
+        .subbloque {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ================================================
+           BLOQUES
+        ================================================ */
+
+        .bloque {
+            width: 140px;
+            min-height: 110px;
+            padding: 14px 10px;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: default;
+            position: relative;
+        }
+
+        .bloque:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+        }
+
+        .bloque-icono { font-size: 32px; margin-bottom: 8px; }
+        .bloque-titulo { font-size: 13px; font-weight: bold; margin-bottom: 4px; }
+        .bloque-sub { font-size: 11px; line-height: 1.4; opacity: 0.85; }
+
+        /* Colores de bloques */
+        .b-energia   { background: #fff8df; border: 2.5px solid #f59e0b; }
+        .b-energia .bloque-titulo   { color: #92400e; }
+
+        .b-bateria   { background: #fef3c7; border: 2.5px solid #fbbf24; }
+        .b-bateria .bloque-titulo   { color: #78350f; }
+
+        .b-control   { background: #eff6ff; border: 2.5px solid #3b82f6; }
+        .b-control .bloque-titulo   { color: #1e40af; }
+
+        .b-neumatico { background: #f5f3ff; border: 2.5px solid #7c3aed; }
+        .b-neumatico .bloque-titulo { color: #4c1d95; }
+
+        .b-humidif   { background: #ecfeff; border: 2.5px solid #06b6d4; }
+        .b-humidif .bloque-titulo   { color: #164e63; }
+
+        .b-valvula   { background: #fff7ed; border: 2.5px solid #f97316; }
+        .b-valvula .bloque-titulo   { color: #7c2d12; }
+
+        .b-circuito  { background: #ecfdf5; border: 2.5px solid #10b981; }
+        .b-circuito .bloque-titulo  { color: #064e3b; }
+
+        .b-paciente  { background: #f0fdf4; border: 2.5px solid #22c55e; }
+        .b-paciente .bloque-titulo  { color: #14532d; }
+
+        .b-sensor    { background: #f8fafc; border: 2.5px solid #64748b; }
+        .b-sensor .bloque-titulo    { color: #1e293b; }
+
+        .b-interfaz  { background: #e0f2fe; border: 2.5px solid #0ea5e9; }
+        .b-interfaz .bloque-titulo  { color: #0c4a6e; }
+
+        .b-alarma    { background: #fff1f2; border: 2.5px solid #f43f5e; }
+        .b-alarma .bloque-titulo    { color: #881337; }
+
+        .b-filtro    { background: #fafaf9; border: 2.5px solid #a8a29e; }
+        .b-filtro .bloque-titulo    { color: #292524; }
+
+        /* ================================================
+           CONECTORES
+        ================================================ */
+
+        .flecha-h {
+            width: 40px;
+            min-width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 22px;
+        }
+
+        .flecha-h-azul { color: #3b82f6; }
+
+        .conector-v {
+            width: 3px;
+            height: 35px;
+            background: #94a3b8;
+        }
+
+        .conector-v-largo {
+            width: 3px;
+            height: 50px;
+            background: #94a3b8;
+        }
+
+        .etiqueta-conector {
+            font-size: 10px;
+            font-weight: bold;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 3px 8px;
+            margin: 4px 0;
+        }
+
+        /* Linea horizontal de retroalimentacion */
+        .linea-retro {
+            width: 80%;
+            max-width: 900px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #7c3aed);
+            border-radius: 2px;
+            margin: 8px auto;
+            position: relative;
+        }
+
+        .linea-retro::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-right: 8px solid #3b82f6;
+        }
+
+        .linea-retro::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 8px solid #7c3aed;
+        }
+
+        .retro-label {
+            font-size: 11px;
+            color: #64748b;
+            text-align: center;
+            margin: 4px 0 16px;
+            font-style: italic;
+        }
+
+        /* ================================================
+           LEYENDA
+        ================================================ */
+
+        .leyenda {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .leyenda-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #475569;
+        }
+
+        .leyenda-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            border: 2px solid;
+        }
+
+        /* ================================================
+           TABLA
+        ================================================ */
+
         .tabla-contenedor { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #dce3eb; padding: 14px; text-align: left; vertical-align: top; line-height: 1.5; }
-        th { background: #eaf2ff; color: #084298; }
+        th, td { border: 1px solid #e2e8f0; padding: 13px 15px; text-align: left; vertical-align: top; line-height: 1.5; }
+        th { background: #eff6ff; color: #1e40af; font-size: 14px; }
         tr:nth-child(even) { background: #f8fafc; }
-        .BioMedic { border-left: 6px solid #198754; }
-        .BioMedic h2 { color: #198754; }
-        .BioMedic-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 25px; }
-        .modulo { background: #f2fbf6; border: 1px solid #b7dfc6; border-radius: 14px; padding: 20px; text-align: center; }
-        .modulo strong { color: #146c43; }
-        .modulo p { line-height: 1.5; }
-        .nota { background: #fff8e1; border-left: 6px solid #ffc107; padding: 20px; border-radius: 12px; line-height: 1.7; }
-        .nota strong { color: #856404; }
-        footer { background: #263238; color: white; text-align: center; padding: 25px; margin-top: 40px; }
-        footer p { margin: 6px; }
-        @media (max-width: 900px) { .BioMedic-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { header h1 { font-size: 25px; } .tarjeta { padding: 20px; } nav { flex-direction: column; } nav a { text-align: center; } .BioMedic-grid { grid-template-columns: 1fr; } }
+        tr:hover { background: #f0f9ff; }
+
+        /* ================================================
+           GRID BIOMEDIC
+        ================================================ */
+
+        .BioMedic { border-left: 6px solid #10b981; }
+        .BioMedic h2 { color: #064e3b; }
+        .biomedic-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
+        .bm-card { background: #f0fdf4; border: 1px solid #a7f3d0; border-radius: 12px; padding: 18px; text-align: center; transition: 0.2s; }
+        .bm-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(16,185,129,0.15); }
+        .bm-card .bm-icon { font-size: 28px; margin-bottom: 8px; }
+        .bm-card strong { color: #064e3b; display: block; margin-bottom: 6px; }
+        .bm-card p { font-size: 13px; color: #065f46; line-height: 1.5; margin: 0; }
+
+        /* ================================================
+           NOTA
+        ================================================ */
+
+        .nota { background: #fffbeb; border-left: 6px solid #f59e0b; padding: 20px; border-radius: 12px; line-height: 1.7; }
+        .nota strong { color: #92400e; }
+
+        footer { background: #1e293b; color: white; text-align: center; padding: 25px; margin-top: 40px; }
+        footer p { margin: 6px; color: #94a3b8; }
+
+        /* ================================================
+           RESPONSIVE
+        ================================================ */
+
+        @media (max-width: 900px) { .biomedic-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) {
+            header h1 { font-size: 26px; }
+            .tarjeta { padding: 20px; }
+            nav { flex-direction: column; }
+            nav a { text-align: center; }
+            .biomedic-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
+
 <header>
     <h1>&#x1FAC1; Diagrama de Bloques</h1>
     <p>Arquitectura funcional del ventilador mec&aacute;nico</p>
 </header>
+
 <nav>
     <a href="/">Inicio</a>
     <a href="/equipos">Equipos</a>
@@ -89,94 +319,306 @@
     <a href="/diagrama-bloques" class="activo">Diagrama de bloques</a>
     <a href="/cronograma">Cronograma</a>
 </nav>
+
 <main class="contenedor">
+
+    <!-- INTRODUCCION -->
     <section class="tarjeta introduccion">
         <h2>&#x1F52C; Arquitectura funcional del ventilador mec&aacute;nico</h2>
-        <p>El siguiente diagrama representa de manera simplificada los principales subsistemas que intervienen en el funcionamiento de un ventilador mec&aacute;nico.</p>
-        <p>El sistema recibe energ&iacute;a, procesa informaci&oacute;n mediante la unidad de control, regula el suministro de gases, entrega el flujo al paciente y utiliza sensores para supervisar continuamente las variables de funcionamiento.</p>
+        <p>El diagrama representa los principales subsistemas del ventilador mec&aacute;nico y c&oacute;mo interact&uacute;an entre s&iacute; para proporcionar soporte ventilatorio al paciente.</p>
+        <p>El flujo principal va desde la fuente de energ&iacute;a hasta el paciente, mientras que los sensores y la unidad de control cierran el lazo de retroalimentaci&oacute;n para garantizar una ventilaci&oacute;n segura y precisa.</p>
     </section>
+
+    <!-- DIAGRAMA VISUAL -->
     <section class="tarjeta">
-        <h2 style="text-align:center;">&#x2699;&#xFE0F; Diagrama funcional</h2>
-        <div class="zona-diagrama">
-            <div class="diagrama">
-                <div class="zona-sensores">
-                    <div>
-                        <div class="conexion"></div>
-                        <div class="etiqueta">MONITOREO</div>
-                        <div class="bloque sensor">
-                            <div class="icono">&#x1F4CA;</div>
-                            <strong>Sensores</strong>
-                            <small>Presi&oacute;n<br>Flujo<br>Variables del sistema</small>
+        <h2 style="text-align:center; margin-bottom: 30px;">&#x2699;&#xFE0F; Diagrama funcional completo</h2>
+
+        <div class="diagrama-wrapper">
+            <div class="diagrama-completo">
+
+                <!-- FILA 1: ENERGIA + BATERIA arriba del control -->
+                <div style="display:flex; justify-content:center; gap:60px; align-items:flex-end; width:100%; margin-bottom:0;">
+
+                    <!-- Columna energia -->
+                    <div style="display:flex; flex-direction:column; align-items:center;">
+                        <div class="bloque b-energia">
+                            <div class="bloque-icono">&#x26A1;</div>
+                            <div class="bloque-titulo">Fuente de energ&iacute;a</div>
+                            <div class="bloque-sub">Red el&eacute;ctrica<br>220V / 110V</div>
+                        </div>
+                        <div class="conector-v"></div>
+                    </div>
+
+                    <!-- Columna bateria -->
+                    <div style="display:flex; flex-direction:column; align-items:center;">
+                        <div class="bloque b-bateria">
+                            <div class="bloque-icono">&#x1F50B;</div>
+                            <div class="bloque-titulo">Bater&iacute;a de respaldo</div>
+                            <div class="bloque-sub">UPS interno<br>Alimentaci&oacute;n de emergencia</div>
+                        </div>
+                        <div class="conector-v"></div>
+                    </div>
+
+                </div>
+
+
+                <!-- FILA 2: FLUJO PRINCIPAL -->
+                <div class="fila-flujo">
+
+                    <div class="bloque b-control">
+                        <div class="bloque-icono">&#x1F9E0;</div>
+                        <div class="bloque-titulo">Unidad de control (CPU)</div>
+                        <div class="bloque-sub">Microprocesador<br>Algoritmos de ventilaci&oacute;n<br>Gesti&oacute;n de par&aacute;metros</div>
+                    </div>
+
+                    <div class="flecha-h flecha-h-azul">&#x27A1;&#xFE0F;</div>
+
+                    <div class="bloque b-neumatico">
+                        <div class="bloque-icono">&#x1F4A8;</div>
+                        <div class="bloque-titulo">Sistema neum&aacute;tico</div>
+                        <div class="bloque-sub">Compresor / turbina<br>Mezcla O&#x2082; / Aire<br>Regulaci&oacute;n de presi&oacute;n</div>
+                    </div>
+
+                    <div class="flecha-h flecha-h-azul">&#x27A1;&#xFE0F;</div>
+
+                    <div class="bloque b-valvula">
+                        <div class="bloque-icono">&#x1F6B0;</div>
+                        <div class="bloque-titulo">V&aacute;lvulas de control</div>
+                        <div class="bloque-sub">V&aacute;lvula inspiratoria<br>V&aacute;lvula espiratoria<br>PEEP / FiO&#x2082;</div>
+                    </div>
+
+                    <div class="flecha-h flecha-h-azul">&#x27A1;&#xFE0F;</div>
+
+                    <div class="bloque b-humidif">
+                        <div class="bloque-icono">&#x1F4A7;</div>
+                        <div class="bloque-titulo">Humidificador</div>
+                        <div class="bloque-sub">Temperatura y<br>humedad del gas<br>HME / activo</div>
+                    </div>
+
+                    <div class="flecha-h flecha-h-azul">&#x27A1;&#xFE0F;</div>
+
+                    <div class="bloque b-filtro">
+                        <div class="bloque-icono">&#x1F9F9;</div>
+                        <div class="bloque-titulo">Filtros</div>
+                        <div class="bloque-sub">Filtro bacteriano<br>Filtro anti-part&iacute;culas<br>Protecci&oacute;n cruzada</div>
+                    </div>
+
+                    <div class="flecha-h flecha-h-azul">&#x27A1;&#xFE0F;</div>
+
+                    <div class="bloque b-circuito">
+                        <div class="bloque-icono">&#x1F504;</div>
+                        <div class="bloque-titulo">Circuito respiratorio</div>
+                        <div class="bloque-sub">Rama inspiratoria<br>Rama espiratoria<br>Pieza en Y</div>
+                    </div>
+
+                    <div class="flecha-h flecha-h-azul">&#x27A1;&#xFE0F;</div>
+
+                    <div class="bloque b-paciente">
+                        <div class="bloque-icono">&#x1FAC1;</div>
+                        <div class="bloque-titulo">Paciente</div>
+                        <div class="bloque-sub">V&iacute;a a&eacute;rea artificial<br>Soporte ventilatorio<br>Intercambio gaseoso</div>
+                    </div>
+
+                </div>
+
+
+                <!-- SENSORES -->
+                <div style="display:flex; justify-content:center; align-items:flex-start; gap:50px; margin-top:0; width:100%;">
+
+                    <div style="display:flex; flex-direction:column; align-items:center;">
+                        <div class="conector-v"></div>
+                        <div class="etiqueta-conector">&#x2B06;&#xFE0F; retroalimentaci&oacute;n</div>
+                        <div class="bloque b-sensor" style="width:160px;">
+                            <div class="bloque-icono">&#x1F4CA;</div>
+                            <div class="bloque-titulo">Sensores de presi&oacute;n y flujo</div>
+                            <div class="bloque-sub">Presi&oacute;n proximal<br>Flujo inspiratorio / espiratorio<br>Volumen tidal</div>
                         </div>
                     </div>
-                </div>
-                <div class="fila-principal">
-                    <div class="bloque alimentacion"><div class="icono">&#x26A1;</div><strong>Alimentaci&oacute;n</strong><small>Energ&iacute;a el&eacute;ctrica<br>Bater&iacute;a de respaldo</small></div>
-                    <div class="flecha-horizontal">&rarr;</div>
-                    <div class="bloque control"><div class="icono">&#x1F9E0;</div><strong>Unidad de control</strong><small>Procesamiento<br>y control</small></div>
-                    <div class="flecha-horizontal">&rarr;</div>
-                    <div class="bloque neumatico"><div class="icono">&#x1F4A8;</div><strong>Sistema neum&aacute;tico</strong><small>Gesti&oacute;n y regulaci&oacute;n de gases</small></div>
-                    <div class="flecha-horizontal">&rarr;</div>
-                    <div class="bloque actuador"><div class="icono">&#x2699;&#xFE0F;</div><strong>Actuadores</strong><small>Regulaci&oacute;n del flujo y entrega</small></div>
-                    <div class="flecha-horizontal">&rarr;</div>
-                    <div class="bloque circuito"><div class="icono">&#x1F504;</div><strong>Circuito respiratorio</strong><small>Conducci&oacute;n de gases</small></div>
-                    <div class="flecha-horizontal">&rarr;</div>
-                    <div class="bloque paciente"><div class="icono">&#x1FAC1;</div><strong>Paciente</strong><small>Soporte ventilatorio</small></div>
-                </div>
-                <div class="zona-control">
-                    <div class="subbloque">
-                        <div class="conexion"></div>
-                        <div class="etiqueta">USUARIO</div>
-                        <div class="bloque interfaz"><div class="icono">&#x1F5A5;&#xFE0F;</div><strong>Interfaz / Pantalla</strong><small>Configuraci&oacute;n<br>Visualizaci&oacute;n</small></div>
+
+                    <div style="display:flex; flex-direction:column; align-items:center;">
+                        <div class="conector-v"></div>
+                        <div class="etiqueta-conector">&#x2B06;&#xFE0F; monitoreo</div>
+                        <div class="bloque b-sensor" style="width:160px;">
+                            <div class="bloque-icono">&#x1FA78;</div>
+                            <div class="bloque-titulo">Sensor FiO&#x2082; / SpO&#x2082;</div>
+                            <div class="bloque-sub">Fracci&oacute;n de ox&iacute;geno<br>Concentraci&oacute;n de gas<br>Oximetr&iacute;a</div>
+                        </div>
                     </div>
+
+                </div>
+
+                <!-- LINEA RETROALIMENTACION -->
+                <div style="width:80%; max-width:900px; display:flex; flex-direction:column; align-items:center; margin: 10px auto 0;">
+                    <div class="linea-retro"></div>
+                    <div class="retro-label">Lazo cerrado de retroalimentaci&oacute;n &mdash; Los sensores env&iacute;an se&ntilde;ales a la unidad de control para ajustar la ventilaci&oacute;n en tiempo real</div>
+                </div>
+
+                <!-- FILA INFERIOR: INTERFAZ Y ALARMAS -->
+                <div class="fila-inferior" style="margin-top: 10px;">
+
                     <div class="subbloque">
-                        <div class="conexion"></div>
-                        <div class="etiqueta">SEGURIDAD</div>
-                        <div class="bloque alarma"><div class="icono">&#x1F514;</div><strong>Sistema de alarmas</strong><small>Alertas visuales<br>y sonoras</small></div>
+                        <div class="etiqueta-conector">&#x2195;&#xFE0F; interacci&oacute;n usuario</div>
+                        <div class="conector-v"></div>
+                        <div class="bloque b-interfaz" style="width:165px;">
+                            <div class="bloque-icono">&#x1F5A5;&#xFE0F;</div>
+                            <div class="bloque-titulo">Interfaz y pantalla</div>
+                            <div class="bloque-sub">Pantalla t&aacute;ctil<br>Configuraci&oacute;n de par&aacute;metros<br>Visualizaci&oacute;n de curvas</div>
+                        </div>
                     </div>
+
+                    <div class="subbloque">
+                        <div class="etiqueta-conector">&#x26A0;&#xFE0F; alertas</div>
+                        <div class="conector-v"></div>
+                        <div class="bloque b-alarma" style="width:165px;">
+                            <div class="bloque-icono">&#x1F514;</div>
+                            <div class="bloque-titulo">Sistema de alarmas</div>
+                            <div class="bloque-sub">Alarmas de presi&oacute;n<br>Alarmas de volumen<br>Alertas visuales y sonoras</div>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="retroalimentacion">
-                    <strong>&#x1F504; Retroalimentaci&oacute;n del sistema</strong>
-                    Los sensores permiten obtener informaci&oacute;n sobre las condiciones de funcionamiento. Esta informaci&oacute;n es procesada por la unidad de control para supervisar el sistema y generar acciones y alarmas cuando corresponde.
-                </div>
+
             </div>
         </div>
+
+        <!-- LEYENDA -->
+        <div class="leyenda" style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#fff8df; border-color:#f59e0b;"></div> Alimentaci&oacute;n el&eacute;ctrica</div>
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#eff6ff; border-color:#3b82f6;"></div> Control y procesamiento</div>
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#f5f3ff; border-color:#7c3aed;"></div> Sistema neum&aacute;tico</div>
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#fff7ed; border-color:#f97316;"></div> V&aacute;lvulas</div>
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#ecfeff; border-color:#06b6d4;"></div> Humidificaci&oacute;n</div>
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#fafaf9; border-color:#a8a29e;"></div> Filtraci&oacute;n</div>
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#ecfdf5; border-color:#10b981;"></div> Circuito respiratorio</div>
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#f0fdf4; border-color:#22c55e;"></div> Paciente</div>
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#f8fafc; border-color:#64748b;"></div> Sensores</div>
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#e0f2fe; border-color:#0ea5e9;"></div> Interfaz de usuario</div>
+            <div class="leyenda-item"><div class="leyenda-color" style="background:#fff1f2; border-color:#f43f5e;"></div> Sistema de alarmas</div>
+        </div>
     </section>
+
+
+    <!-- TABLA DESCRIPCION -->
     <section class="tarjeta">
-        <h2>&#x1F4CB; Descripci&oacute;n de los bloques</h2>
+        <h2>&#x1F4CB; Descripci&oacute;n de los subsistemas</h2>
         <div class="tabla-contenedor">
             <table>
-                <thead><tr><th>Bloque</th><th>Funci&oacute;n</th><th>Relaci&oacute;n con BioMedic</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>Subsistema</th>
+                        <th>Funci&oacute;n principal</th>
+                        <th>Componentes clave</th>
+                        <th>Relaci&oacute;n con BioMedic</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr><td><strong>&#x26A1; Alimentaci&oacute;n</strong></td><td>Proporciona la energ&iacute;a necesaria para el funcionamiento del equipo y puede incluir una bater&iacute;a de respaldo.</td><td>Cable de alimentaci&oacute;n, bater&iacute;a y estado del equipo.</td></tr>
-                    <tr><td><strong>&#x1F9E0; Unidad de control</strong></td><td>Procesa las se&ntilde;ales provenientes de los sensores y coordina el funcionamiento del ventilador.</td><td>Encendido y prueba de funcionamiento.</td></tr>
-                    <tr><td><strong>&#x1F4CA; Sensores</strong></td><td>Permiten medir variables necesarias para supervisar las condiciones de ventilaci&oacute;n.</td><td>Punto de inspecci&oacute;n de sensores y pruebas funcionales.</td></tr>
-                    <tr><td><strong>&#x1F4A8; Sistema neum&aacute;tico</strong></td><td>Gestiona y regula el suministro de gases utilizados durante la ventilaci&oacute;n.</td><td>Circuito respiratorio, filtros y prueba de funcionamiento.</td></tr>
-                    <tr><td><strong>&#x2699;&#xFE0F; Actuadores</strong></td><td>Permiten controlar el flujo y las condiciones de entrega de los gases.</td><td>Prueba de funcionamiento del equipo.</td></tr>
-                    <tr><td><strong>&#x1F5A5;&#xFE0F; Interfaz / Pantalla</strong></td><td>Permite al usuario visualizar informaci&oacute;n y configurar par&aacute;metros del equipo.</td><td>Inspecci&oacute;n de pantalla.</td></tr>
-                    <tr><td><strong>&#x1F514; Sistema de alarmas</strong></td><td>Informa mediante se&ntilde;ales visuales y sonoras sobre condiciones que requieren atenci&oacute;n.</td><td>Punto de alarmas del checklist.</td></tr>
-                    <tr><td><strong>&#x1F504; Circuito respiratorio</strong></td><td>Conduce los gases entre el ventilador y el paciente.</td><td>Circuito respiratorio y filtros.</td></tr>
-                    <tr><td><strong>&#x1FAC1; Paciente</strong></td><td>Recibe el soporte ventilatorio proporcionado por el equipo.</td><td>Representa el objetivo final del sistema de ventilaci&oacute;n.</td></tr>
+                    <tr>
+                        <td><strong>&#x26A1; Fuente de energ&iacute;a</strong></td>
+                        <td>Suministra energ&iacute;a el&eacute;ctrica al equipo desde la red hospitalaria.</td>
+                        <td>Cable de alimentaci&oacute;n, transformador, regulador de voltaje.</td>
+                        <td>Inspecci&oacute;n del cable de alimentaci&oacute;n en el checklist.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1F50B; Bater&iacute;a de respaldo</strong></td>
+                        <td>Mantiene el funcionamiento ante cortes de energ&iacute;a el&eacute;ctrica.</td>
+                        <td>Bater&iacute;a interna, sistema UPS, cargador.</td>
+                        <td>Punto de verificaci&oacute;n de bater&iacute;a en el checklist.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1F9E0; Unidad de control</strong></td>
+                        <td>Procesa se&ntilde;ales, ejecuta algoritmos de ventilaci&oacute;n y coordina todos los subsistemas.</td>
+                        <td>Microprocesador, firmware, memoria, tarjetas electr&oacute;nicas.</td>
+                        <td>Prueba de encendido y funcionamiento en el checklist.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1F4A8; Sistema neum&aacute;tico</strong></td>
+                        <td>Genera y regula el flujo de gases mezclados para la ventilaci&oacute;n.</td>
+                        <td>Turbina o compresor, mez clador O&#x2082;/aire, manorreductores.</td>
+                        <td>Verificaci&oacute;n del circuito respiratorio y pruebas funcionales.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1F6B0; V&aacute;lvulas de control</strong></td>
+                        <td>Regulan con precisi&oacute;n el flujo inspiratorio, espiratorio y la PEEP.</td>
+                        <td>V&aacute;lvula inspiratoria, v&aacute;lvula espiratoria, v&aacute;lvula de seguridad.</td>
+                        <td>Prueba de funcionamiento general del equipo.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1F4A7; Humidificador</strong></td>
+                        <td>Acondiciona el gas con temperatura y humedad adecuadas para proteger la v&iacute;a a&eacute;rea.</td>
+                        <td>C&aacute;mara de humidificaci&oacute;n activa o HME pasivo, sensor de temperatura.</td>
+                        <td>Inspecci&oacute;n del circuito respiratorio y estado f&iacute;sico del equipo.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1F9F9; Filtros</strong></td>
+                        <td>Retienen part&iacute;culas y microorganismos para proteger al paciente y al equipo.</td>
+                        <td>Filtro HEPA, filtro bacteriano/viral, filtro de l&iacute;nea.</td>
+                        <td>Punto de inspecci&oacute;n de filtros en el checklist.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1F504; Circuito respiratorio</strong></td>
+                        <td>Conduce el gas entre el ventilador y la v&iacute;a a&eacute;rea del paciente.</td>
+                        <td>Tuber&iacute;as corrugadas, pieza en Y, trampa de agua, conector.</td>
+                        <td>Inspecci&oacute;n del circuito respiratorio en el checklist.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1F4CA; Sensores de presi&oacute;n y flujo</strong></td>
+                        <td>Miden continuamente las variables de ventilaci&oacute;n para retroalimentar el sistema de control.</td>
+                        <td>Transductor de presi&oacute;n, neum otac&oacute;metro, sensor diferencial.</td>
+                        <td>Verificaci&oacute;n de sensores y prueba de funcionamiento.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1FA78; Sensor FiO&#x2082; / SpO&#x2082;</strong></td>
+                        <td>Monitorea la concentraci&oacute;n de ox&iacute;geno entregada y la saturaci&oacute;n del paciente.</td>
+                        <td>C&eacute;lula galv&aacute;nica de O&#x2082;, ox&iacute;metro de pulso, sensor param agn&eacute;tico.</td>
+                        <td>Verificaci&oacute;n de sensores en el checklist.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1F5A5;&#xFE0F; Interfaz y pantalla</strong></td>
+                        <td>Permite al operador configurar par&aacute;metros y monitorear las curvas de ventilaci&oacute;n.</td>
+                        <td>Pantalla t&aacute;ctil o LCD, perillas, teclado, software de visualizaci&oacute;n.</td>
+                        <td>Inspecci&oacute;n de pantalla y controles en el checklist.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&#x1F514; Sistema de alarmas</strong></td>
+                        <td>Notifica al personal cl&iacute;nico ante condiciones fuera de los l&iacute;mites seguros de ventilaci&oacute;n.</td>
+                        <td>Alarma sonora, alarma visual, registro de eventos, l&iacute;mites configurables.</td>
+                        <td>Prueba de alarmas en el checklist de inspecci&oacute;n.</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </section>
+
+
+    <!-- RELACION CON BIOMEDIC -->
     <section class="tarjeta BioMedic">
         <h2>&#x1F4BB; Relaci&oacute;n del diagrama con BioMedic</h2>
-        <p>El diagrama funcional permite relacionar los subsistemas del ventilador mec&aacute;nico con las diferentes funciones de la plataforma BioMedic.</p>
-        <div class="BioMedic-grid">
-            <div class="modulo"><span style="font-size:32px">&#x1FAC1;</span><br><strong>Equipos</strong><p>Identificaci&oacute;n, registro y estado del ventilador.</p></div>
-            <div class="modulo"><span style="font-size:32px">&#x1F527;</span><br><strong>Mantenimientos</strong><p>Seguimiento de actividades preventivas y correctivas.</p></div>
-            <div class="modulo"><span style="font-size:32px">&#x1F4CB;</span><br><strong>Checklists</strong><p>Inspecci&oacute;n de los diferentes componentes y condiciones del equipo.</p></div>
-            <div class="modulo"><span style="font-size:32px">&#x1F4CA;</span><br><strong>Dashboard</strong><p>Visualizaci&oacute;n general del estado y seguimiento de los equipos.</p></div>
+        <p>Cada subsistema del ventilador se relaciona directamente con los m&oacute;dulos de gesti&oacute;n de la plataforma BioMedic, permitiendo una inspecci&oacute;n y seguimiento sistematizado.</p>
+        <div class="biomedic-grid">
+            <div class="bm-card">
+                <div class="bm-icon">&#x1FAC1;</div>
+                <strong>Equipos</strong>
+                <p>Registro e identificaci&oacute;n del ventilador, marca, modelo, n&uacute;mero de serie y ubicaci&oacute;n en la instituci&oacute;n.</p>
+            </div>
+            <div class="bm-card">
+                <div class="bm-icon">&#x1F527;</div>
+                <strong>Mantenimientos</strong>
+                <p>Seguimiento de actividades preventivas y correctivas sobre los diferentes subsistemas del ventilador.</p>
+            </div>
+            <div class="bm-card">
+                <div class="bm-icon">&#x1F4CB;</div>
+                <strong>Checklists</strong>
+                <p>Inspecci&oacute;n sistem&aacute;tica de los subsistemas: alimentaci&oacute;n, sensores, circuito, filtros, alarmas y pantalla.</p>
+            </div>
+            <div class="bm-card">
+                <div class="bm-icon">&#x1F4CA;</div>
+                <strong>Dashboard</strong>
+                <p>Visualizaci&oacute;n general del estado operativo, resultados de inspecciones y actividades de mantenimiento.</p>
+            </div>
         </div>
     </section>
-    <section class="nota">
-        <strong>&#x1F4CC; Nota acad&eacute;mica</strong>
-        <p>El presente diagrama corresponde a una representaci&oacute;n funcional simplificada de un ventilador mec&aacute;nico. La arquitectura interna, los componentes y los sistemas espec&iacute;ficos pueden variar dependiendo del fabricante y del modelo del equipo.</p>
-        <p>Para el proyecto BioMedic, este esquema se utiliza como referencia para relacionar el funcionamiento general del ventilador con las actividades de inspecci&oacute;n, mantenimiento y seguimiento realizadas mediante la plataforma.</p>
-    </section>
+
 </main>
-<footer><p><strong>BioMedic</strong></p><p>Plataforma para la gesti&oacute;n y seguimiento de equipos biom&eacute;dicos</p></footer>
+
 </body>
 </html>

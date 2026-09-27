@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>🗺️Diagrama de Flujo - BioMedic</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f8f9;
+            color: #1f2933;
+        }
+
+        /* =========================
+           MENÚ
+        ========================= */
+
+        nav {
+            background: #087f8c;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        nav a.activo {
+            background: white;
+            color: #087f8c;
+        }
+
+        /* =========================
+           ENCABEZADO
+        ========================= */
+
+        header {
+            background: linear-gradient(135deg, #087f8c, #10a6a6);
+            color: white;
+            text-align: center;
+            padding: 45px 20px;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+            font-size: 36px;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        /* =========================
+           CONTENEDOR
+        ========================= */
+
+        .contenedor {
+            width: 95%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .introduccion {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 35px;
+        }
+
+        .introduccion h2 {
+            color: #087f8c;
+            margin-top: 0;
+        }
+
+        .introduccion p {
+            line-height: 1.7;
+        }
+
+        /* =========================
+           DIAGRAMA
+        ========================= */
+
+        .diagrama {
+            background: white;
+            padding: 35px 20px;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .inicio,
+        .fin {
+            background: #b9f6ca;
+            border: 3px solid #159447;
+            color: #14532d;
+            border-radius: 40px;
+            padding: 18px 50px;
+            font-size: 19px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .proceso {
+            background: #dbeafe;
+            border: 3px solid #2563eb;
+            color: #173b73;
+            border-radius: 12px;
+            padding: 18px 30px;
+            width: 310px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        }
+
+        .proceso span {
+            display: block;
+            font-weight: normal;
+            font-size: 14px;
+            margin-top: 7px;
+            line-height: 1.5;
+        }
+
+        /* ROMBOS */
+
+        .decision {
+            width: 190px;
+            height: 110px;
+            background: #fff3cd;
+            border: 3px solid #e0a800;
+
+            transform: rotate(45deg);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 30px 0;
+        }
+
+        .decision-texto {
+            transform: rotate(-45deg);
+            text-align: center;
+            font-weight: bold;
+            width: 130px;
+            color: #765500;
+        }
+
+        /* =========================
+           FLECHAS
+        ========================= */
+
+        .flecha {
+            width: 3px;
+            height: 45px;
+            background: #34495e;
+            position: relative;
+        }
+
+        .flecha::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: -6px;
+
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #34495e;
+        }
+
+        /* =========================
+           RAMA DE DECISIÓN
+        ========================= */
+
+        .ramas {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 70px;
+            width: 100%;
+            margin: 5px 0 20px;
+        }
+
+        .rama {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .etiqueta {
+            font-weight: bold;
+            color: #087f8c;
+            font-size: 17px;
+        }
+
+        .flecha-horizontal {
+            width: 65px;
+            height: 3px;
+            background: #34495e;
+            position: relative;
+        }
+
+        .flecha-horizontal::after {
+            content: "";
+            position: absolute;
+            right: -1px;
+            top: -6px;
+
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 12px solid #34495e;
+        }
+
+        /* =========================
+           EXPLICACIÓN
+        ========================= */
+
+        .explicacion {
+            margin-top: 35px;
+            background: #e9f7f8;
+            border-left: 6px solid #087f8c;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        .explicacion h2 {
+            margin-top: 0;
+            color: #087f8c;
+        }
+
+        .explicacion li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            margin-top: 50px;
+            background: #075e66;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+        }
+
+        footer p {
+            margin: 6px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            header h1 {
+                font-size: 28px;
+            }
+
+            .proceso {
+                width: 90%;
+            }
+
+            .ramas {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .flecha-horizontal {
+                transform: rotate(90deg);
+            }
+
+            .decision {
+                width: 150px;
+                height: 90px;
+            }
+
+            .decision-texto {
+                font-size: 13px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         MENÚ DE NAVEGACIÓN
+    ========================= -->
+
+    <nav>
+
+        <a href="/">Inicio</a>
+
+        <a href="/equipos">Equipos</a>
+
+        <a href="/mantenimientos">Mantenimientos</a>
+
+        <a href="/checklist">Checklists</a>
+
+        <a href="/dashboard">Dashboard</a>
+
+        <a href="/normativa">Normativa</a>
+
+        <a href="/casos-uso">Casos de uso</a>
+
+        <a href="/bibliografia">Bibliografía</a>
+
+        <a href="/diagrama-bloques">Diagrama de bloques</a>
+
+        <a href="/diagrama-flujo" class="activo">Diagrama de flujo</a>
+
+        <a href="/cronograma">Cronograma</a>
+
+    </nav>
+
+
+    <!-- =========================
+         ENCABEZADO
+    ========================= -->
+
+    <header>
+
+        <h1>Diagrama de Flujo</h1>
+
+        <p>
+            Flujo de funcionamiento de la plataforma BioMedic
+        </p>
+
+    </header>
+
+
+    <main class="contenedor">
+
+        <!-- INTRODUCCIÓN -->
+
+        <section class="introduccion">
+
+            <h2>Diagrama de flujo de la programación</h2>
+
+            <p>
+                El siguiente diagrama representa de manera visual
+                el funcionamiento general de la plataforma web BioMedic.
+                Se muestran las principales etapas que sigue el sistema
+                desde el inicio de la aplicación hasta la obtención
+                de un resultado.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             DIAGRAMA
+        ========================= -->
+
+        <section class="diagrama">
+
+
+            <!-- INICIO -->
+
+            <div class="inicio">
+                INICIO
+            </div>
+
+
+            <div class="flecha"></div>
+
+
+            <!-- PASO 1 -->
+
+            <div class="proceso">
+
+                1. Ingreso a BioMedic
+
+                <span>
+                    El usuario accede a la plataforma web.
+                </span>
+
+            </div>
+
+
+            <div class="flecha"></div>
+
+
+            <!-- PASO 2 -->
+
+            <div class="proceso">
+
+                2. Selección del módulo
+
+                <span>
+                    El usuario selecciona Equipos,
+                    Mantenimientos, Checklists,
+                    Dashboard o Manuales.
+                </span>
+
+            </div>
+
+
+            <div class="flecha"></div>
+
+
+            <!-- PASO 3 -->
+
+            <div class="proceso">
+
+                3. Ingreso de información
+
+                <span>
+                    El usuario registra o consulta
+                    información en el módulo seleccionado.
+                </span>
+
+            </div>
+
+
+            <div class="flecha"></div>
+
+
+            <!-- DECISIÓN -->
+
+            <div class="decision">
+
+                <div class="decision-texto">
+                    ¿Los datos son correctos?
+                </div>
+
+            </div>
+
+
+            <!-- RAMAS -->
+
+            <div class="ramas">
+
+
+                <!-- NO -->
+
+                <div class="rama">
+
+                    <div class="etiqueta">
+                        NO
+                    </div>
+
+                    <div class="flecha-horizontal"></div>
+
+                    <div class="proceso">
+
+                        Corregir información
+
+                        <span>
+                            El sistema solicita corregir
+                            los datos ingresados.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SÍ -->
+
+                <div class="rama">
+
+                    <div class="etiqueta">
+                        SÍ
+                    </div>
+
+                    <div class="flecha-horizontal"></div>
+
+                    <div class="proceso">
+
+                        4. Procesar información
+
+                        <span>
+                            Flask procesa la solicitud
+                            realizada por el usuario.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="flecha"></div>
+
+
+            <!-- BASE DE DATOS -->
+
+            <div class="proceso">
+
+                5. Base de datos
+
+                <span>
+                    La información se almacena o consulta
+                    en la base de datos SQLite.
+                </span>
+
+            </div>
+
+
+            <div class="flecha"></div>
+
+
+            <!-- RESULTADO -->
+
+            <div class="proceso">
+
+                6. Mostrar resultado
+
+                <span>
+                    BioMedic presenta la información
+                    actualizada al usuario.
+                </span>
+
+            </div>
+
+
+            <div class="flecha"></div>
+
+
+            <!-- FIN -->
+
+            <div class="fin">
+
+                FIN
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =========================
+             EXPLICACIÓN
+        ========================= -->
+
+        <section class="explicacion">
+
+            <h2>¿Qué representa este diagrama?</h2>
+
+            <ul>
+
+                <li>
+                    <strong>Inicio:</strong>
+                    representa el momento en que el usuario
+                    comienza a utilizar la plataforma.
+                </li>
+
+                <li>
+                    <strong>Selección del módulo:</strong>
+                    el usuario decide qué función de BioMedic
+                    desea utilizar.
+                </li>
+
+                <li>
+                    <strong>Ingreso de información:</strong>
+                    se registran datos de equipos,
+                    mantenimientos, checklists u otra información.
+                </li>
+
+                <li>
+                    <strong>Validación:</strong>
+                    el sistema verifica que la información
+                    ingresada sea correcta.
+                </li>
+
+                <li>
+                    <strong>Procesamiento:</strong>
+                    Flask recibe la solicitud y ejecuta
+                    la lógica correspondiente.
+                </li>
+
+                <li>
+                    <strong>Base de datos:</strong>
+                    SQLite almacena o proporciona
+                    la información solicitada.
+                </li>
+
+                <li>
+                    <strong>Resultado:</strong>
+                    el sistema muestra al usuario
+                    la información procesada.
+                </li>
+
+                <li>
+                    <strong>Fin:</strong>
+                    finaliza el proceso seleccionado.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+    </main>
+
+
+</body>
+</html>
+<div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+    <button onclick="history.back()" 
+            style="
+                background: #0f766e;
+                color: white;
+                border: none;
+                padding: 12px 25px;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+            ">
+        ← Volver
+    </button>
+</div>

@@ -46,9 +46,6 @@
     </style>
 </head>
 <body>
-<div class="volver-container">
-    <a href="{{ url_for('inicio') }}" class="btn-volver">&larr; Volver al inicio</a>
-</div>
 <header class="encabezado">
     <h1>Casos de Uso</h1>
     <h4>Identificaci&oacute;n de las principales interacciones entre los usuarios y la plataforma BioMedic para la gesti&oacute;n, seguimiento y control de ventiladores mec&aacute;nicos.</h4>
@@ -73,31 +70,265 @@
         <article class="caso"><div class="numero">5</div><h3>Evaluar checklist</h3><p>El sistema determina autom&aacute;ticamente el resultado general de la inspecci&oacute;n.</p><ul><li>APROBADO.</li><li>ATENCI&Oacute;N REQUERIDA.</li><li>NO APROBADO.</li></ul></article>
         <article class="caso"><div class="numero">6</div><h3>Consultar Dashboard</h3><p>Permite visualizar un resumen general del estado de la gesti&oacute;n biom&eacute;dica.</p><ul><li>Total de equipos.</li><li>Equipos operativos.</li><li>Checklists realizados.</li><li>Mantenimientos.</li></ul></article>
         <article class="caso"><div class="numero">7</div><h3>Gestionar manuales</h3><p>Permite asociar documentaci&oacute;n t&eacute;cnica a cada ventilador registrado.</p><ul><li>Manual de usuario.</li><li>Manual de servicio t&eacute;cnico.</li><li>Manual de mantenimiento.</li></ul></article>
+        <article class="caso"><div class="numero">8</div><h3>Consultar historial de checklists</h3><p>Permite consultar las inspecciones realizadas anteriormente a los equipos biomédicos.</p><ul><li>Consultar fecha de la inspección.</li><li>Consultar técnico responsable</li><li>Consultar resultado del checklist</li><li>Recisar las condiciones evaluadas</li><li>Consultar observaciones registradas</li></ul></article>
     </section>
     <section class="tabla-contenedor">
-        <h2>Resumen de casos de uso</h2>
-        <table>
-            <thead><tr><th>Caso de uso</th><th>Actor principal</th><th>Descripci&oacute;n</th></tr></thead>
-            <tbody>
-                <tr><td>Registrar equipo</td><td>T&eacute;cnico biom&eacute;dico</td><td>Registra la informaci&oacute;n t&eacute;cnica y administrativa del ventilador.</td></tr>
-                <tr><td>Registrar mantenimiento</td><td>T&eacute;cnico biom&eacute;dico</td><td>Registra las actividades de mantenimiento realizadas.</td></tr>
-                <tr><td>Realizar checklist</td><td>T&eacute;cnico biom&eacute;dico</td><td>Verifica el estado f&iacute;sico y funcional del equipo.</td></tr>
-                <tr><td>Consultar historial</td><td>Responsable biom&eacute;dico</td><td>Consulta inspecciones y mantenimientos anteriores.</td></tr>
-                <tr><td>Consultar Dashboard</td><td>Responsable biom&eacute;dico</td><td>Visualiza indicadores generales de la plataforma.</td></tr>
-                <tr><td>Gestionar manuales</td><td>Administrador / T&eacute;cnico</td><td>Administra los documentos t&eacute;cnicos asociados a los equipos.</td></tr>
-            </tbody>
-        </table>
-    </section>
-    <section class="importancia">
-        <h2>Importancia dentro del proyecto BioMedic</h2>
-        <p>Los casos de uso permiten definir claramente las funciones que debe cumplir la plataforma y la interacci&oacute;n de los usuarios con cada m&oacute;dulo.</p>
-        <ul>
-            <li>Facilitan la identificaci&oacute;n de las funciones principales del sistema.</li>
-            <li>Permiten establecer los actores que interact&uacute;an con la plataforma.</li>
-            <li>Ayudan a definir los requisitos funcionales.</li>
-            <li>Permiten relacionar los m&oacute;dulos de BioMedic con las necesidades del usuario.</li>
-        </ul>
-    </section>
-</main>
+        
+<!-- =========================================
+     TABLA DE CASOS DE USO
+========================================= -->
+
+<section class="tabla-contenedor">
+
+<h2>
+    Resumen de casos de uso
+</h2>
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>
+                Caso de uso
+            </th>
+
+            <th>
+                Actor principal
+            </th>
+
+            <th>
+                Descripción
+            </th>
+
+            <th>
+                Precondiciones
+            </th>
+
+            <th>
+                Resultado esperado
+            </th>
+
+        </tr>
+
+    </thead>
+
+
+    <tbody>
+
+
+        <tr>
+
+            <td>
+                Registrar equipo
+            </td>
+
+            <td>
+                Técnico biomédico
+            </td>
+
+            <td>
+                Registra la información técnica y administrativa
+                del ventilador.
+            </td>
+
+            <td>
+                El usuario debe tener acceso al módulo de equipos.
+            </td>
+
+            <td>
+                El equipo queda registrado correctamente
+                en la plataforma.
+            </td>
+
+        </tr>
+
+
+        <tr>
+
+            <td>
+                Registrar mantenimiento
+            </td>
+
+            <td>
+                Técnico biomédico
+            </td>
+
+            <td>
+                Registra las actividades de mantenimiento
+                realizadas.
+            </td>
+
+            <td>
+                El equipo debe estar previamente registrado.
+            </td>
+
+            <td>
+                El mantenimiento queda almacenado y asociado
+                al equipo.
+            </td>
+
+        </tr>
+
+
+        <tr>
+
+            <td>
+                Realizar checklist
+            </td>
+
+            <td>
+                Técnico biomédico
+            </td>
+
+            <td>
+                Verifica el estado físico y funcional del equipo.
+            </td>
+
+            <td>
+                El equipo debe estar registrado y disponible
+                para inspección.
+            </td>
+
+            <td>
+                El checklist queda registrado con su resultado.
+            </td>
+
+        </tr>
+
+
+        <tr>
+
+            <td>
+                Evaluar checklist
+            </td>
+
+            <td>
+                Sistema / Técnico biomédico
+            </td>
+
+            <td>
+                Determina el resultado general de la inspección
+                según las condiciones registradas.
+            </td>
+
+            <td>
+                Debe existir un checklist diligenciado.
+            </td>
+
+            <td>
+                Se genera un resultado: APROBADO,
+                ATENCIÓN REQUERIDA o NO APROBADO.
+            </td>
+
+        </tr>
+
+
+        <tr>
+
+            <td>
+                Consultar historial de checklists
+            </td>
+
+            <td>
+                Responsable biomédico
+            </td>
+
+            <td>
+                Consulta inspecciones realizadas anteriormente
+                a los equipos.
+            </td>
+
+            <td>
+                Deben existir checklists registrados
+                en la plataforma.
+            </td>
+
+            <td>
+                Se visualiza el historial de inspecciones,
+                sus resultados y observaciones.
+            </td>
+
+        </tr>
+
+
+        <tr>
+
+            <td>
+                Consultar Dashboard
+            </td>
+
+            <td>
+                Responsable biomédico
+            </td>
+
+            <td>
+                Visualiza indicadores generales de la plataforma.
+            </td>
+
+            <td>
+                Debe existir información registrada
+                en el sistema.
+            </td>
+
+            <td>
+                Se muestran los principales indicadores
+                de gestión biomédica.
+            </td>
+
+        </tr>
+
+
+        <tr>
+
+            <td>
+                Gestionar manuales
+            </td>
+
+            <td>
+                Administrador / Técnico
+            </td>
+
+            <td>
+                Administra los documentos técnicos asociados
+                a los equipos.
+            </td>
+
+            <td>
+                El equipo debe estar registrado y debe existir
+                un documento disponible para asociar.
+            </td>
+
+            <td>
+                El manual queda almacenado y asociado
+                al equipo correspondiente.
+            </td>
+
+        </tr>
+
+
+    </tbody>
+
+</table>
+
+</section>
+
 </body>
+
 </html>
+<div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+    <button onclick="history.back()" 
+            style="
+                background: #1f2ce4;
+                color: white;
+                border: none;
+                padding: 12px 25px;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+            ">
+        ← Volver
+    </button>
+</div>

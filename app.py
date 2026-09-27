@@ -292,7 +292,54 @@ def equipos():
         equipos=equipos_registrados
     )
 
+@app.route("/hoja-vida/<int:id>")
+def hoja_vida(id):
+    conexion = conectar_bd()
 
+    # Buscar información del equipo
+    equipo = conexion.execute("""
+        SELECT *
+        FROM equipos
+        WHERE id = ?
+    """, (id,)).fetchone()
+
+    if equipo is None:
+        conexion.close()
+        return "Equipo no encontrado", 404
+
+    # Buscar mantenimientos del equipo
+    mantenimientos_equipo = conexion.execute("""
+        SELECT *
+        FROM mantenimientos
+        WHERE equipo_id = ?
+        ORDER BY fecha DESC, id DESC
+    """, (id,)).fetchall()
+
+    # Buscar checklists del equipo
+    checklists_equipo = conexion.execute("""
+        SELECT *
+        FROM checklists
+        WHERE equipo_id = ?
+        ORDER BY fecha DESC, id DESC
+    """, (id,)).fetchall()
+
+    # Buscar manuales del equipo
+    manuales_equipo = conexion.execute("""
+        SELECT *
+        FROM manuales
+        WHERE equipo_id = ?
+        ORDER BY tipo ASC
+    """, (id,)).fetchall()
+
+    conexion.close()
+
+    return render_template(
+        "hoja_vida.html",
+        equipo=equipo,
+        mantenimientos=mantenimientos_equipo,
+        checklists=checklists_equipo,
+        manuales=manuales_equipo
+    )
 # =========================================================
 # ELIMINAR EQUIPO
 # =========================================================
@@ -1434,9 +1481,7 @@ def subir_manual(id):
 # ABRIR / DESCARGAR MANUAL
 # =========================================================
 
-@app.route(
-    "/manuales/<int:id>/archivo/<nombre>"
-)
+@app.route("/manuales/<int:id>/archivo/<path:nombre>")
 def abrir_manual(id, nombre):
 
     carpeta_equipo = os.path.join(
@@ -1444,9 +1489,18 @@ def abrir_manual(id, nombre):
         str(id)
     )
 
-    return send_from_directory(
+    ruta_archivo = os.path.join(
         carpeta_equipo,
         nombre
+    )
+
+    if not os.path.isfile(ruta_archivo):
+        return "El manual no existe en el servidor.", 404
+
+    return send_from_directory(
+        carpeta_equipo,
+        nombre,
+        as_attachment=False
     )
 
 
@@ -1565,19 +1619,32 @@ def bibliografia():
 
 # =========================================================
 # DIAGRAMA DE BLOQUES
-
+# =========================================================
 @app.route("/diagrama-bloques")
 def diagrama_bloques():
     return render_template(
         "diagrama_bloques.html"
     )
-    # =========================================================
-# DIAGRAMA DE BLOQUES
 
+
+# =========================================================
+# DIAGRAMA DE FLUJO
+# =========================================================
+@app.route("/diagrama-flujo")
+def diagrama_flujo():
+    return render_template(
+        "diagrama_flujo.html"
+    )
+
+
+# =========================================================
+# CRONOGRAMA
+# =========================================================
 @app.route("/cronograma")
 def cronograma():
-    return render_template("cronograma.html")
-
+    return render_template(
+        "cronograma.html"
+    )
 # =========================================================
 # CREAR BASE DE DATOS
 # =========================================================
