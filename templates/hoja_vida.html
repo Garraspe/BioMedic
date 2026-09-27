@@ -656,9 +656,7 @@
 
             {% endif %}
 
-        </div>
-
-        </div>
+       
 
     <!-- CÓDIGO QR DEL EQUIPO -->
 
@@ -672,10 +670,12 @@
         </p>
 
         <img
-            src="{{ url_for('codigo_qr', id=equipo.id) }}"
-            alt="Código QR de {{ equipo.codigo }}"
-            class="qr-imagen"
-        >
+    src="{{ url_for('codigo_qr', id=equipo.id) }}"
+    alt="Código QR de {{ equipo.codigo }}"
+    width="220"
+    height="220"
+    style="display: block; margin: 20px auto;"
+>
 
         <div class="qr-equipo">
             Equipo: {{ equipo.codigo }}
@@ -684,7 +684,6 @@
     </div>
 
 </section>
-
 
 <!-- RESUMEN -->
 

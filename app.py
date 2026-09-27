@@ -371,11 +371,8 @@ def codigo_qr(id):
     from flask import send_file
 
     # URL de la Hoja de Vida del equipo
-    url_hoja_vida = url_for(
-        "hoja_vida",
-        id=id,
-        _external=True
-    )
+    url_hoja_vida = f"https://biomedic-jf5o.onrender.com/hoja-vida/{id}"
+    
 
     # Crear código QR
     qr = qrcode.QRCode(
