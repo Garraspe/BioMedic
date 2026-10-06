@@ -21,9 +21,15 @@ DATABASE = os.path.join(BASE_DIR, "biovent.db")
 
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "manuales")
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# =========================================================
+# CARPETA DE EVIDENCIAS FOTOGRÁFICAS
+# =========================================================
 
+EVIDENCIAS_FOLDER = os.path.join(BASE_DIR, "evidencias")
+app.config["EVIDENCIAS_FOLDER"] = EVIDENCIAS_FOLDER
+os.makedirs(EVIDENCIAS_FOLDER, exist_ok=True)
+print("CARPETA DE EVIDENCIAS:", EVIDENCIAS_FOLDER)
 
 # =========================================================
 # FORZAR UTF-8 EN TODAS LAS RESPUESTAS HTML
@@ -55,7 +61,28 @@ def archivo_permitido(nombre):
     extension = nombre.rsplit(".", 1)[1].lower()
 
     return extension in ALLOWED_EXTENSIONS
+# =========================================================
+# ARCHIVOS DE EVIDENCIA FOTOGRÁFICA
+# =========================================================
 
+ALLOWED_IMAGE_EXTENSIONS = {
+    "jpg",
+    "jpeg",
+    "png",
+    "webp"
+}
+
+
+def imagen_permitida(nombre):
+    if not nombre:
+        return False
+
+    if "." not in nombre:
+        return False
+
+    extension = nombre.rsplit(".", 1)[1].lower()
+
+    return extension in ALLOWED_IMAGE_EXTENSIONS
 
 # =========================================================
 # CONEXIÓN A BASE DE DATOS
@@ -152,6 +179,17 @@ def crear_bd():
             equipo_id INTEGER NOT NULL,
             tipo TEXT NOT NULL,
             archivo TEXT NOT NULL,
+            fecha_subida TEXT NOT NULL,
+            FOREIGN KEY (equipo_id)
+                REFERENCES equipos(id)
+        )
+    """)
+    conexion.execute("""
+        CREATE TABLE IF NOT EXISTS evidencias (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            equipo_id INTEGER NOT NULL,
+            archivo TEXT NOT NULL,
+            descripcion TEXT,
             fecha_subida TEXT NOT NULL,
             FOREIGN KEY (equipo_id)
                 REFERENCES equipos(id)
@@ -310,10 +348,14 @@ def equipos():
         equipos=equipos_registrados
     )
 
+    # =====================================================
+# HOJA DE VIDA DEL EQUIPO
+# =====================================================
+
 @app.route("/hoja-vida/<int:id>")
 def hoja_vida(id):
+
     conexion = conectar_bd()
-    
 
     # Buscar información del equipo
     equipo = conexion.execute("""
@@ -350,6 +392,17 @@ def hoja_vida(id):
         ORDER BY tipo ASC
     """, (id,)).fetchall()
 
+    # Buscar evidencias fotográficas del equipo
+    evidencias_equipo = conexion.execute("""
+        SELECT *
+        FROM evidencias
+        WHERE equipo_id = ?
+        ORDER BY fecha_subida DESC, id DESC
+    """, (id,)).fetchall()
+    print("ID DEL EQUIPO:", id)
+    print("EVIDENCIAS ENCONTRADAS:", len(evidencias_equipo))
+    print("DATOS:", [dict(e) for e in evidencias_equipo])
+
     conexion.close()
 
     return render_template(
@@ -357,7 +410,8 @@ def hoja_vida(id):
         equipo=equipo,
         mantenimientos=mantenimientos_equipo,
         checklists=checklists_equipo,
-        manuales=manuales_equipo
+        manuales=manuales_equipo,
+        evidencias=evidencias_equipo
     )
     # =========================================================
 # CÓDIGO QR DE LA HOJA DE VIDA
@@ -421,6 +475,9 @@ def eliminar_equipo(id):
         app.config["UPLOAD_FOLDER"],
         str(id)
     )
+    print("CARPETA EQUIPO:", carpeta_equipo)
+    print("ARCHIVO RECIBIDO:", foto.filename)
+    print("RUTA FINAL:", ruta_archivo)
 
     for manual in manuales:
 
@@ -1630,6 +1687,185 @@ def eliminar_manual(
         )
     )
 
+    # =====================================================
+# SUBIR EVIDENCIA FOTOGRÁFICA
+# =====================================================
+
+@app.route("/evidencias/<int:id>/subir", methods=["POST"])
+def subir_evidencia(id):
+
+    conexion = conectar_bd()
+
+    # Verificar que el equipo exista
+    equipo = conexion.execute("""
+        SELECT *
+        FROM equipos
+        WHERE id = ?
+    """, (id,)).fetchone()
+
+    if equipo is None:
+        conexion.close()
+        return "Equipo no encontrado", 404
+
+    # Verificar que se haya enviado una fotografía
+    if "foto" not in request.files:
+        conexion.close()
+        return "No se seleccionó ninguna fotografía", 400
+
+    foto = request.files["foto"]
+
+    # Verificar que tenga nombre
+    if foto.filename == "":
+        conexion.close()
+        return "No se seleccionó ninguna fotografía", 400
+
+    # Verificar extensión
+    if not imagen_permitida(foto.filename):
+        conexion.close()
+        return "Formato de imagen no permitido", 400
+
+    # Crear carpeta del equipo
+    carpeta_equipo = os.path.join(
+        app.config["EVIDENCIAS_FOLDER"],
+        str(id)
+    )
+
+    os.makedirs(carpeta_equipo, exist_ok=True)
+
+    # Crear nombre seguro para el archivo
+    nombre_original = secure_filename(foto.filename)
+
+    fecha_actual = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    nombre_archivo = f"{fecha_actual}_{nombre_original}"
+
+    ruta_archivo = os.path.join(
+        carpeta_equipo,
+        nombre_archivo
+    )
+
+    # Guardar fotografía
+    foto.save(ruta_archivo)
+
+    # Descripción
+    descripcion = request.form.get("descripcion", "").strip()
+
+    # Registrar en la base de datos
+    conexion.execute("""
+        INSERT INTO evidencias (
+            equipo_id,
+            archivo,
+            descripcion,
+            fecha_subida
+        )
+        VALUES (?, ?, ?, ?)
+    """, (
+        id,
+        nombre_archivo,
+        descripcion,
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ))
+
+    conexion.commit()
+    conexion.close()
+
+    return redirect(url_for("hoja_vida", id=id))
+
+
+# =====================================================
+# ABRIR EVIDENCIA FOTOGRÁFICA
+# =====================================================
+
+@app.route("/evidencias/<int:id>/archivo/<path:nombre>")
+def abrir_evidencia(id, nombre):
+
+    carpeta_equipo = os.path.join(
+        app.config["EVIDENCIAS_FOLDER"],
+        str(id)
+    )
+
+    ruta_archivo = os.path.join(
+        carpeta_equipo,
+        nombre
+    )
+
+    if not os.path.isfile(ruta_archivo):
+        return "La evidencia fotográfica no existe.", 404
+
+    return send_from_directory(
+        carpeta_equipo,
+        nombre,
+        as_attachment=False
+    )
+
+
+# =====================================================
+# ELIMINAR EVIDENCIA FOTOGRÁFICA
+# =====================================================
+
+@app.route(
+    "/evidencias/<int:id>/eliminar/<int:evidencia_id>",
+    methods=["POST"]
+)
+def eliminar_evidencia(id, evidencia_id):
+
+    conexion = conectar_bd()
+
+    # Buscar la evidencia
+    evidencia = conexion.execute("""
+        SELECT archivo
+        FROM evidencias
+        WHERE id = ?
+        AND equipo_id = ?
+    """, (
+        evidencia_id,
+        id
+    )).fetchone()
+
+    if evidencia is None:
+        conexion.close()
+        return "Evidencia no encontrada", 404
+
+    # Ubicación de la carpeta del equipo
+    carpeta_equipo = os.path.join(
+        app.config["EVIDENCIAS_FOLDER"],
+        str(id)
+    )
+
+    # Ruta del archivo
+    ruta_archivo = os.path.join(
+        carpeta_equipo,
+        evidencia["archivo"]
+    )
+
+    # Eliminar archivo físico
+    if os.path.exists(ruta_archivo):
+
+        try:
+            os.remove(ruta_archivo)
+
+        except OSError:
+            pass
+
+    # Eliminar registro de la base de datos
+    conexion.execute("""
+        DELETE FROM evidencias
+        WHERE id = ?
+        AND equipo_id = ?
+    """, (
+        evidencia_id,
+        id
+    ))
+
+    conexion.commit()
+    conexion.close()
+
+    return redirect(
+        url_for(
+            "hoja_vida",
+            id=id
+        )
+    )
 
 # =========================================================
 # INFORMACIÓN DEL EQUIPO BIOMÉDICO
