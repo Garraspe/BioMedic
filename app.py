@@ -416,7 +416,6 @@ def hoja_vida(id):
     # =========================================================
 # CÓDIGO QR DE LA HOJA DE VIDA
 # =========================================================
-
 @app.route("/qr/<int:id>")
 def codigo_qr(id):
 
@@ -426,7 +425,6 @@ def codigo_qr(id):
 
     # URL de la Hoja de Vida del equipo
     url_hoja_vida = f"https://biomedic-jf5o.onrender.com/hoja-vida/{id}"
-    
 
     # Crear código QR
     qr = qrcode.QRCode(
