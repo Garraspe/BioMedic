@@ -324,7 +324,10 @@
             display: flex;
             justify-content: flex-end;
         }
-
+        .btn-eliminar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(13,110,253,0.25);
+        }
         .btn-hoja-vida {
             display: inline-block;
             text-decoration: none;
@@ -336,12 +339,31 @@
             font-weight: bold;
             transition: 0.2s;
         }
-
         .btn-hoja-vida:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 12px rgba(13,110,253,0.25);
         }
 
+        .btn-eliminar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(13,110,253,0.25);
+        }
+        .btn-eliminar {
+            display: inline-block;
+            text-decoration: none;
+            background: linear-gradient(135deg, #0d6efd, #084298);
+            color: white;
+            padding: 11px 18px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-eliminar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(13,110,253,0.25);
+        }
         .sin-equipos {
             text-align: center;
             padding: 50px 20px;
@@ -674,6 +696,7 @@
                 <!-- BOTÓN ÚNICO DE HOJA DE VIDA -->
 
                 <div class="acciones-equipo">
+                    
 
                     <a href="{{ url_for('hoja_vida', id=equipo.id) }}"
                        class="btn-hoja-vida">
@@ -681,6 +704,14 @@
                         📋 Hoja de vida
 
                     </a>
+                    <form action="{{ url_for('eliminar_equipo', id=equipo['id']) }}" method="POST"
+      onsubmit="return confirm('¿Está seguro de eliminar este equipo?');">
+
+    <button type="submit" class="btn-eliminar">
+    🗑️ Eliminar
+</button>
+
+</form>
 
                 </div>
 

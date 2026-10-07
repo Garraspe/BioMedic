@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
-
+import os
 import sqlite3
-import os
-from datetime import datetime, date
-import os
-from werkzeug.utils import secure_filename
+import qrcode
+
+from flask import Flask, render_template, request, redirect, url_for
 
 
 # =========================================================
@@ -238,7 +237,6 @@ def equipos():
 
     conexion = conectar_bd()
 
-
     # =====================================================
     # REGISTRAR EQUIPO
     # =====================================================
@@ -289,17 +287,13 @@ def equipos():
         # ESTADO INICIAL DEL EQUIPO
         # =================================================
 
-        # El estado ya NO lo selecciona el usuario.
-        #
-        # Al registrar un equipo nuevo se considera:
-        # "Equipo apto y disponible para su uso"
-        #
-        # Posteriormente el estado podrá actualizarse
-        # mediante las revisiones y mantenimientos.
-
         estado = "Equipo apto y disponible para su uso"
 
-        conexion.execute("""
+        # =================================================
+        # GUARDAR EQUIPO EN LA BASE DE DATOS
+        # =================================================
+
+        cursor = conexion.execute("""
             INSERT INTO equipos (
                 codigo,
                 marca,
@@ -324,8 +318,34 @@ def equipos():
             observaciones
         ))
 
+        id_equipo = cursor.lastrowid
+
+        # IMPORTANTE:
+        # Guardamos y cerramos SQLite ANTES de generar el QR.
         conexion.commit()
         conexion.close()
+
+        # =================================================
+        # GENERAR QR AUTOMÁTICAMENTE
+        # =================================================
+
+        os.makedirs(
+            os.path.join(BASE_DIR, "static", "qr"),
+            exist_ok=True
+        )
+
+        url_qr = f"https://biomedic-jf5o.onrender.com/hoja-vida/{id_equipo}?desde_qr=1"
+
+        imagen_qr = qrcode.make(url_qr)
+
+        ruta_qr = os.path.join(
+            BASE_DIR,
+            "static",
+            "qr",
+            f"equipo_{id_equipo}.png"
+        )
+
+        imagen_qr.save(ruta_qr)
 
         return redirect(
             url_for("equipos")
@@ -347,7 +367,6 @@ def equipos():
         "equipos.html",
         equipos=equipos_registrados
     )
-
     # =====================================================
 # HOJA DE VIDA DEL EQUIPO
 # =====================================================
@@ -455,11 +474,11 @@ def codigo_qr(id):
 # =========================================================
 # ELIMINAR EQUIPO
 # =========================================================
-
 @app.route("/equipos/eliminar/<int:id>", methods=["POST", "GET"])
 def eliminar_equipo(id):
 
     conexion = conectar_bd()
+
 
     # =====================================================
     # ELIMINAR MANUALES RELACIONADOS
@@ -476,8 +495,7 @@ def eliminar_equipo(id):
         str(id)
     )
     print("CARPETA EQUIPO:", carpeta_equipo)
-    print("ARCHIVO RECIBIDO:", foto.filename)
-    print("RUTA FINAL:", ruta_archivo)
+    
 
     for manual in manuales:
 
