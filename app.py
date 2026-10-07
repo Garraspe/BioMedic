@@ -405,14 +405,16 @@ def hoja_vida(id):
 
     conexion.close()
 
+    desde_qr = request.args.get("desde_qr") == "1"
     return render_template(
-        "hoja_vida.html",
-        equipo=equipo,
-        mantenimientos=mantenimientos_equipo,
-        checklists=checklists_equipo,
-        manuales=manuales_equipo,
-        evidencias=evidencias_equipo
-    )
+    "hoja_vida.html",
+    equipo=equipo,
+    mantenimientos=mantenimientos_equipo,
+    checklists=checklists_equipo,
+    manuales=manuales_equipo,
+    evidencias=evidencias_equipo,
+    desde_qr=desde_qr
+)
     # =========================================================
 # CÓDIGO QR DE LA HOJA DE VIDA
 # =========================================================

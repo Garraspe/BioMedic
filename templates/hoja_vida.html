@@ -537,6 +537,33 @@
         font-weight: bold;
         color: #263238;
     }
+    <style>
+    .seccion-qr {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .qr-contenedor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .qr-imagen {
+        width: 220px;
+        height: 220px;
+        object-fit: contain;
+        border: 1px solid #ddd;
+        padding: 10px;
+        background: white;
+        border-radius: 10px;
+    }
+
+    .qr-nombre {
+        margin-top: 10px;
+        font-weight: bold;
+    }
 </style>
 
 
@@ -658,28 +685,35 @@
 
        
 
-    <!-- CÓDIGO QR DEL EQUIPO -->
+    {% if not desde_qr %}
 
-    <div class="qr-container">
+<!-- CÓDIGO QR DEL EQUIPO -->
+<div class="seccion-qr">
 
-        <h3>📱 Código QR del equipo</h3>
+    <h2>📱 Código QR del equipo</h2>
 
-        <p>
-            Escanea este código para acceder directamente
-            a la Hoja de Vida de este equipo.
-        </p>
+    <p>
+        Escanea este código para acceder directamente a la Hoja de Vida de este equipo.
+    </p>
+
+    <div class="qr-contenedor">
 
         <img
-    src="{{ url_for('codigo_qr', id=equipo.id) }}"
-    alt="Código QR de {{ equipo.codigo }}"
-    width="220"
-    height="220"
-    style="display: block; margin: 20px auto;"
->
+            src="{{ url_for('static', filename='qr/equipo_' ~ equipo['id'] ~ '.png') }}"
+            alt="Código QR de {{ equipo['codigo'] }}"
+            class="qr-imagen"
+        >
 
-        <div class="qr-equipo">
-            Equipo: {{ equipo.codigo }}
-        </div>
+{% endif %}    
+
+        <p class="qr-nombre">
+            Código QR de {{ equipo['codigo'] }}
+        </p>
+
+    </div>
+
+</div>
+
 
     </div>
 
