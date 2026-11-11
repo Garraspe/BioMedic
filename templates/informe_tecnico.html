@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe técnico - BioMedic</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #263445;
+            background: #f1f4f8;
+            margin: 0;
+            padding: 25px;
+        }
+
+        .documento {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 10px;
+        }
+
+        h1, h2 {
+            color: #164e87;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .cabecera {
+            text-align: center;
+            border-bottom: 2px solid #164e87;
+            padding-bottom: 15px;
+        }
+
+        .seccion {
+            margin-top: 25px;
+        }
+
+        .datos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .dato {
+            padding: 12px;
+            background: #f4f7fb;
+            border-radius: 6px;
+            overflow-wrap: anywhere;
+        }
+
+        .tabla-contenedor {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        th, td {
+            border: 1px solid #d8e0ea;
+            padding: 9px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #eaf0f7;
+        }
+
+        .acciones {
+            max-width: 1000px;
+            margin: 0 auto 15px;
+        }
+
+        button, .boton {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-right: 8px;
+            border: none;
+            border-radius: 6px;
+            background: #155eef;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .observaciones {
+            min-height: 65px;
+            white-space: pre-wrap;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .documento {
+                max-width: none;
+                padding: 0;
+            }
+
+            .acciones {
+                display: none;
+            }
+
+            .dato {
+                background: white;
+                border: 1px solid #ddd;
+            }
+
+            tr {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="acciones">
+    <a href="{{ url_for('reportes') }}" class="boton">Volver a reportes</a>
+    <button onclick="window.print()">Imprimir / Guardar como PDF</button>
+</div>
+
+<main class="documento">
+
+    <header class="cabecera">
+        <h1>BIOMEDIC</h1>
+        <h2>INFORME TÉCNICO DEL EQUIPO BIOMÉDICO</h2>
+        <p>Fecha de generación: {{ fecha_informe }}</p>
+        <p>Documento generado automáticamente por la plataforma BioMedic.</p>
+    </header>
+
+    <section class="seccion">
+        <h2>1. Identificación del equipo</h2>
+
+        <div class="datos">
+            <div class="dato"><strong>Código:</strong> {{ equipo["codigo"] or "No registrado" }}</div>
+            <div class="dato"><strong>Marca:</strong> {{ equipo["marca"] or "No registrada" }}</div>
+            <div class="dato"><strong>Modelo:</strong> {{ equipo["modelo"] or "No registrado" }}</div>
+            <div class="dato"><strong>Número de serie:</strong> {{ equipo["serie"] or "No registrado" }}</div>
+            <div class="dato"><strong>Ubicación:</strong> {{ equipo["ubicacion"] or "No registrada" }}</div>
+            <div class="dato"><strong>Servicio:</strong> {{ equipo["servicio"] or "No registrado" }}</div>
+            <div class="dato"><strong>Estado actual:</strong> {{ equipo["estado"] or "No registrado" }}</div>
+            <div class="dato"><strong>Fecha de registro:</strong> {{ equipo["fecha"] or "No registrada" }}</div>
+        </div>
+
+        <h3>Observaciones del equipo</h3>
+        <div class="dato observaciones">{{ equipo["observaciones"] or "Sin observaciones registradas." }}</div>
+    </section>
+
+    <section class="seccion">
+        <h2>2. Historial de mantenimiento</h2>
+
+        {% if mantenimientos %}
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Tipo</th>
+                        <th>Técnico</th>
+                        <th>Próxima fecha</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in mantenimientos %}
+                    <tr>
+                        <td>{{ m["fecha"] or "—" }}</td>
+                        <td>{{ m["tipo"] or "—" }}</td>
+                        <td>{{ m["tecnico"] or "—" }}</td>
+                        <td>{{ m["proxima_fecha"] or "—" }}</td>
+                        <td>{{ m["observaciones"] or "Sin observaciones" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>No hay mantenimientos registrados para este equipo.</p>
+        {% endif %}
+    </section>
+
+    <section class="seccion">
+        <h2>3. Inspecciones y checklists</h2>
+
+        {% if checklists %}
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Técnico</th>
+                        <th>Resultado</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in checklists %}
+                    <tr>
+                        <td>{{ c["fecha"] or "—" }}</td>
+                        <td>{{ c["tecnico"] or "—" }}</td>
+                        <td>{{ c["resultado"] or "Sin resultado" }}</td>
+                        <td>{{ c["observaciones"] or "Sin observaciones" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>No hay checklists registrados para este equipo.</p>
+        {% endif %}
+    </section>
+
+    <section class="seccion">
+        <h2>4. Registro de fallas</h2>
+
+        {% if fallas %}
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha de falla</th>
+                        <th>Descripción</th>
+                        <th>Gravedad</th>
+                        <th>Técnico</th>
+                        <th>Estado</th>
+                        <th>Tiempo fuera de servicio (h)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in fallas %}
+                    <tr>
+                        <td>{{ f["fecha_falla"] or "—" }}</td>
+                        <td>{{ f["descripcion"] or "—" }}</td>
+                        <td>{{ f["gravedad"] or "—" }}</td>
+                        <td>{{ f["tecnico"] or "—" }}</td>
+                        <td>{{ f["estado"] or "—" }}</td>
+                        <td>{{ f["tiempo_fuera_servicio"] if f["tiempo_fuera_servicio"] is not none else "No registrado" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>No hay fallas registradas para este equipo.</p>
+        {% endif %}
+    </section>
+
+    <section class="seccion">
+        <h2>5. Evidencias registradas</h2>
+
+        {% if evidencias %}
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha de carga</th>
+                        <th>Archivo</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for e in evidencias %}
+                    <tr>
+                        <td>{{ e["fecha_subida"] or "—" }}</td>
+                        <td>{{ e["archivo"] or "—" }}</td>
+                        <td>{{ e["descripcion"] or "Sin descripción" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>No hay evidencias registradas para este equipo.</p>
+        {% endif %}
+    </section>
+
+    <section class="seccion">
+        <h2>6. Conclusión técnica</h2>
+        <p>
+            Este documento consolida los datos disponibles en BioMedic para el
+            equipo identificado en la sección 1. La información corresponde
+            a los registros almacenados en la plataforma a la fecha de generación.
+        </p>
+        <p>
+            La determinación de aptitud para el uso clínico debe basarse en
+            la evaluación técnica realizada por personal competente y en los
+            resultados documentados de las pruebas aplicables. Este informe
+            automático no sustituye dicha evaluación.
+        </p>
+    </section>
+
+    <section class="seccion">
+        <h2>7. Responsable de la revisión técnica</h2>
+        <p>Nombre del responsable: __________________________________</p>
+        <p>Firma: ______________________________</p>
+        <p>Fecha de revisión: ___________________</p>
+    </section>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioMedic | Gestión de falla</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul: #16324f;
+            --azul-claro: #234b6e;
+            --turquesa: #0d9488;
+            --fondo: #f3f6fa;
+            --texto: #243447;
+            --gris: #64748b;
+            --borde: #e2e8f0;
+            --blanco: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--fondo);
+            color: var(--texto);
+        }
+
+        .barra-superior {
+            background: var(--azul);
+            color: white;
+            padding: 17px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .marca {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            background: var(--turquesa);
+            border-radius: 12px;
+            font-size: 23px;
+        }
+
+        .marca h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .marca p {
+            font-size: 12px;
+            color: #cbd5e1;
+            margin: 4px 0 0;
+        }
+
+        .volver {
+            color: white;
+            text-decoration: none;
+            border: 1px solid #55718a;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 14px;
+        }
+
+        .volver:hover {
+            background: var(--azul-claro);
+        }
+
+        .contenedor {
+            width: min(1050px, 92%);
+            margin: 32px auto;
+        }
+
+        .encabezado {
+            margin-bottom: 24px;
+        }
+
+        .encabezado .ruta {
+            color: var(--gris);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .encabezado h2 {
+            font-size: clamp(25px, 4vw, 32px);
+            margin: 0 0 8px;
+            color: var(--azul);
+        }
+
+        .encabezado p {
+            color: var(--gris);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .tarjeta {
+            background: var(--blanco);
+            border: 1px solid var(--borde);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 18px #16324f08;
+        }
+
+        .titulo-tarjeta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 18px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .icono-seccion {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: #e0f2f1;
+            font-size: 21px;
+        }
+
+        .titulo-tarjeta h3 {
+            margin: 0 0 5px;
+            color: var(--azul);
+            font-size: 18px;
+        }
+
+        .titulo-tarjeta p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--gris);
+        }
+
+        .datos {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .dato {
+            padding: 14px;
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            background: #f8fafc;
+            min-width: 0;
+        }
+
+        .dato small {
+            display: block;
+            color: var(--gris);
+            margin-bottom: 7px;
+            font-size: 12px;
+        }
+
+        .dato strong {
+            overflow-wrap: anywhere;
+            font-size: 15px;
+        }
+
+        .descripcion {
+            margin-top: 18px;
+            padding: 16px;
+            border-left: 4px solid var(--turquesa);
+            background: #f0fdfa;
+            border-radius: 5px 10px 10px 5px;
+        }
+
+        .descripcion small {
+            display: block;
+            color: var(--gris);
+            margin-bottom: 7px;
+        }
+
+        .descripcion p {
+            margin: 0;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .campo {
+            margin-bottom: 19px;
+            min-width: 0;
+        }
+
+        .rejilla {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            min-width: 0;
+            padding: 12px 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            background: white;
+            color: var(--texto);
+            font: inherit;
+            font-size: 14px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--turquesa);
+            box-shadow: 0 0 0 3px #0d94881a;
+        }
+
+        textarea {
+            min-height: 115px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        .ayuda {
+            color: var(--gris);
+            font-size: 12px;
+            line-height: 1.5;
+            margin-top: 7px;
+        }
+
+        .estado-ayuda {
+            padding: 13px 15px;
+            border-radius: 9px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .acciones {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding-top: 20px;
+            border-top: 1px solid var(--borde);
+        }
+
+        .boton {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 19px;
+            border: none;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform .15s, background .2s;
+        }
+
+        .boton:hover {
+            transform: translateY(-1px);
+        }
+
+        .guardar {
+            background: var(--turquesa);
+            color: white;
+        }
+
+        .guardar:hover {
+            background: #0f766e;
+        }
+
+        .cancelar {
+            background: #e9eef5;
+            color: var(--azul);
+        }
+
+        .cancelar:hover {
+            background: #dbe4ee;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--gris);
+            font-size: 12px;
+            padding: 10px 15px 25px;
+        }
+
+        @media (max-width: 650px) {
+            .barra-superior {
+                padding: 15px 4%;
+            }
+
+            .contenedor {
+                width: 94%;
+                margin: 22px auto;
+            }
+
+            .tarjeta {
+                padding: 18px;
+            }
+
+            .datos, .rejilla {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .dato {
+                margin-bottom: 10px;
+            }
+
+            .acciones {
+                flex-direction: column-reverse;
+            }
+
+            .boton {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="barra-superior">
+    <div class="marca">
+        <div class="logo">✚</div>
+        <div>
+            <h1>BioMedic</h1>
+            <p>Gestión de tecnología biomédica</p>
+        </div>
+    </div>
+
+    <a class="volver" href="{{ url_for('fallas') }}">
+        ← Volver al historial
+    </a>
+</header>
+
+<main class="contenedor">
+
+    <div class="encabezado">
+        <div class="ruta">BioMedic / Fallas / Gestión de reparación</div>
+        <h2>Gestión de falla</h2>
+        <p>Documenta el diagnóstico, las acciones correctivas y el retorno del equipo al servicio.</p>
+    </div>
+
+    <section class="tarjeta">
+        <div class="titulo-tarjeta">
+            <div class="icono-seccion">⚙</div>
+            <div>
+                <h3>Información del equipo</h3>
+                <p>Identificación y detalles del evento registrado</p>
+            </div>
+        </div>
+
+        <div class="datos">
+            <div class="dato">
+                <small>Código del equipo</small>
+                <strong>{{ falla["codigo"] }}</strong>
+            </div>
+
+            <div class="dato">
+                <small>Marca y modelo</small>
+                <strong>{{ falla["marca"] }} {{ falla["modelo"] }}</strong>
+            </div>
+
+            <div class="dato">
+                <small>Fecha y hora de la falla</small>
+                <strong>{{ falla["fecha_falla"] }}</strong>
+            </div>
+
+            <div class="dato">
+                <small>Gravedad reportada</small>
+                <strong>{{ falla["gravedad"] }}</strong>
+            </div>
+        </div>
+
+        <div class="descripcion">
+            <small>Descripción de la falla</small>
+            <p>{{ falla["descripcion"] }}</p>
+        </div>
+    </section>
+
+    <form method="POST">
+
+        <section class="tarjeta">
+            <div class="titulo-tarjeta">
+                <div class="icono-seccion">🔧</div>
+                <div>
+                    <h3>Registro de reparación</h3>
+                    <p>Información técnica de la intervención</p>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="acciones_realizadas">Diagnóstico y acciones realizadas</label>
+                <textarea
+                    id="acciones_realizadas"
+                    name="acciones_realizadas"
+                    placeholder="Describe las verificaciones, el diagnóstico, las reparaciones y las pruebas efectuadas."
+                >{{ falla["acciones_realizadas"] or "" }}</textarea>
+            </div>
+
+            <div class="rejilla">
+                <div class="campo">
+                    <label for="fecha_reparacion">Fecha y hora de reparación</label>
+                    <input
+                        type="datetime-local"
+                        id="fecha_reparacion"
+                        name="fecha_reparacion"
+                        value="{{ (falla['fecha_reparacion'] or '')[:16] }}"
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="fecha_retorno_servicio">Fecha y hora de retorno al servicio</label>
+                    <input
+                        type="datetime-local"
+                        id="fecha_retorno_servicio"
+                        name="fecha_retorno_servicio"
+                        value="{{ (falla['fecha_retorno_servicio'] or '')[:16] }}"
+                    >
+                    <div class="ayuda">
+                        Registra el momento en que se verificó y autorizó el retorno del equipo al servicio.
+                    </div>
+                </div>
+            </div>
+
+            <div class="rejilla">
+                <div class="campo">
+                    <label for="tecnico">Técnico responsable *</label>
+                    <input
+                        type="text"
+                        id="tecnico"
+                        name="tecnico"
+                        value="{{ falla['tecnico'] or '' }}"
+                        placeholder="Nombre del técnico"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="estado">Estado de la falla *</label>
+                    <select id="estado" name="estado" required>
+                        <option value="Pendiente"
+                            {% if falla["estado"] == "Pendiente" %}selected{% endif %}>
+                            Pendiente
+                        </option>
+
+                        <option value="En reparación"
+                            {% if falla["estado"] == "En reparación" %}selected{% endif %}>
+                            En reparación
+                        </option>
+
+                        <option value="Reparada"
+                            {% if falla["estado"] == "Reparada" %}selected{% endif %}>
+                            Reparada
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="observaciones">Observaciones técnicas</label>
+                <textarea
+                    id="observaciones"
+                    name="observaciones"
+                    placeholder="Repuestos utilizados, resultados de las pruebas y recomendaciones."
+                >{{ falla["observaciones"] or "" }}</textarea>
+            </div>
+
+            <div class="estado-ayuda">
+                <strong>Importante:</strong> marca una falla como reparada únicamente cuando la intervención haya finalizado y el retorno al servicio esté documentado.
+            </div>
+
+            <div class="acciones">
+                <a href="{{ url_for('fallas') }}" class="boton cancelar">
+                    Cancelar
+                </a>
+
+                <button type="submit" class="boton guardar">
+                    Guardar cambios
+                </button>
+            </div>
+        </section>
+
+    </form>
+
+</main>
+
+<footer>
+    BioMedic · Sistema de gestión de equipos biomédicos
+</footer>
+
+</body>
+</html>

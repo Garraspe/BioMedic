@@ -1,0 +1,1255 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioMedic | Registro de fallas</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul-oscuro: #12365b;
+            --azul: #1769aa;
+            --azul-medio: #2585c5;
+            --azul-claro: #eaf3fc;
+            --fondo: #f1f5fa;
+            --texto: #26364a;
+            --gris: #718096;
+            --borde: #e2eaf2;
+            --blanco: #ffffff;
+            --turquesa: #168b9b;
+            --verde: #168044;
+            --rojo: #c0392b;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--fondo);
+            color: var(--texto);
+        }
+
+        /* NAVEGACIÓN */
+
+        .barra-superior {
+            background: var(--azul-oscuro);
+            color: white;
+            padding: 17px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            box-shadow: 0 3px 12px #12365b20;
+        }
+
+        .marca {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #1769aa, #2585c5);
+            font-size: 24px;
+        }
+
+        .marca h1 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .marca p {
+            margin: 4px 0 0;
+            color: #cbdced;
+            font-size: 12px;
+        }
+
+        nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #e2eaf3;
+            padding: 9px 11px;
+            text-decoration: none;
+            border-radius: 7px;
+            font-size: 12px;
+            transition: .2s;
+        }
+
+        nav a:hover,
+        nav a.activo {
+            background: #ffffff20;
+            color: white;
+        }
+
+        /* CONTENEDOR */
+
+        .contenedor {
+            width: min(1400px, 94%);
+            margin: 30px auto;
+        }
+
+        /* ENCABEZADO */
+
+        .encabezado {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(120deg, #102f50, #1769aa 65%, #2787bd);
+            color: white;
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 7px 20px #12365b20;
+        }
+
+        .encabezado::after {
+            content: "";
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            border: 35px solid #ffffff0c;
+            border-radius: 50%;
+            right: -60px;
+            top: -105px;
+        }
+
+        .encabezado-contenido {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ruta {
+            font-size: 12px;
+            color: #cbdced;
+            margin-bottom: 13px;
+        }
+
+        .etiqueta-modulo {
+            display: inline-block;
+            background: #ffffff20;
+            border: 1px solid #ffffff30;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .encabezado h2 {
+            margin: 0 0 9px;
+            font-size: clamp(25px, 4vw, 31px);
+        }
+
+        .encabezado p {
+            margin: 0;
+            color: #dceafa;
+            line-height: 1.6;
+            font-size: 13px;
+            max-width: 650px;
+        }
+
+        .acciones-superiores {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        /* BOTONES */
+
+        .boton {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 17px;
+            border: 0;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .boton:hover {
+            transform: translateY(-2px);
+        }
+
+        .primario {
+            background: linear-gradient(120deg, #1769aa, #2585c5);
+            color: white;
+            box-shadow: 0 4px 10px #1769aa25;
+        }
+
+        .primario:hover {
+            background: linear-gradient(120deg, #104d80, #1769aa);
+        }
+
+        .secundario {
+            background: #eaf2fa;
+            color: var(--azul-oscuro);
+        }
+
+        .secundario:hover {
+            background: #dceafa;
+        }
+
+        /* INDICADORES */
+
+        .indicadores {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 17px;
+            margin-bottom: 26px;
+        }
+
+        .tarjeta-indicador {
+            background: white;
+            padding: 21px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 1px solid var(--borde);
+            box-shadow: 0 4px 15px #12365b0a;
+            transition: .2s;
+        }
+
+        .tarjeta-indicador:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px #12365b12;
+        }
+
+        .icono-indicador {
+            width: 51px;
+            height: 51px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .icono-total {
+            background: #e8f1fc;
+            color: #1769aa;
+        }
+
+        .icono-pendiente {
+            background: #fff5df;
+            color: #b7791f;
+        }
+
+        .icono-reparacion {
+            background: #e5efff;
+            color: #2563a8;
+        }
+
+        .icono-reparada {
+            background: #e5f6ed;
+            color: #168044;
+        }
+
+        .dato-indicador strong {
+            display: block;
+            font-size: 27px;
+            color: var(--azul-oscuro);
+            line-height: 1.2;
+        }
+
+        .dato-indicador span {
+            display: block;
+            color: var(--gris);
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        /* PANELES */
+
+        .panel {
+            background: var(--blanco);
+            border: 1px solid var(--borde);
+            border-radius: 15px;
+            padding: 27px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px #12365b0a;
+        }
+
+        .titulo-panel {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding-bottom: 20px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .icono-panel {
+            width: 45px;
+            height: 45px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: var(--azul-claro);
+            color: var(--azul);
+            font-size: 22px;
+        }
+
+        .titulo-panel h3 {
+            color: var(--azul-oscuro);
+            margin: 0 0 5px;
+            font-size: 18px;
+        }
+
+        .titulo-panel p {
+            color: var(--gris);
+            margin: 0;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* FORMULARIO */
+
+        .formulario {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .campo {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .completo {
+            grid-column: 1 / -1;
+        }
+
+        .subtitulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--azul);
+            font-size: 13px;
+            font-weight: 700;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .numero-seccion {
+            width: 27px;
+            height: 27px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 8px;
+            background: var(--azul-claro);
+            color: var(--azul);
+            font-size: 11px;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #394b60;
+        }
+
+        .obligatorio {
+            color: #dc2626;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            min-width: 0;
+            padding: 12px 14px;
+            border: 1px solid #d8e2ec;
+            border-radius: 9px;
+            background: #fbfdff;
+            color: var(--texto);
+            font-family: inherit;
+            font-size: 13px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        input:hover,
+        select:hover,
+        textarea:hover {
+            border-color: #a9c8e5;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--azul-medio);
+            background: white;
+            box-shadow: 0 0 0 3px #3185c520;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #a0aab6;
+        }
+
+        textarea {
+            min-height: 105px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .ayuda {
+            color: var(--gris);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* AVISOS */
+
+        .aviso {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px 17px;
+            border-radius: 10px;
+            background: #eff6fd;
+            border: 1px solid #d5e6f6;
+            border-left: 4px solid var(--azul);
+            color: #34516e;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .aviso-icono {
+            font-size: 19px;
+            color: var(--azul);
+        }
+
+        .error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            border-radius: 9px;
+            font-size: 13px;
+        }
+
+        .botones-formulario {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 21px;
+            margin-top: 25px;
+            border-top: 1px solid var(--borde);
+        }
+
+        /* TABLA */
+
+        .tabla-contenedor {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--borde);
+            border-radius: 11px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1050px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 14px 13px;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        th {
+            background: #eaf2fa;
+            color: #34516e;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            white-space: nowrap;
+            border-bottom: 1px solid #dce7f1;
+        }
+
+        tbody tr {
+            transition: background .15s;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #fafcff;
+        }
+
+        tbody tr:hover {
+            background: #f0f6fc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .codigo {
+            color: var(--azul);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* GRAVEDAD */
+
+        .gravedad,
+        .estado {
+            display: inline-block;
+            padding: 7px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .gravedad-baja {
+            background: #e5f6ed;
+            color: #168044;
+        }
+
+        .gravedad-media {
+            background: #fff4dc;
+            color: #9a6700;
+        }
+
+        .gravedad-alta {
+            background: #ffedd5;
+            color: #9a3412;
+        }
+
+        .gravedad-critica {
+            background: #fde9e8;
+            color: #991b1b;
+        }
+
+        /* ESTADOS */
+
+        .estado {
+            background: #edf1f5;
+            color: #475569;
+        }
+
+        .estado-reparada {
+            background: #e5f6ed;
+            color: #168044;
+        }
+
+        .estado-reparacion {
+            background: #e5efff;
+            color: #1d4ed8;
+        }
+
+        .estado-pendiente {
+            background: #fff4dc;
+            color: #946200;
+        }
+
+        /* ACCIONES */
+
+        .acciones {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .acciones .btn-gestionar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #1769aa;
+            color: #ffffff;
+            padding: 9px 12px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .acciones .btn-gestionar:hover {
+            background: #104d80;
+            transform: translateY(-1px);
+        }
+
+        .acciones form {
+            display: inline-block;
+            margin: 0;
+        }
+
+        .acciones .btn-eliminar {
+            display: inline-block;
+            background: #fff1f0;
+            color: #c0392b;
+            padding: 9px 12px;
+            border: 1px solid #f3d0cc;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .acciones .btn-eliminar:hover {
+            background: #c0392b;
+            color: white;
+        }
+
+        /* VACÍOS */
+
+        .vacio {
+            text-align: center;
+            padding: 42px 20px;
+            color: var(--gris);
+        }
+
+        .vacio .simbolo {
+            width: 60px;
+            height: 60px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 14px;
+            border-radius: 17px;
+            background: var(--azul-claro);
+            color: var(--azul);
+            font-size: 27px;
+        }
+
+        .vacio h3 {
+            color: var(--azul-oscuro);
+            margin: 0 0 8px;
+            font-size: 17px;
+        }
+
+        .vacio p {
+            font-size: 12px;
+            margin: 0 0 18px;
+            line-height: 1.6;
+        }
+
+        .pie-tabla {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            color: var(--gris);
+            font-size: 11px;
+        }
+
+        .total-registros {
+            background: var(--azul-claro);
+            color: var(--azul);
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 15px 28px;
+            color: var(--gris);
+            font-size: 12px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .indicadores {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .barra-superior {
+                padding: 16px 4%;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            .contenedor {
+                width: 94%;
+                margin: 22px auto;
+            }
+
+            .panel {
+                padding: 19px;
+            }
+
+            .formulario {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .completo {
+                grid-column: auto;
+            }
+
+            .encabezado {
+                padding: 25px 21px;
+            }
+
+            .botones-formulario {
+                flex-direction: column-reverse;
+            }
+
+            .botones-formulario .boton {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .indicadores {
+                grid-template-columns: 1fr;
+            }
+
+            .encabezado {
+                padding: 22px 18px;
+            }
+
+            .panel {
+                padding: 16px;
+            }
+
+            .acciones-superiores .boton {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="barra-superior">
+
+    <div class="marca">
+        <div class="logo">✚</div>
+
+        <div>
+            <h1>BioMedic</h1>
+            <p>Gestión de tecnología biomédica</p>
+        </div>
+    </div>
+
+    <nav>
+        <a href="/">Inicio</a>
+        <a href="/inventario">Inventario</a>
+        <a href="/mantenimientos">Mantenimientos</a>
+        <a href="/checklist">Checklists</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/fallas" class="activo">Registro de fallas</a>
+        <a href="/reportes">Reportes</a>
+    </nav>
+
+</header>
+
+<main class="contenedor">
+
+    <!-- ENCABEZADO -->
+
+    <div class="encabezado">
+
+        <div class="encabezado-contenido">
+
+            <div class="ruta">
+                BioMedic / Mantenimiento / Registro de fallas
+            </div>
+
+            <span class="etiqueta-modulo">
+                ⚙ GESTIÓN BIOMÉDICA
+            </span>
+
+            <h2>Registro de fallas</h2>
+
+            <p>
+                Documenta incidentes técnicos, identifica las causas y realiza
+                el seguimiento de las reparaciones de los equipos biomédicos.
+            </p>
+
+            <div class="acciones-superiores">
+                <a class="boton secundario" href="/dashboard">
+                    ← Volver al dashboard
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- INDICADORES -->
+
+    {% set resumen = namespace(pendientes=0, reparacion=0, reparadas=0) %}
+
+    {% for falla in fallas %}
+        {% if falla.estado == "Pendiente" %}
+            {% set resumen.pendientes = resumen.pendientes + 1 %}
+        {% elif falla.estado == "En reparación" %}
+            {% set resumen.reparacion = resumen.reparacion + 1 %}
+        {% elif falla.estado == "Reparada" %}
+            {% set resumen.reparadas = resumen.reparadas + 1 %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="indicadores">
+
+        <div class="tarjeta-indicador">
+            <div class="icono-indicador icono-total">▤</div>
+
+            <div class="dato-indicador">
+                <strong>{{ fallas|length }}</strong>
+                <span>Total de fallas registradas</span>
+            </div>
+        </div>
+
+        <div class="tarjeta-indicador">
+            <div class="icono-indicador icono-pendiente">!</div>
+
+            <div class="dato-indicador">
+                <strong>{{ resumen.pendientes }}</strong>
+                <span>Fallas pendientes</span>
+            </div>
+        </div>
+
+        <div class="tarjeta-indicador">
+            <div class="icono-indicador icono-reparacion">⚙</div>
+
+            <div class="dato-indicador">
+                <strong>{{ resumen.reparacion }}</strong>
+                <span>En reparación</span>
+            </div>
+        </div>
+
+        <div class="tarjeta-indicador">
+            <div class="icono-indicador icono-reparada">✓</div>
+
+            <div class="dato-indicador">
+                <strong>{{ resumen.reparadas }}</strong>
+                <span>Fallas reparadas</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- REGISTRO DE FALLAS -->
+
+    <section class="panel">
+
+        <div class="titulo-panel">
+
+            <div class="icono-panel">＋</div>
+
+            <div>
+                <h3>Registrar una nueva falla</h3>
+                <p>
+                    Complete la información del incidente técnico.
+                    Los campos marcados con * son obligatorios.
+                </p>
+            </div>
+
+        </div>
+
+        {% if error %}
+        <div class="error">
+            <strong>No se pudo registrar la falla.</strong>
+            <br>
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if equipos %}
+
+        <div class="aviso">
+            <span class="aviso-icono">ⓘ</span>
+
+            <div>
+                <strong>Antes de registrar:</strong>
+                selecciona el equipo afectado y describe lo observado.
+                Registra la gravedad según la evaluación técnica realizada.
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('fallas') }}">
+
+            <div class="formulario">
+
+                <!-- SECCIÓN 1 -->
+
+                <div class="campo completo">
+                    <div class="subtitulo">
+                        <span class="numero-seccion">01</span>
+                        Identificación del equipo
+                    </div>
+                </div>
+
+                <div class="campo completo">
+
+                    <label for="equipo_id">
+                        Equipo afectado <span class="obligatorio">*</span>
+                    </label>
+
+                    <select id="equipo_id" name="equipo_id" required>
+                        <option value="">Selecciona un equipo del inventario</option>
+
+                        {% for equipo in equipos %}
+                        <option value="{{ equipo.id }}">
+                            {{ equipo.codigo }} — {{ equipo.marca }} {{ equipo.modelo }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                    <div class="ayuda">
+                        El equipo debe estar registrado previamente en el inventario de BioMedic.
+                    </div>
+
+                </div>
+
+                <!-- SECCIÓN 2 -->
+
+                <div class="campo completo">
+                    <div class="subtitulo">
+                        <span class="numero-seccion">02</span>
+                        Información del incidente
+                    </div>
+                </div>
+
+                <div class="campo">
+
+                    <label for="fecha_falla">
+                        Fecha y hora de la falla <span class="obligatorio">*</span>
+                    </label>
+
+                    <input
+                        type="datetime-local"
+                        id="fecha_falla"
+                        name="fecha_falla"
+                        required
+                    >
+
+                    <div class="ayuda">
+                        Registra cuándo se detectó la falla.
+                    </div>
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="gravedad">
+                        Gravedad <span class="obligatorio">*</span>
+                    </label>
+
+                    <select id="gravedad" name="gravedad" required>
+                        <option value="">Selecciona la gravedad</option>
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Crítica">Crítica</option>
+                    </select>
+
+                    <div class="ayuda">
+                        Clasifica el nivel de gravedad del incidente.
+                    </div>
+
+                </div>
+
+                <div class="campo completo">
+
+                    <label for="descripcion">
+                        Descripción de la falla <span class="obligatorio">*</span>
+                    </label>
+
+                    <textarea
+                        id="descripcion"
+                        name="descripcion"
+                        placeholder="Describe el síntoma observado, el mensaje de alarma o el comportamiento anormal del equipo."
+                        required
+                    ></textarea>
+
+                </div>
+
+                <!-- SECCIÓN 3 -->
+
+                <div class="campo completo">
+                    <div class="subtitulo">
+                        <span class="numero-seccion">03</span>
+                        Análisis y responsable
+                    </div>
+                </div>
+
+                <div class="campo completo">
+
+                    <label for="causa">
+                        Causa identificada
+                    </label>
+
+                    <textarea
+                        id="causa"
+                        name="causa"
+                        placeholder="Indica la causa si ya fue identificada. Si aún no se conoce, puedes dejar este campo vacío."
+                    ></textarea>
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="tecnico">
+                        Técnico responsable <span class="obligatorio">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="tecnico"
+                        name="tecnico"
+                        placeholder="Nombre del responsable"
+                        required
+                    >
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="observaciones">
+                        Observaciones adicionales
+                    </label>
+
+                    <textarea
+                        id="observaciones"
+                        name="observaciones"
+                        placeholder="Comentarios relevantes para el seguimiento."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+            <div class="botones-formulario">
+
+                <a href="/dashboard" class="boton secundario">
+                    Cancelar
+                </a>
+
+                <button type="submit" class="boton primario">
+                    ✓ Registrar falla
+                </button>
+
+            </div>
+
+        </form>
+
+        {% else %}
+
+        <div class="vacio">
+
+            <div class="simbolo">⚙</div>
+
+            <h3>No hay equipos registrados</h3>
+
+            <p>
+                Registra primero un equipo en el inventario para poder reportar una falla.
+            </p>
+
+            <a href="/inventario" class="boton primario">
+                Ir al inventario
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+    <!-- HISTORIAL -->
+
+    <section class="panel">
+
+        <div class="titulo-panel">
+
+            <div class="icono-panel">▤</div>
+
+            <div>
+                <h3>Historial de fallas</h3>
+                <p>
+                    Consulta los incidentes registrados y accede a su gestión y seguimiento.
+                </p>
+            </div>
+
+        </div>
+
+        {% if fallas %}
+
+        <div class="tabla-contenedor">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Fecha y hora</th>
+                        <th>Código</th>
+                        <th>Equipo</th>
+                        <th>Descripción</th>
+                        <th>Gravedad</th>
+                        <th>Técnico</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for falla in fallas %}
+
+                    <tr>
+
+                        <td>{{ falla.fecha_falla }}</td>
+
+                        <td>
+                            <span class="codigo">{{ falla.codigo }}</span>
+                        </td>
+
+                        <td>
+                            {{ falla.marca }} {{ falla.modelo }}
+                        </td>
+
+                        <td>{{ falla.descripcion }}</td>
+
+                        <td>
+
+                            {% if falla.gravedad == "Baja" %}
+                                <span class="gravedad gravedad-baja">Baja</span>
+
+                            {% elif falla.gravedad == "Media" %}
+                                <span class="gravedad gravedad-media">Media</span>
+
+                            {% elif falla.gravedad == "Alta" %}
+                                <span class="gravedad gravedad-alta">Alta</span>
+
+                            {% elif falla.gravedad == "Crítica" %}
+                                <span class="gravedad gravedad-critica">Crítica</span>
+
+                            {% else %}
+                                <span class="gravedad">{{ falla.gravedad }}</span>
+                            {% endif %}
+
+                        </td>
+
+                        <td>{{ falla.tecnico }}</td>
+
+                        <td>
+
+                            {% if falla.estado == "Reparada" %}
+                                <span class="estado estado-reparada">✓ Reparada</span>
+
+                            {% elif falla.estado == "En reparación" %}
+                                <span class="estado estado-reparacion">⚙ En reparación</span>
+
+                            {% elif falla.estado == "Pendiente" %}
+                                <span class="estado estado-pendiente">! Pendiente</span>
+
+                            {% else %}
+                                <span class="estado">{{ falla.estado }}</span>
+                            {% endif %}
+
+                        </td>
+
+                        <td class="acciones">
+
+                            <a
+                                href="{{ url_for('gestionar_falla', falla_id=falla['id']) }}"
+                                class="btn-gestionar">
+                                Gestionar
+                            </a>
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('eliminar_falla', falla_id=falla['id']) }}"
+                                onsubmit="return confirm('¿Seguro que deseas eliminar esta falla? Esta acción no se puede deshacer.');">
+
+                                <button type="submit" class="btn-eliminar">
+                                    Eliminar
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="pie-tabla">
+            <span>Registro y seguimiento de incidentes técnicos</span>
+
+            <span class="total-registros">
+                Total de fallas: {{ fallas|length }}
+            </span>
+        </div>
+
+        {% else %}
+
+        <div class="vacio">
+
+            <div class="simbolo">▤</div>
+
+            <h3>Sin fallas registradas</h3>
+
+            <p>
+                Cuando registres una falla, aparecerá aquí para su seguimiento.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+<footer>
+    BioMedic · Sistema de gestión y mantenimiento de equipos biomédicos
+</footer>
+
+</body>
+</html>

@@ -2,9 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 import os
 import sqlite3
 import qrcode
-from datetime import date, datetime
+from datetime import datetime, date
 
 from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
 
 
 # =========================================================
@@ -195,11 +196,55 @@ def crear_bd():
                 REFERENCES equipos(id)
         )
     """)
+    
+    # =====================================================
+    # TABLA FALLAS
+    # =====================================================
 
+    conexion.execute("""
+        CREATE TABLE IF NOT EXISTS fallas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            equipo_id INTEGER NOT NULL,
+            fecha_falla TEXT NOT NULL,
+            descripcion TEXT NOT NULL,
+            causa TEXT,
+            gravedad TEXT NOT NULL,
+            acciones_realizadas TEXT,
+            fecha_reparacion TEXT,
+            fecha_retorno_servicio TEXT,
+            tiempo_fuera_servicio REAL,
+            tecnico TEXT NOT NULL,
+            estado TEXT NOT NULL DEFAULT 'Pendiente',
+            observaciones TEXT,
+            FOREIGN KEY (equipo_id)
+                REFERENCES equipos(id)
+        )
+    """)
+        # =====================================================
+    # TABLA PRUEBAS FUNCIONALES
+    # =====================================================
+
+    conexion.execute("""
+        CREATE TABLE IF NOT EXISTS pruebas_funcionales (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            equipo_id INTEGER NOT NULL,
+            fecha TEXT NOT NULL,
+            tipo_prueba TEXT NOT NULL,
+            parametro TEXT NOT NULL,
+            valor_referencia REAL,
+            valor_medido REAL,
+            unidad TEXT,
+            limite_inferior REAL,
+            limite_superior REAL,
+            resultado TEXT NOT NULL,
+            tecnico TEXT NOT NULL,
+            observaciones TEXT,
+            FOREIGN KEY (equipo_id)
+                REFERENCES equipos(id)
+        )
+    """)
     conexion.commit()
     conexion.close()
-
-
 # =========================================================
 # INICIO
 # =========================================================
@@ -227,6 +272,289 @@ def inventario():
         "inventario.html",
         equipos=equipos
     )
+    
+
+# =====================================================
+# REGISTRO Y CONSULTA DE FALLAS
+# =====================================================
+
+@app.route("/fallas", methods=["GET", "POST"])
+def fallas():
+    conexion = conectar_bd()
+
+    if request.method == "POST":
+        equipo_id = request.form.get("equipo_id", "").strip()
+        fecha_falla = request.form.get("fecha_falla", "").strip()
+        descripcion = request.form.get("descripcion", "").strip()
+        causa = request.form.get("causa", "").strip()
+        gravedad = request.form.get("gravedad", "").strip()
+        tecnico = request.form.get("tecnico", "").strip()
+        observaciones = request.form.get("observaciones", "").strip()
+
+        error = None
+
+        # Validar campos obligatorios
+        if not all([
+            equipo_id, fecha_falla, descripcion, gravedad, tecnico
+        ]):
+            error = "Completa todos los campos obligatorios."
+
+        # Validar fecha: acepta fecha antigua o fecha con hora
+        if error is None:
+            try:
+                datetime.fromisoformat(fecha_falla)
+            except ValueError:
+                error = "La fecha y hora de la falla no son válidas."
+
+        # Validar que el equipo exista
+        if error is None:
+            equipo = conexion.execute(
+                "SELECT id FROM equipos WHERE id = ?",
+                (equipo_id,)
+            ).fetchone()
+
+            if equipo is None:
+                error = "El equipo seleccionado no existe."
+
+        # Si hay errores, volver a mostrar el formulario
+        if error:
+            equipos = conexion.execute("""
+                SELECT id, codigo, marca, modelo
+                FROM equipos
+                ORDER BY codigo
+            """).fetchall()
+
+            registros = conexion.execute("""
+                SELECT f.*, e.codigo, e.marca, e.modelo
+                FROM fallas f
+                JOIN equipos e ON e.id = f.equipo_id
+                ORDER BY f.fecha_falla DESC, f.id DESC
+            """).fetchall()
+
+            conexion.close()
+
+            return render_template(
+                "fallas.html",
+                equipos=equipos,
+                fallas=registros,
+                error=error
+            )
+
+        # Guardar la falla
+        conexion.execute("""
+            INSERT INTO fallas (
+                equipo_id,
+                fecha_falla,
+                descripcion,
+                causa,
+                gravedad,
+                tecnico,
+                observaciones,
+                estado
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'Pendiente')
+        """, (
+            equipo_id,
+            fecha_falla,
+            descripcion,
+            causa,
+            gravedad,
+            tecnico,
+            observaciones
+        ))
+
+        conexion.commit()
+        conexion.close()
+
+        return redirect(url_for("fallas"))
+
+    # Consultar equipos para el formulario
+    equipos = conexion.execute("""
+        SELECT id, codigo, marca, modelo
+        FROM equipos
+        ORDER BY codigo
+    """).fetchall()
+
+    # Consultar historial de fallas
+    registros = conexion.execute("""
+        SELECT f.*, e.codigo, e.marca, e.modelo
+        FROM fallas f
+        JOIN equipos e ON e.id = f.equipo_id
+        ORDER BY f.fecha_falla DESC, f.id DESC
+    """).fetchall()
+
+    conexion.close()
+
+    return render_template(
+        "fallas.html",
+        equipos=equipos,
+        fallas=registros
+    )
+
+# =====================================================
+# GESTIONAR UNA FALLA REGISTRADA
+# =====================================================
+
+@app.route("/fallas/gestionar/<int:falla_id>", methods=["GET", "POST"])
+def gestionar_falla(falla_id):
+    conexion = conectar_bd()
+
+    falla = conexion.execute("""
+        SELECT f.*, e.codigo, e.marca, e.modelo
+        FROM fallas f
+        JOIN equipos e ON e.id = f.equipo_id
+        WHERE f.id = ?
+    """, (falla_id,)).fetchone()
+
+    if falla is None:
+        conexion.close()
+        return "La falla solicitada no existe.", 404
+
+    if request.method == "POST":
+        acciones = request.form.get(
+            "acciones_realizadas", ""
+        ).strip()
+
+        fecha_reparacion = request.form.get(
+            "fecha_reparacion", ""
+        ).strip() or None
+
+        fecha_retorno = request.form.get(
+            "fecha_retorno_servicio", ""
+        ).strip() or None
+
+        tecnico = request.form.get(
+            "tecnico", ""
+        ).strip()
+
+        estado = request.form.get("estado", "").strip()
+
+        observaciones = request.form.get(
+            "observaciones", ""
+        ).strip()
+
+        estados_validos = [
+            "Pendiente",
+            "En reparación",
+            "Reparada"
+        ]
+
+        if not tecnico or estado not in estados_validos:
+            return (
+                "Debes indicar el técnico y un estado válido.",
+                400
+            )
+
+        if estado == "Reparada" and not fecha_retorno:
+            return (
+                "Registra la fecha y hora de retorno al servicio "
+                "antes de marcar la falla como reparada.",
+                400
+            )
+
+        tiempo_fuera = None
+
+        if fecha_retorno:
+            try:
+                inicio = datetime.fromisoformat(
+                    falla["fecha_falla"]
+                )
+                retorno = datetime.fromisoformat(fecha_retorno)
+
+                if retorno < inicio:
+                    return (
+                        "El retorno al servicio no puede ser "
+                        "anterior a la fecha de la falla.",
+                        400
+                    )
+
+                tiempo_fuera = (
+                    retorno - inicio
+                ).total_seconds() / 3600
+
+            except ValueError:
+                conexion.close()
+                return (
+                    "No se pudieron interpretar las fechas. "
+                    "Verifica los datos registrados.",
+                    400
+                )
+
+        conexion.execute("""
+            UPDATE fallas
+            SET acciones_realizadas = ?,
+                fecha_reparacion = ?,
+                fecha_retorno_servicio = ?,
+                tiempo_fuera_servicio = ?,
+                tecnico = ?,
+                estado = ?,
+                observaciones = ?
+            WHERE id = ?
+        """, (
+            acciones,
+            fecha_reparacion,
+            fecha_retorno,
+            tiempo_fuera,
+            tecnico,
+            estado,
+            observaciones,
+            falla_id
+        ))
+
+        conexion.commit()
+        conexion.close()
+
+        return redirect(url_for("fallas"))
+
+    conexion.close()
+
+    return render_template(
+        "gestionar_falla.html",
+        falla=falla
+    )
+    
+@app.route("/fallas/eliminar/<int:falla_id>", methods=["POST"])
+def eliminar_falla(falla_id):
+    conexion = conectar_bd()
+
+    try:
+        # Verificar que la falla exista
+        falla = conexion.execute(
+            "SELECT id FROM fallas WHERE id = ?",
+            (falla_id,)
+        ).fetchone()
+
+        if falla is None:
+            flash("El registro de falla no existe.", "error")
+            return redirect(url_for("fallas"))
+
+        # Eliminar el registro
+        conexion.execute(
+            "DELETE FROM fallas WHERE id = ?",
+            (falla_id,)
+        )
+
+        # Guardar los cambios antes de cerrar la conexión
+        conexion.commit()
+
+    except Exception as e:
+        # Intentar revertir solo si la conexión sigue abierta
+        try:
+            conexion.rollback()
+        except sqlite3.ProgrammingError:
+            pass
+
+        print(f"Error al eliminar la falla: {e}")
+        flash("No se pudo eliminar el registro de falla.", "error")
+
+        return redirect(url_for("fallas"))
+
+    finally:
+        conexion.close()
+
+    flash("Registro de falla eliminado correctamente.", "success")
+    return redirect(url_for("fallas"))
+
 
 
 # =========================================================
@@ -368,7 +696,8 @@ def equipos():
         "equipos.html",
         equipos=equipos_registrados
     )
-    # =====================================================
+    
+# =====================================================
 # HOJA DE VIDA DEL EQUIPO
 # =====================================================
 
@@ -412,29 +741,108 @@ def hoja_vida(id):
         ORDER BY tipo ASC
     """, (id,)).fetchall()
 
-    # Buscar evidencias fotográficas del equipo
+    # Buscar evidencias fotográficas
     evidencias_equipo = conexion.execute("""
         SELECT *
         FROM evidencias
         WHERE equipo_id = ?
         ORDER BY fecha_subida DESC, id DESC
     """, (id,)).fetchall()
-    print("ID DEL EQUIPO:", id)
-    print("EVIDENCIAS ENCONTRADAS:", len(evidencias_equipo))
-    print("DATOS:", [dict(e) for e in evidencias_equipo])
+
+    # Buscar fallas del equipo
+    fallas_equipo = conexion.execute("""
+        SELECT *
+        FROM fallas
+        WHERE equipo_id = ?
+        ORDER BY fecha_falla DESC, id DESC
+    """, (id,)).fetchall()
 
     conexion.close()
 
+    # =====================================================
+    # CONSTRUIR HISTORIAL GENERAL
+    # =====================================================
+
+    historial_general = []
+
+    # Agregar mantenimientos
+    for mantenimiento in mantenimientos_equipo:
+
+        historial_general.append({
+            "fecha": mantenimiento["fecha"],
+            "tipo_evento": "Mantenimiento",
+            "detalle": (
+                f"Mantenimiento {mantenimiento['tipo']} "
+                f"realizado por {mantenimiento['tecnico']}"
+            ),
+            "observaciones": mantenimiento["observaciones"]
+        })
+
+    # Agregar checklists
+    for checklist in checklists_equipo:
+
+        historial_general.append({
+            "fecha": checklist["fecha"],
+            "tipo_evento": "Checklist",
+            "detalle": (
+                f"Inspección realizada por {checklist['tecnico']}. "
+                f"Resultado: {checklist['resultado']}"
+            ),
+            "observaciones": checklist["observaciones"]
+        })
+
+    # Agregar fallas
+    for falla in fallas_equipo:
+
+        historial_general.append({
+            "fecha": falla["fecha_falla"],
+            "tipo_evento": "Falla",
+            "detalle": (
+                f"{falla['descripcion']} "
+                f"(Gravedad: {falla['gravedad']})"
+            ),
+            "observaciones": (
+                falla["observaciones"] or
+                falla["acciones_realizadas"] or
+                "Sin observaciones"
+            )
+        })
+
+    # Agregar evidencias fotográficas
+    for evidencia in evidencias_equipo:
+
+        historial_general.append({
+            "fecha": evidencia["fecha_subida"],
+            "tipo_evento": "Evidencia fotográfica",
+            "detalle": (
+                evidencia["descripcion"] or
+                "Evidencia fotográfica registrada"
+            ),
+            "observaciones": evidencia["archivo"]
+        })
+
+    # Ordenar todas las actividades de la más reciente
+    # a la más antigua
+    historial_general.sort(
+        key=lambda actividad: str(actividad["fecha"] or ""),
+        reverse=True
+    )
+
+    # Detectar acceso desde código QR
     desde_qr = request.args.get("desde_qr") == "1"
+
     return render_template(
-    "hoja_vida.html",
-    equipo=equipo,
-    mantenimientos=mantenimientos_equipo,
-    checklists=checklists_equipo,
-    manuales=manuales_equipo,
-    evidencias=evidencias_equipo,
-    desde_qr=desde_qr
-)
+        "hoja_vida.html",
+        equipo=equipo,
+        mantenimientos=mantenimientos_equipo,
+        checklists=checklists_equipo,
+        manuales=manuales_equipo,
+        evidencias=evidencias_equipo,
+        fallas=fallas_equipo,
+        historial_general=historial_general,
+        desde_qr=desde_qr
+    )
+
     # =========================================================
 # CÓDIGO QR DE LA HOJA DE VIDA
 # =========================================================
@@ -1100,6 +1508,145 @@ def eliminar_checklist(id):
         url_for("checklist")
     )
 
+    # =====================================================
+# PRUEBAS FUNCIONALES
+# =====================================================
+
+@app.route("/pruebas-funcionales", methods=["GET", "POST"])
+def pruebas_funcionales():
+
+    conexion = conectar_bd()
+
+    # =================================================
+    # GUARDAR PRUEBA FUNCIONAL
+    # =================================================
+
+    if request.method == "POST":
+
+        equipo_id = request.form.get("equipo_id")
+        fecha = request.form.get("fecha", "").strip()
+        tipo_prueba = request.form.get("tipo_prueba", "").strip()
+        parametro = request.form.get("parametro", "").strip()
+        valor_referencia = request.form.get("valor_referencia")
+        valor_medido = request.form.get("valor_medido")
+        unidad = request.form.get("unidad", "").strip()
+        limite_inferior = request.form.get("limite_inferior")
+        limite_superior = request.form.get("limite_superior")
+        tecnico = request.form.get("tecnico", "").strip()
+        observaciones = request.form.get("observaciones", "").strip()
+
+        try:
+            medido = float(valor_medido)
+            inferior = float(limite_inferior)
+            superior = float(limite_superior)
+
+            if inferior > superior:
+                conexion.close()
+                return "El límite inferior no puede ser mayor al superior.", 400
+
+            if inferior <= medido <= superior:
+                resultado = "APROBADO"
+            else:
+                resultado = "NO APROBADO"
+
+            referencia = (
+                float(valor_referencia)
+                if valor_referencia else None
+            )
+
+        except (ValueError, TypeError):
+            conexion.close()
+            return "Verifica los valores numéricos de la prueba.", 400
+
+        conexion.execute("""
+            INSERT INTO pruebas_funcionales (
+                equipo_id,
+                fecha,
+                tipo_prueba,
+                parametro,
+                valor_referencia,
+                valor_medido,
+                unidad,
+                limite_inferior,
+                limite_superior,
+                resultado,
+                tecnico,
+                observaciones
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            equipo_id,
+            fecha,
+            tipo_prueba,
+            parametro,
+            referencia,
+            medido,
+            unidad,
+            inferior,
+            superior,
+            resultado,
+            tecnico,
+            observaciones
+        ))
+
+        conexion.commit()
+        conexion.close()
+
+        return redirect(url_for("pruebas_funcionales"))
+
+    # =================================================
+    # CONSULTAR EQUIPOS
+    # =================================================
+
+    equipos = conexion.execute("""
+        SELECT *
+        FROM equipos
+        ORDER BY codigo ASC
+    """).fetchall()
+
+    # =================================================
+    # CONSULTAR PRUEBAS REGISTRADAS
+    # =================================================
+
+    pruebas = conexion.execute("""
+        SELECT
+            pruebas_funcionales.*,
+            equipos.codigo,
+            equipos.marca,
+            equipos.modelo
+        FROM pruebas_funcionales
+        INNER JOIN equipos
+            ON pruebas_funcionales.equipo_id = equipos.id
+        ORDER BY pruebas_funcionales.fecha DESC,
+                 pruebas_funcionales.id DESC
+    """).fetchall()
+
+    conexion.close()
+
+    return render_template(
+        "pruebas_funcionales.html",
+        equipos=equipos,
+        pruebas=pruebas
+    )
+
+# =====================================================
+# ELIMINAR PRUEBA FUNCIONAL
+# =====================================================
+
+@app.route("/eliminar-prueba-funcional/<int:prueba_id>", methods=["POST"])
+def eliminar_prueba_funcional(prueba_id):
+
+    conexion = conectar_bd()
+
+    conexion.execute("""
+        DELETE FROM pruebas_funcionales
+        WHERE id = ?
+    """, (prueba_id,))
+
+    conexion.commit()
+    conexion.close()
+
+    return redirect(url_for("pruebas_funcionales"))
 
 # =========================================================
 # DASHBOARD
@@ -1107,8 +1654,463 @@ def eliminar_checklist(id):
 
 @app.route("/dashboard")
 def dashboard():
+    conexion = conectar_bd()
+
+    try:
+        # =====================================================
+        # RESUMEN DE EQUIPOS
+        # =====================================================
+
+        total_equipos = conexion.execute("""
+            SELECT COUNT(*) AS total FROM equipos
+        """).fetchone()["total"]
+
+        equipos_operativos = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM equipos
+            WHERE estado = 'Equipo apto y disponible para su uso'
+        """).fetchone()["total"]
+
+        equipos_mantenimiento = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM mantenimientos
+            WHERE id IN (
+                SELECT MAX(id)
+                FROM mantenimientos
+                GROUP BY equipo_id
+            )
+        """).fetchone()["total"]
+
+        equipos_fuera_servicio = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM equipos
+            WHERE estado = 'Fuera de servicio'
+        """).fetchone()["total"]
+
+        # =====================================================
+        # RESUMEN DE CHECKLISTS
+        # =====================================================
+
+        total_checklists = conexion.execute("""
+            SELECT COUNT(*) AS total FROM checklists
+        """).fetchone()["total"]
+
+        checklists_aprobados = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM checklists
+            WHERE resultado = 'APROBADO'
+        """).fetchone()["total"]
+
+        checklists_atencion = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM checklists
+            WHERE resultado = 'ATENCIÓN REQUERIDA'
+        """).fetchone()["total"]
+
+        checklists_no_aprobados = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM checklists
+            WHERE resultado = 'NO APROBADO'
+        """).fetchone()["total"]
+
+        porcentaje_checklists_aprobados = (
+            round(checklists_aprobados / total_checklists * 100, 1)
+            if total_checklists > 0 else 0
+        )
+
+        # =====================================================
+        # RESUMEN DE MANTENIMIENTOS
+        # =====================================================
+
+        total_mantenimientos = conexion.execute("""
+            SELECT COUNT(*) AS total FROM mantenimientos
+        """).fetchone()["total"]
+
+        hoy = date.today().isoformat()
+
+        mantenimientos_proximos = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM mantenimientos
+            WHERE proxima_fecha >= ?
+              AND proxima_fecha <= date(?, '+30 day')
+        """, (hoy, hoy)).fetchone()["total"]
+
+        mantenimientos_vencidos = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM mantenimientos
+            WHERE proxima_fecha < ?
+        """, (hoy,)).fetchone()["total"]
+
+        mantenimientos_al_dia = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM mantenimientos
+            WHERE proxima_fecha > date(?, '+30 day')
+        """, (hoy,)).fetchone()["total"]
+
+        # =====================================================
+        # EVIDENCIAS Y REGISTROS PENDIENTES
+        # =====================================================
+
+        total_evidencias = conexion.execute("""
+            SELECT COUNT(*) AS total FROM evidencias
+        """).fetchone()["total"]
+
+        equipos_sin_checklist = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM equipos e
+            WHERE NOT EXISTS (
+                SELECT 1 FROM checklists c
+                WHERE c.equipo_id = e.id
+            )
+        """).fetchone()["total"]
+
+        equipos_sin_mantenimiento = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM equipos e
+            WHERE NOT EXISTS (
+                SELECT 1 FROM mantenimientos m
+                WHERE m.equipo_id = e.id
+            )
+        """).fetchone()["total"]
+
+        # =====================================================
+        # ÚLTIMOS CHECKLISTS
+        # =====================================================
+
+        ultimos_checklists = conexion.execute("""
+            SELECT c.*, e.codigo, e.marca, e.modelo
+            FROM checklists c
+            INNER JOIN equipos e ON c.equipo_id = e.id
+            ORDER BY c.fecha DESC, c.id DESC
+            LIMIT 10
+        """).fetchall()
+
+        # =====================================================
+        # ÚLTIMOS MANTENIMIENTOS
+        # =====================================================
+
+        ultimos_mantenimientos = conexion.execute("""
+            SELECT m.*, e.codigo, e.marca, e.modelo
+            FROM mantenimientos m
+            INNER JOIN equipos e ON m.equipo_id = e.id
+            ORDER BY m.fecha DESC, m.id DESC
+            LIMIT 10
+        """).fetchall()
+
+        # =====================================================
+        # RESUMEN DE FALLAS
+        # =====================================================
+
+        total_fallas = conexion.execute("""
+            SELECT COUNT(*) AS total FROM fallas
+        """).fetchone()["total"]
+
+        fallas_pendientes = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM fallas
+            WHERE estado = 'Pendiente'
+        """).fetchone()["total"]
+
+        fallas_en_reparacion = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM fallas
+            WHERE estado = 'En reparación'
+        """).fetchone()["total"]
+
+        fallas_reparadas = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM fallas
+            WHERE estado = 'Reparada'
+        """).fetchone()["total"]
+
+        ultimas_fallas = conexion.execute("""
+            SELECT
+                f.id,
+                f.fecha_falla,
+                f.descripcion,
+                f.gravedad,
+                f.tecnico,
+                f.estado,
+                e.codigo,
+                e.marca,
+                e.modelo
+            FROM fallas f
+            INNER JOIN equipos e ON f.equipo_id = e.id
+            ORDER BY f.fecha_falla DESC, f.id DESC
+            LIMIT 10
+        """).fetchall()
+
+        # =====================================================
+        # MTTR: TIEMPO MEDIO DE REPARACIÓN, EN HORAS
+        # =====================================================
+
+        mttr_resultado = conexion.execute("""
+            SELECT AVG(tiempo_fuera_servicio) AS promedio
+            FROM fallas
+            WHERE estado = 'Reparada'
+              AND tiempo_fuera_servicio IS NOT NULL
+              AND tiempo_fuera_servicio >= 0
+        """).fetchone()["promedio"]
+
+        mttr = round(mttr_resultado, 2) if mttr_resultado is not None else 0
+
+        # =====================================================
+        # MTBF: INTERVALO MEDIO ENTRE FALLAS, EN HORAS
+        # =====================================================
+
+        registros_fallas = conexion.execute("""
+            SELECT equipo_id, fecha_falla
+            FROM fallas
+            WHERE fecha_falla IS NOT NULL
+              AND TRIM(fecha_falla) != ''
+            ORDER BY equipo_id, fecha_falla, id
+        """).fetchall()
+
+        fallas_por_equipo = {}
+        intervalos_mtbf = []
+
+        for registro in registros_fallas:
+            equipo_id = registro["equipo_id"]
+            fecha_texto = str(registro["fecha_falla"]).strip()
+
+            try:
+                fecha_falla = datetime.fromisoformat(fecha_texto)
+            except (ValueError, TypeError):
+                continue
+
+            fallas_por_equipo.setdefault(equipo_id, []).append(
+                fecha_falla
+            )
+
+        for fechas in fallas_por_equipo.values():
+            fechas.sort()
+
+            for i in range(1, len(fechas)):
+                horas = (
+                    fechas[i] - fechas[i - 1]
+                ).total_seconds() / 3600
+
+                if horas > 0:
+                    intervalos_mtbf.append(horas)
+
+        mtbf = (
+            round(sum(intervalos_mtbf) / len(intervalos_mtbf), 2)
+            if intervalos_mtbf
+            else None
+        )
+
+
+        # =====================================================
+        # DISPONIBILIDAD OPERATIVA ACTUAL
+        # =====================================================
+
+        disponibilidad = (
+            round(equipos_operativos / total_equipos * 100, 1)
+            if total_equipos > 0 else 0
+        )
+
+    finally:
+        conexion.close()
+
+    # =====================================================
+    # ENVIAR DATOS AL HTML
+    # =====================================================
+
+    return render_template(
+        "dashboard.html",
+        total_equipos=total_equipos,
+        equipos_operativos=equipos_operativos,
+        equipos_mantenimiento=equipos_mantenimiento,
+        equipos_fuera_servicio=equipos_fuera_servicio,
+        total_checklists=total_checklists,
+        checklists_aprobados=checklists_aprobados,
+        checklists_atencion=checklists_atencion,
+        checklists_no_aprobados=checklists_no_aprobados,
+        porcentaje_checklists_aprobados=porcentaje_checklists_aprobados,
+        total_mantenimientos=total_mantenimientos,
+        mantenimientos_al_dia=mantenimientos_al_dia,
+        mantenimientos_proximos=mantenimientos_proximos,
+        mantenimientos_vencidos=mantenimientos_vencidos,
+        total_evidencias=total_evidencias,
+        equipos_sin_checklist=equipos_sin_checklist,
+        equipos_sin_mantenimiento=equipos_sin_mantenimiento,
+        ultimos_checklists=ultimos_checklists,
+        ultimos_mantenimientos=ultimos_mantenimientos,
+        total_fallas=total_fallas,
+        fallas_pendientes=fallas_pendientes,
+        fallas_en_reparacion=fallas_en_reparacion,
+        fallas_reparadas=fallas_reparadas,
+        ultimas_fallas=ultimas_fallas,
+        mtbf=mtbf,
+        mttr=mttr,
+        disponibilidad=disponibilidad
+    )
+
+# =========================================================
+# REPORTES GENERALES
+# =========================================================
+
+@app.route("/reportes")
+def reportes():
 
     conexion = conectar_bd()
+
+    try:
+        # Resumen de equipos
+        total_equipos = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM equipos
+        """).fetchone()["total"]
+
+        equipos_operativos = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM equipos
+            WHERE estado = 'Equipo apto y disponible para su uso'
+        """).fetchone()["total"]
+
+        equipos_fuera_servicio = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM equipos
+            WHERE estado = 'Fuera de servicio'
+        """).fetchone()["total"]
+
+        # Resumen de mantenimientos
+        total_mantenimientos = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM mantenimientos
+        """).fetchone()["total"]
+
+        # Resumen de checklists
+        total_checklists = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM checklists
+        """).fetchone()["total"]
+
+        checklists_aprobados = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM checklists
+            WHERE resultado = 'APROBADO'
+        """).fetchone()["total"]
+
+        checklists_no_aprobados = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM checklists
+            WHERE resultado = 'NO APROBADO'
+        """).fetchone()["total"]
+
+        # Resumen de fallas
+        total_fallas = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM fallas
+        """).fetchone()["total"]
+
+        fallas_pendientes = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM fallas
+            WHERE estado = 'Pendiente'
+        """).fetchone()["total"]
+
+        fallas_en_reparacion = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM fallas
+            WHERE estado = 'En reparación'
+        """).fetchone()["total"]
+
+        fallas_reparadas = conexion.execute("""
+            SELECT COUNT(*) AS total
+            FROM fallas
+            WHERE estado = 'Reparada'
+        """).fetchone()["total"]
+
+        # Equipos disponibles para generar informes técnicos
+        equipos = conexion.execute("""
+            SELECT id, codigo, marca, modelo, serie, ubicacion,
+                   servicio, estado, fecha, observaciones
+            FROM equipos
+            ORDER BY codigo ASC
+        """).fetchall()
+
+    finally:
+        conexion.close()
+
+    return render_template(
+        "reportes.html",
+        total_equipos=total_equipos,
+        equipos_operativos=equipos_operativos,
+        equipos_fuera_servicio=equipos_fuera_servicio,
+        total_mantenimientos=total_mantenimientos,
+        total_checklists=total_checklists,
+        checklists_aprobados=checklists_aprobados,
+        checklists_no_aprobados=checklists_no_aprobados,
+        total_fallas=total_fallas,
+        fallas_pendientes=fallas_pendientes,
+        fallas_en_reparacion=fallas_en_reparacion,
+        fallas_reparadas=fallas_reparadas,
+        equipos=equipos
+    )
+    
+# =========================================================
+# GENERAR INFORME TÉCNICO DEL EQUIPO
+# =========================================================
+
+@app.route("/informe-tecnico/<int:equipo_id>")
+def informe_tecnico(equipo_id):
+
+    conexion = conectar_bd()
+
+    try:
+        equipo = conexion.execute("""
+            SELECT *
+            FROM equipos
+            WHERE id = ?
+        """, (equipo_id,)).fetchone()
+
+        if equipo is None:
+            flash("El equipo solicitado no existe.", "error")
+            return redirect(url_for("reportes"))
+
+        mantenimientos = conexion.execute("""
+            SELECT *
+            FROM mantenimientos
+            WHERE equipo_id = ?
+            ORDER BY fecha DESC, id DESC
+        """, (equipo_id,)).fetchall()
+
+        checklists = conexion.execute("""
+            SELECT *
+            FROM checklists
+            WHERE equipo_id = ?
+            ORDER BY fecha DESC, id DESC
+        """, (equipo_id,)).fetchall()
+
+        fallas = conexion.execute("""
+            SELECT *
+            FROM fallas
+            WHERE equipo_id = ?
+            ORDER BY fecha_falla DESC, id DESC
+        """, (equipo_id,)).fetchall()
+
+        evidencias = conexion.execute("""
+            SELECT *
+            FROM evidencias
+            WHERE equipo_id = ?
+            ORDER BY fecha_subida DESC, id DESC
+        """, (equipo_id,)).fetchall()
+
+    finally:
+        conexion.close()
+
+    return render_template(
+        "informe_tecnico.html",
+        equipo=equipo,
+        mantenimientos=mantenimientos,
+        checklists=checklists,
+        fallas=fallas,
+        evidencias=evidencias,
+        fecha_informe=date.today().strftime("%d/%m/%Y")
+    )
+
+
 
     # =====================================================
     # RESUMEN DE EQUIPOS
@@ -1176,6 +2178,49 @@ def dashboard():
         SELECT COUNT(*) AS total
         FROM mantenimientos
     """).fetchone()["total"]
+    
+    # =====================================================
+    # NUEVOS INDICADORES DEL DASHBOARD
+    # =====================================================
+
+    # Total de evidencias fotográficas
+    total_evidencias = conexion.execute("""
+        SELECT COUNT(*) AS total
+        FROM evidencias
+    """).fetchone()["total"]
+
+    # Equipos que no tienen checklists registrados
+    equipos_sin_checklist = conexion.execute("""
+        SELECT COUNT(*) AS total
+        FROM equipos e
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM checklists c
+            WHERE c.equipo_id = e.id
+        )
+    """).fetchone()["total"]
+
+    # Equipos que no tienen mantenimientos registrados
+    equipos_sin_mantenimiento = conexion.execute("""
+        SELECT COUNT(*) AS total
+        FROM equipos e
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM mantenimientos m
+            WHERE m.equipo_id = e.id
+        )
+    """).fetchone()["total"]
+
+    # Porcentaje de checklists aprobados
+    porcentaje_checklists_aprobados = (
+        round(
+            checklists_aprobados / total_checklists * 100,
+            1
+        )
+        if total_checklists > 0
+        else 0
+    )
+
 
     # =====================================================
     # FECHA ACTUAL
@@ -1259,6 +2304,119 @@ def dashboard():
         LIMIT 10
     """).fetchall()
 
+    
+    # =====================================================
+    # RESUMEN DE FALLAS
+    # =====================================================
+
+    total_fallas = conexion.execute("""
+        SELECT COUNT(*) AS total
+        FROM fallas
+    """).fetchone()["total"]
+
+    fallas_pendientes = conexion.execute("""
+        SELECT COUNT(*) AS total
+        FROM fallas
+        WHERE estado = 'Pendiente'
+    """).fetchone()["total"]
+
+    fallas_en_reparacion = conexion.execute("""
+        SELECT COUNT(*) AS total
+        FROM fallas
+        WHERE estado = 'En reparación'
+    """).fetchone()["total"]
+
+    fallas_reparadas = conexion.execute("""
+        SELECT COUNT(*) AS total
+        FROM fallas
+        WHERE estado = 'Reparada'
+    """).fetchone()["total"]
+
+    # =====================================================
+    # ÚLTIMAS FALLAS REGISTRADAS
+    # =====================================================
+
+    ultimas_fallas = conexion.execute("""
+        SELECT
+            f.id,
+            f.fecha_falla,
+            f.descripcion,
+            f.gravedad,
+            f.tecnico,
+            f.estado,
+            e.codigo,
+            e.marca,
+            e.modelo
+        FROM fallas f
+        INNER JOIN equipos e ON f.equipo_id = e.id
+        ORDER BY f.fecha_falla DESC, f.id DESC
+        LIMIT 10
+    """).fetchall()
+    
+    # =====================================================
+    # INDICADORES MTBF, MTTR Y DISPONIBILIDAD
+    # =====================================================
+
+    # MTTR: tiempo medio de reparación en horas.
+    # Se utilizan fallas reparadas que tengan tiempo registrado.
+    mttr = conexion.execute("""
+        SELECT AVG(tiempo_fuera_servicio) AS promedio
+        FROM fallas
+        WHERE estado = 'Reparada'
+        AND tiempo_fuera_servicio IS NOT NULL
+        AND tiempo_fuera_servicio >= 0
+    """).fetchone()["promedio"]
+
+    mttr = round(mttr, 2) if mttr is not None else 0
+
+    # MTBF: promedio de horas entre fallas consecutivas
+    # del mismo equipo. Se necesitan al menos dos fallas
+    # registradas en un mismo equipo para calcular un intervalo.
+    registros_fallas = conexion.execute("""
+        SELECT equipo_id, fecha_falla
+        FROM fallas
+        WHERE fecha_falla IS NOT NULL
+        ORDER BY equipo_id, fecha_falla
+    """).fetchall()
+
+    fallas_por_equipo = {}
+    intervalos_mtbf = []
+
+    for registro in registros_fallas:
+        equipo_id = registro["equipo_id"]
+        fecha_texto = str(registro["fecha_falla"])[:10]
+
+        try:
+            fecha_falla = date.fromisoformat(fecha_texto)
+        except (ValueError, TypeError):
+            continue
+
+        if equipo_id not in fallas_por_equipo:
+            fallas_por_equipo[equipo_id] = []
+
+        fallas_por_equipo[equipo_id].append(fecha_falla)
+
+    for fechas in fallas_por_equipo.values():
+        fechas.sort()
+
+        for i in range(1, len(fechas)):
+            horas = (fechas[i] - fechas[i - 1]).total_seconds() / 3600
+            intervalos_mtbf.append(horas)
+
+    mtbf = (
+        round(sum(intervalos_mtbf) / len(intervalos_mtbf), 2)
+        if intervalos_mtbf
+        else None
+    )
+
+    # Disponibilidad operativa actual según el estado
+    # registrado para los equipos en BioMedic.
+    disponibilidad = (
+        round(equipos_operativos / total_equipos * 100, 1)
+        if total_equipos > 0
+        else 0
+    )
+
     # =====================================================
     # CERRAR CONEXIÓN
     # =====================================================
@@ -1271,6 +2429,10 @@ def dashboard():
 
     return render_template(
         "dashboard.html",
+        total_evidencias=total_evidencias,
+        equipos_sin_checklist=equipos_sin_checklist,
+        equipos_sin_mantenimiento=equipos_sin_mantenimiento,
+        porcentaje_checklists_aprobados=porcentaje_checklists_aprobados,
 
         total_equipos=total_equipos,
 
@@ -1297,8 +2459,15 @@ def dashboard():
         mantenimientos_vencidos=mantenimientos_vencidos,
 
         ultimos_checklists=ultimos_checklists,
-
-        ultimos_mantenimientos=ultimos_mantenimientos
+        ultimos_mantenimientos=ultimos_mantenimientos,
+        total_fallas=total_fallas,
+        fallas_pendientes=fallas_pendientes,
+        fallas_en_reparacion=fallas_en_reparacion,
+        fallas_reparadas=fallas_reparadas,
+        mtbf=mtbf,
+        mttr=mttr,
+        disponibilidad=disponibilidad,
+        ultimas_fallas=ultimas_fallas
     )
 
 
@@ -1962,7 +3131,6 @@ def cronograma():
 # CREAR BASE DE DATOS
 # =========================================================
 crear_bd()
-
 
 # =========================================================
 # EJECUTAR APLICACIÓN

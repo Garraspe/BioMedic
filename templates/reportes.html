@@ -1,0 +1,695 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioMedic | Reportes</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --azul-oscuro: #102c46;
+            --azul: #174b78;
+            --azul-medio: #2474b5;
+            --azul-claro: #e8f3fc;
+            --turquesa: #0e9f9a;
+            --fondo: #f1f5fa;
+            --texto: #26384c;
+            --gris: #718096;
+            --borde: #e1eaf2;
+            --blanco: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 28px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background:
+                radial-gradient(circle at top right, #e1effb 0, transparent 32%),
+                var(--fondo);
+            color: var(--texto);
+        }
+
+        .contenedor {
+            max-width: 1350px;
+            margin: auto;
+        }
+
+        /* NAVEGACIÓN */
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-bottom: 30px;
+            padding: 12px;
+            background: var(--blanco);
+            border: 1px solid var(--borde);
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(20, 55, 90, 0.05);
+        }
+
+        nav a {
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: #49647e;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            background: var(--azul-claro);
+            color: var(--azul);
+        }
+
+        nav a.activo {
+            background: var(--azul-oscuro);
+            color: white;
+        }
+
+        /* ENCABEZADO */
+
+        .encabezado {
+            position: relative;
+            overflow: hidden;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 17px;
+            color: white;
+            background: linear-gradient(120deg, #102c46, #175487 70%, #168c9b);
+            box-shadow: 0 8px 22px rgba(16, 44, 70, 0.15);
+        }
+
+        .encabezado::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            right: -55px;
+            top: -95px;
+            border: 35px solid rgba(255,255,255,0.07);
+            border-radius: 50%;
+        }
+
+        .encabezado-contenido {
+            position: relative;
+            z-index: 1;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            padding: 6px 11px;
+            margin-bottom: 12px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.14);
+            color: #d8f5ff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0 0 9px;
+            font-size: 29px;
+            letter-spacing: -0.5px;
+        }
+
+        .encabezado p {
+            margin: 0;
+            color: #d7e9f8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* INDICADORES */
+
+        .titulo-seccion {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 28px 0 15px;
+            color: var(--azul-oscuro);
+            font-size: 19px;
+        }
+
+        .titulo-seccion::before {
+            content: "";
+            width: 5px;
+            height: 23px;
+            border-radius: 5px;
+            background: var(--turquesa);
+        }
+
+        .tarjetas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .tarjeta {
+            position: relative;
+            overflow: hidden;
+            padding: 21px;
+            background: var(--blanco);
+            border: 1px solid var(--borde);
+            border-radius: 14px;
+            box-shadow: 0 4px 13px rgba(20, 55, 90, 0.045);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(20, 55, 90, 0.09);
+        }
+
+        .tarjeta::after {
+            content: "";
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            right: -28px;
+            bottom: -32px;
+            border-radius: 50%;
+            background: #eaf3fb;
+        }
+
+        .tarjeta.superior {
+            border-top: 3px solid var(--azul-medio);
+        }
+
+        .tarjeta.operativo {
+            border-top: 3px solid #0e9f9a;
+        }
+
+        .tarjeta.alerta {
+            border-top: 3px solid #e59a37;
+        }
+
+        .tarjeta.falla {
+            border-top: 3px solid #d65b68;
+        }
+
+        .tarjeta-icono {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 37px;
+            height: 37px;
+            margin-bottom: 13px;
+            border-radius: 10px;
+            background: var(--azul-claro);
+            color: var(--azul);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .tarjeta.operativo .tarjeta-icono {
+            background: #e2f7f3;
+            color: #0b8980;
+        }
+
+        .tarjeta.alerta .tarjeta-icono {
+            background: #fff3df;
+            color: #c47b17;
+        }
+
+        .tarjeta.falla .tarjeta-icono {
+            background: #fdecef;
+            color: #c44859;
+        }
+
+        .tarjeta h3 {
+            margin: 0;
+            color: var(--gris);
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .numero {
+            position: relative;
+            z-index: 1;
+            margin-top: 9px;
+            color: var(--azul-oscuro);
+            font-size: 32px;
+            font-weight: 750;
+            line-height: 1.2;
+        }
+
+        .tarjeta-pie {
+            margin-top: 7px;
+            color: #93a1b1;
+            font-size: 11px;
+        }
+
+        /* PANEL DE INFORMES */
+
+        .panel {
+            margin-bottom: 25px;
+            padding: 25px;
+            background: var(--blanco);
+            border: 1px solid var(--borde);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(20, 55, 90, 0.05);
+        }
+
+        .panel-encabezado {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 9px;
+        }
+
+        .panel-icono {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 43px;
+            height: 43px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e4f1fc, #d9f3f2);
+            color: var(--azul);
+            font-size: 21px;
+        }
+
+        .panel h2 {
+            margin: 0;
+            color: var(--azul-oscuro);
+            font-size: 19px;
+        }
+
+        .panel-descripcion {
+            margin: 0 0 22px 56px;
+            color: var(--gris);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .contador-equipos {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 17px;
+            padding: 7px 11px;
+            border-radius: 20px;
+            background: var(--azul-claro);
+            color: var(--azul);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* TABLA */
+
+        .tabla-contenedor {
+            overflow-x: auto;
+            border: 1px solid var(--borde);
+            border-radius: 11px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 750px;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            padding: 15px 14px;
+            background: #edf4fa;
+            color: #49647e;
+            font-size: 11px;
+            font-weight: 750;
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #edf1f5;
+            color: #526477;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        tbody tr {
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f6faff;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .codigo {
+            color: var(--azul);
+            font-weight: 750;
+        }
+
+        .estado {
+            display: inline-block;
+            max-width: 190px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #edf3f8;
+            color: #47627b;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .boton {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 9px 13px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #1764a1, #2184bd);
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 3px 8px rgba(23, 100, 161, 0.17);
+            transition: 0.2s;
+        }
+
+        .boton:hover {
+            background: linear-gradient(135deg, #104b7b, #176da6);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(23, 100, 161, 0.23);
+        }
+
+        /* ESTADO VACÍO */
+
+        .vacio {
+            padding: 40px 20px;
+            text-align: center;
+            border: 1px dashed #cbd9e6;
+            border-radius: 12px;
+            background: #f8fbfe;
+        }
+
+        .vacio-icono {
+            margin-bottom: 12px;
+            color: #78a6cb;
+            font-size: 38px;
+        }
+
+        .vacio h3 {
+            margin: 0 0 8px;
+            color: var(--azul-oscuro);
+            font-size: 16px;
+        }
+
+        .vacio p {
+            margin: 0;
+            color: var(--gris);
+            font-size: 13px;
+        }
+
+        /* PIE DE PÁGINA */
+
+        footer {
+            margin-top: 30px;
+            padding: 18px;
+            border-top: 1px solid var(--borde);
+            color: #8493a4;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        footer strong {
+            color: var(--azul);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 700px) {
+            body {
+                padding: 13px;
+            }
+
+            nav {
+                gap: 5px;
+                padding: 8px;
+            }
+
+            nav a {
+                padding: 9px 10px;
+                font-size: 11px;
+            }
+
+            .encabezado {
+                padding: 23px 19px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+
+            .tarjetas {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .tarjeta {
+                padding: 15px;
+            }
+
+            .numero {
+                font-size: 27px;
+            }
+
+            .panel {
+                padding: 17px;
+            }
+
+            .panel-descripcion {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .tarjetas {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="contenedor">
+
+    <nav>
+        <a href="/">Inicio</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="{{ url_for('pruebas_funcionales') }}">Pruebas funcionales</a>
+        <a href="/inventario">Inventario</a>
+        <a href="/mantenimientos">Mantenimientos</a>
+        <a href="/fallas">Registro de fallas</a>
+        <a href="/reportes" class="activo">Reportes</a>
+    </nav>
+
+    <header class="encabezado">
+        <div class="encabezado-contenido">
+            <span class="etiqueta">Gestión biomédica</span>
+            <h1>Centro de reportes</h1>
+            <p>
+                Consulta los indicadores generales, supervisa la gestión de los
+                equipos biomédicos y genera informes técnicos individuales.
+            </p>
+        </div>
+    </header>
+
+    <h2 class="titulo-seccion">Resumen general del sistema</h2>
+
+    <section class="tarjetas">
+
+        <div class="tarjeta superior">
+            <div class="tarjeta-icono">▦</div>
+            <h3>Total de equipos</h3>
+            <div class="numero">{{ total_equipos }}</div>
+            <div class="tarjeta-pie">Equipos registrados</div>
+        </div>
+
+        <div class="tarjeta operativo">
+            <div class="tarjeta-icono">✓</div>
+            <h3>Equipos operativos</h3>
+            <div class="numero">{{ equipos_operativos }}</div>
+            <div class="tarjeta-pie">Disponibles para su uso</div>
+        </div>
+
+        <div class="tarjeta falla">
+            <div class="tarjeta-icono">!</div>
+            <h3>Equipos fuera de servicio</h3>
+            <div class="numero">{{ equipos_fuera_servicio }}</div>
+            <div class="tarjeta-pie">Requieren atención</div>
+        </div>
+
+        <div class="tarjeta superior">
+            <div class="tarjeta-icono">⚙</div>
+            <h3>Mantenimientos registrados</h3>
+            <div class="numero">{{ total_mantenimientos }}</div>
+            <div class="tarjeta-pie">Intervenciones realizadas</div>
+        </div>
+
+        <div class="tarjeta superior">
+            <div class="tarjeta-icono">☷</div>
+            <h3>Checklists realizados</h3>
+            <div class="numero">{{ total_checklists }}</div>
+            <div class="tarjeta-pie">Inspecciones registradas</div>
+        </div>
+
+        <div class="tarjeta operativo">
+            <div class="tarjeta-icono">✓</div>
+            <h3>Checklists aprobados</h3>
+            <div class="numero">{{ checklists_aprobados }}</div>
+            <div class="tarjeta-pie">Resultados satisfactorios</div>
+        </div>
+
+        <div class="tarjeta alerta">
+            <div class="tarjeta-icono">⚠</div>
+            <h3>Checklists no aprobados</h3>
+            <div class="numero">{{ checklists_no_aprobados }}</div>
+            <div class="tarjeta-pie">Requieren revisión</div>
+        </div>
+
+        <div class="tarjeta falla">
+            <div class="tarjeta-icono">✕</div>
+            <h3>Total de fallas</h3>
+            <div class="numero">{{ total_fallas }}</div>
+            <div class="tarjeta-pie">Eventos reportados</div>
+        </div>
+
+        <div class="tarjeta alerta">
+            <div class="tarjeta-icono">◷</div>
+            <h3>Fallas pendientes</h3>
+            <div class="numero">{{ fallas_pendientes }}</div>
+            <div class="tarjeta-pie">Pendientes de gestión</div>
+        </div>
+
+        <div class="tarjeta superior">
+            <div class="tarjeta-icono">⚒</div>
+            <h3>En reparación</h3>
+            <div class="numero">{{ fallas_en_reparacion }}</div>
+            <div class="tarjeta-pie">En proceso de intervención</div>
+        </div>
+
+        <div class="tarjeta operativo">
+            <div class="tarjeta-icono">✓</div>
+            <h3>Fallas reparadas</h3>
+            <div class="numero">{{ fallas_reparadas }}</div>
+            <div class="tarjeta-pie">Intervenciones finalizadas</div>
+        </div>
+
+    </section>
+
+    <h2 class="titulo-seccion">Informes técnicos</h2>
+
+    <section class="panel">
+
+        <div class="panel-encabezado">
+            <div class="panel-icono">▤</div>
+            <h2>Generar informe técnico</h2>
+        </div>
+
+        <p class="panel-descripcion">
+            Selecciona un equipo biomédico para consultar su historial
+            y generar un informe técnico individual con la información
+            registrada en el sistema.
+        </p>
+
+        {% if equipos %}
+
+            <div class="contador-equipos">
+                <span>▦</span>
+                {{ equipos|length }} equipo(s) disponible(s)
+            </div>
+
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Ubicación</th>
+                            <th>Estado</th>
+                            <th>Informe</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for equipo in equipos %}
+                        <tr>
+                            <td>
+                                <span class="codigo">{{ equipo["codigo"] }}</span>
+                            </td>
+
+                            <td>{{ equipo["marca"] }}</td>
+
+                            <td>{{ equipo["modelo"] }}</td>
+
+                            <td>{{ equipo["ubicacion"] }}</td>
+
+                            <td>
+                                <span class="estado">
+                                    {{ equipo["estado"] }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <a class="boton"
+                                   href="{{ url_for('informe_tecnico', equipo_id=equipo['id']) }}">
+                                    <span>▤</span>
+                                    Generar informe
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% else %}
+
+            <div class="vacio">
+                <div class="vacio-icono">▤</div>
+                <h3>No hay equipos registrados</h3>
+                <p>
+                    Registra equipos en el inventario para poder generar
+                    sus respectivos informes técnicos.
+                </p>
+                <br>
+                <a href="/inventario" class="boton">
+                    Ir al inventario
+                </a>
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    <footer>
+        <strong>BioMedic</strong> · Sistema de gestión y mantenimiento
+        de equipos biomédicos.
+    </footer>
+
+</div>
+</body>
+</html>

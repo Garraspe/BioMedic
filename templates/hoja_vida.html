@@ -1138,25 +1138,45 @@
                     background: #f8f9fa;
                     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
                 ">
+                <!-- IMAGEN CON OPCIÓN DE AMPLIAR -->
 
-                    <!-- IMAGEN -->
+<a
+    href="{{ url_for(
+        'abrir_evidencia',
+        id=equipo['id'],
+        nombre=evidencia['archivo']
+    ) }}"
+    target="_blank"
+    title="Haz clic para abrir la fotografía en tamaño completo"
+    style="display: block; cursor: zoom-in;"
+>
 
-                    <img
-                        src="{{ url_for(
-                            'abrir_evidencia',
-                            id=equipo['id'],
-                            nombre=evidencia['archivo']
-                        ) }}"
-                        alt="Evidencia fotográfica"
-                        style="
-                            width: 100%;
-                            height: 250px;
-                            object-fit: contain;
-                            border-radius: 8px;
-                            background: white;
-                            border: 1px solid #ddd;
-                        "
-                    >
+    <img
+        src="{{ url_for(
+            'abrir_evidencia',
+            id=equipo['id'],
+            nombre=evidencia['archivo']
+        ) }}"
+        alt="Evidencia fotográfica"
+        style="
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            border: 1px solid #ddd;
+        "
+    >
+
+</a>
+
+<p style="
+    text-align: center;
+    color: #0d6efd;
+    font-size: 13px;
+">
+    🔍 Haz clic en la imagen para ampliarla
+</p>
 
                     <!-- DESCRIPCIÓN -->
 
@@ -1234,7 +1254,6 @@
 
 </div>
 
-
 <!-- ===================================================== -->
 <!-- HISTORIAL GENERAL -->
 <!-- ===================================================== -->
@@ -1242,122 +1261,109 @@
 <section class="tarjeta">
 
     <div class="titulo-seccion">
-        <div class="icono">&#x1F4C5;</div>
+
+        <div class="icono">📅</div>
+
         <div>
             <h2>Historial del equipo</h2>
+
             <div class="subtitulo">
-                Registro general de las actividades realizadas sobre el equipo.
+                Línea de tiempo de las actividades realizadas
+                sobre el equipo biomédico.
             </div>
         </div>
+
     </div>
 
-    {% if mantenimientos or checklists %}
+    {% if historial_general %}
 
-    <div class="historial">
+        <div class="historial">
 
-        {% for mantenimiento in mantenimientos %}
+            {% for actividad in historial_general %}
 
-        <div class="historial-item">
+                <div class="historial-item">
 
-            <div class="historial-punto"></div>
+                    <div class="historial-punto"></div>
 
-            <div class="historial-contenido">
+                    <div class="historial-contenido">
 
-                <strong>
-                    &#x1F527; Mantenimiento
-                </strong>
+                        <!-- TIPO DE ACTIVIDAD -->
 
-                <br>
+                        <strong>
 
-                <small>
-                    Fecha: {{ mantenimiento.fecha }}
-                </small>
+                            {% if actividad.tipo_evento == "Mantenimiento" %}
 
-                <p>
-                    Se registr&oacute; un mantenimiento de tipo
-                    <strong>{{ mantenimiento.tipo }}</strong>
-                    realizado por {{ mantenimiento.tecnico }}.
-                </p>
+                                🔧 Mantenimiento
 
-            </div>
+                            {% elif actividad.tipo_evento == "Checklist" %}
 
-        </div>
+                                ✅ Checklist
 
-        {% endfor %}
+                            {% elif actividad.tipo_evento == "Falla" %}
 
+                                ⚠️ Falla registrada
 
-        {% for checklist in checklists %}
+                            {% elif actividad.tipo_evento == "Evidencia fotográfica" %}
 
-        <div class="historial-item">
+                                📷 Evidencia fotográfica
 
-            <div class="historial-punto"></div>
+                            {% endif %}
 
-            <div class="historial-contenido">
+                        </strong>
 
-                <strong>
-                    &#x2705; Checklist
-                </strong>
+                        <br>
 
-                <br>
+                        <!-- FECHA -->
 
-                <small>
-                    Fecha: {{ checklist.fecha }}
-                </small>
+                        <small>
+                            📅 Fecha: {{ actividad.fecha }}
+                        </small>
 
-                <p>
+                        <!-- DESCRIPCIÓN -->
 
-                    Se realiz&oacute; un checklist por
-                    <strong>{{ checklist.tecnico }}</strong>.
+                        <p>
+                            {{ actividad.detalle }}
+                        </p>
 
-                    Resultado:
+                        <!-- OBSERVACIONES -->
 
-                    {% if checklist.resultado == "APROBADO" %}
+                        {% if actividad.observaciones %}
 
-                        <span class="badge badge-aprobado">
-                            APROBADO
-                        </span>
+                            <p>
+                                <strong>Observaciones:</strong>
+                                {{ actividad.observaciones }}
+                            </p>
 
-                    {% elif checklist.resultado == "ATENCIÓN REQUERIDA" %}
+                        {% endif %}
 
-                        <span class="badge badge-atencion">
-                            ATENCI&Oacute;N REQUERIDA
-                        </span>
+                    </div>
 
-                    {% else %}
+                </div>
 
-                        <span class="badge badge-no">
-                            NO APROBADO
-                        </span>
-
-                    {% endif %}
-
-                </p>
-
-            </div>
+            {% endfor %}
 
         </div>
-
-        {% endfor %}
-
-    </div>
 
     {% else %}
 
-    <div class="sin-datos">
+        <div class="sin-datos">
 
-        <div class="icono">&#x1F4C5;</div>
+            <div class="icono">📅</div>
 
-        <h3>No hay historial disponible</h3>
+            <h3>No hay historial disponible</h3>
 
-        <p>
-            Las actividades realizadas sobre el equipo aparecer&aacute;n aqu&iacute;.
-        </p>
+            <p>
+                Las actividades realizadas sobre este equipo
+                aparecerán aquí cuando sean registradas.
+            </p>
 
-    </div>
+        </div>
 
     {% endif %}
 
 </section>
+
+
 </body>
 </html>
 <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">

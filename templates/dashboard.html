@@ -93,6 +93,10 @@
     <a href="/mantenimientos">Mantenimientos</a>
     <a href="/checklist">Checklists</a>
     <a href="/dashboard" class="activo">Dashboard</a>
+    <a href="{{ url_for('pruebas_funcionales') }}">Pruebas funcionales</a>
+    <a href="/fallas">Registro de fallas</a>
+    <a href="/reportes">Reportes</a>
+    
 
 </nav>
 <main class="contenedor">
@@ -103,6 +107,78 @@
         <div class="tarjeta verde"><div class="icono-tarjeta">&#x1F7E2;</div><h3>Equipos operativos</h3><div class="numero">{{ equipos_operativos }}</div><div class="descripcion">Equipos actualmente operativos</div></div>
         <div class="tarjeta rojo"><div class="icono-tarjeta">&#x1F534;</div><h3>Fuera de servicio</h3><div class="numero">{{ equipos_fuera_servicio }}</div><div class="descripcion">Equipos fuera de operaci&oacute;n</div></div>
     </section>
+    
+<div class="seccion-titulo">
+    <h2>📈 Indicadores adicionales</h2>
+    <p>Seguimiento de documentación, inspecciones y evidencias.</p>
+</div>
+
+<section class="tarjetas">
+    <div class="tarjeta azul">
+        <div class="icono-tarjeta">📸</div>
+        <h3>Evidencias fotográficas</h3>
+        <div class="numero">{{ total_evidencias }}</div>
+        <div class="descripcion">
+            Fotografías registradas en la plataforma
+        </div>
+    </div>
+
+    <div class="tarjeta amarillo">
+        <div class="icono-tarjeta">📋</div>
+        <h3>Equipos sin checklist</h3>
+        <div class="numero">{{ equipos_sin_checklist }}</div>
+        <div class="descripcion">
+            Equipos sin inspecciones registradas
+        </div>
+    </div>
+
+    <div class="tarjeta rojo">
+        <div class="icono-tarjeta">🔧</div>
+        <h3>Equipos sin mantenimiento</h3>
+        <div class="numero">{{ equipos_sin_mantenimiento }}</div>
+        <div class="descripcion">
+            Equipos sin intervenciones registradas
+        </div>
+    </div>
+
+    <div class="tarjeta verde">
+        <div class="icono-tarjeta">✅</div>
+        <h3>Checklists aprobados</h3>
+        <div class="numero">{{ porcentaje_checklists_aprobados }}%</div>
+        <div class="descripcion">
+            Porcentaje de inspecciones con resultado aprobado
+        </div>
+    </div>
+    
+<div class="tarjeta azul">
+    <div class="icono-tarjeta">⏱️</div>
+    <h3>MTBF</h3>
+    <div class="numero">
+        {% if mtbf is not none %}
+            {{ mtbf }}
+        {% else %}
+            N/D
+        {% endif %}
+    </div>
+    <div class="descripcion">Horas promedio entre fallas consecutivas</div>
+</div>
+
+<div class="tarjeta amarillo">
+    <div class="icono-tarjeta">🔧</div>
+    <h3>MTTR</h3>
+    <div class="numero">{{ mttr }}</div>
+    <div class="descripcion">Horas promedio de reparación</div>
+</div>
+
+<div class="tarjeta verde">
+    <div class="icono-tarjeta">📈</div>
+    <h3>Disponibilidad</h3>
+    <div class="numero">{{ disponibilidad }}%</div>
+    <div class="descripcion">Porcentaje de equipos operativos actualmente</div>
+</div>
+
+</section>
+
     <div class="seccion-titulo"><h2>&#x1F4CB; Resumen de checklists</h2><p>Resultados de las inspecciones realizadas a los equipos.</p></div>
     <section class="tarjetas">
         <div class="tarjeta azul"><div class="icono-tarjeta">&#x1F4CB;</div><h3>Total checklists</h3><div class="numero">{{ total_checklists }}</div><div class="descripcion">Inspecciones registradas</div></div>
@@ -175,6 +251,104 @@
         </div>
         {% else %}<div class="sin-registros"><div class="icono">&#x1F527;</div><strong>No hay mantenimientos registrados todav&iacute;a.</strong></div>{% endif %}
     </section>
+    
+    <section class="panel">
+        <h2>⚠️ Últimas fallas registradas</h2>
+        <p>Seguimiento de las fallas reportadas en los equipos biomédicos.</p>
+
+        {% if ultimas_fallas %}
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Código</th>
+                        <th>Equipo</th>
+                        <th>Descripción</th>
+                        <th>Gravedad</th>
+                        <th>Técnico</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>   
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for falla in ultimas_fallas %}
+                    <tr>
+                        <td>{{ falla["fecha_falla"] or "Sin fecha" }}</td>
+                        <td><strong>{{ falla["codigo"] }}</strong></td>
+                        <td>{{ falla["marca"] }} {{ falla["modelo"] }}</td>
+                        <td>{{ falla["descripcion"] }}</td>
+                        <td>{{ falla["gravedad"] or "Sin especificar" }}</td>
+                        <td>{{ falla["tecnico"] or "Sin asignar" }}</td>
+                        <td>
+                            {% if falla["estado"] == "Reparada" %}
+                                <span class="resultado resultado-aprobado">
+                                    REPARADA
+                                </span>
+                            {% elif falla["estado"] == "En reparación" %}
+                                <span class="resultado resultado-atencion">
+                                    EN REPARACIÓN
+                                </span>
+                            {% else %}
+                                <span class="resultado resultado-no">
+                                    {{ falla["estado"] or "Pendiente" }}
+                                </span>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="sin-registros">
+            <div class="icono">🔧</div>
+            <strong>No hay fallas registradas todavía.</strong>
+            <p>Cuando registres una falla, aparecerá aquí.</p>
+        </div>
+        {% endif %}
+
+        <p style="margin-top: 20px;">
+            <a href="/fallas" class="boton">Gestionar fallas</a>
+        </p>
+    </section>
+    
+    <div class="seccion-titulo">
+        <h2>🛠️ Estado de las fallas</h2>
+        <p>Resumen de las fallas reportadas y su estado de atención.</p>
+    </div>
+
+    <section class="tarjetas">
+        <div class="tarjeta azul">
+            <div class="icono-tarjeta">📋</div>
+            <h3>Total de fallas</h3>
+            <div class="numero">{{ total_fallas }}</div>
+            <div class="descripcion">Fallas registradas</div>
+        </div>
+
+        <div class="tarjeta rojo">
+            <div class="icono-tarjeta">⚠️</div>
+            <h3>Pendientes</h3>
+            <div class="numero">{{ fallas_pendientes }}</div>
+            <div class="descripcion">Esperan atención técnica</div>
+        </div>
+
+        <div class="tarjeta amarillo">
+            <div class="icono-tarjeta">🔧</div>
+            <h3>En reparación</h3>
+            <div class="numero">{{ fallas_en_reparacion }}</div>
+            <div class="descripcion">En proceso de intervención</div>
+        </div>
+
+        <div class="tarjeta verde">
+            <div class="icono-tarjeta">✅</div>
+            <h3>Reparadas</h3>
+            <div class="numero">{{ fallas_reparadas }}</div>
+            <div class="descripcion">Con reparación registrada</div>
+        </div>
+    </section>
+
 </main>
 <footer>
     <p><strong>BioMedic</strong></p>
